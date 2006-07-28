@@ -1,0 +1,253 @@
+
+/**
+ * Copyright 2006, Micah Villmow, All Rights Reserved
+ * @file vector.c
+ * @author Micah Villmow
+ * @brief a reusable vector class that takes any object
+ *
+ * The base class that other data structures are created from
+ */
+#include <string.h>
+#include <stdio.h>
+#include <stddef.h>
+#include "gen/data_types.h"
+#include "vector.h"
+#include "gen/error_macros.h"
+#include "gen/access_macros.h"
+#include "gen/function_macros.h"
+
+#define D(X)	((char *)(H((X))))
+
+int8_t
+construct_Vector(Vector * vec,size_t objsize, int flag)
+{
+  CHECK_VARN(vec, EINVAL);
+  if(S(vec) > 0) {
+	  destruct(Vector,vec);
+  }
+  S(vec) = 0;
+  C(vec) = 0;
+  vec->end = M(vec) = H(vec) = T(vec) = NULL;
+  vec->API.alloc = malloc;
+  vec->API.dealloc = free;
+  vec->API.copy = memcpy;
+  vec->API.cmp = NULL;
+  vec->API.rcmp = NULL;
+  vec->API.print = NULL;
+  vec->objfree = flag;
+  vec->objsize = objsize;
+  return SUCCESS;
+}
+
+
+int8_t
+construct_func_Vector(Vector * vec, size_t objsize, int flag,
+                      void *(*alloc) (size_t),
+                      void (*dealloc) (void *),
+                      int (*cmp) (const void *, const void *),
+                      int (*rcmp) (const void *, const void *),
+                      void (*print) (const void *),
+                      void *(*copy) (void *, const void *, size_t))
+{
+  construct(Vector,vec,objsize,flag);
+  vec->API.alloc = alloc;
+  vec->API.dealloc = dealloc;
+  vec->API.cmp = cmp;
+  vec->API.rcmp = rcmp;
+  vec->API.print = print;
+  vec->API.copy = copy;
+  return SUCCESS;
+}
+
+
+int8_t
+destruct_Vector(Vector * vec)
+{
+  CHECK_VARN(vec, EINVAL);
+  free(M(vec));
+  memset(vec,0,sizeof *vec);
+  return SUCCESS;
+}
+
+int8_t clear_Vector(Vector *vec) {
+	CHECK_VARN(vec,EINVAL);
+	if(!C(vec)) {
+		return SUCCESS;
+	}
+
+	arr_clear(Vector,vec);
+
+	return SUCCESS;
+}
+
+
+int8_t
+insert_at_Vector(Vector * vec, void *obj, uint32_t loc)
+{
+  size_t offset;
+  CHECK_VARN(vec, EINVAL);
+  CHECK_VARN(obj, EINVAL);
+  if (loc > C(vec)) {
+	  return EOOB;
+  }
+  offset = O(vec) * loc;
+  if(!S(vec)) {
+	  if(M(vec) == NULL) {
+		  CHECK_VARA(M(vec) = malloc((offset << 1) == 0 ? (O(vec)):(offset << 1)),EALLOCF);
+		  C(vec) = (offset << 1) == 0 ? (1):(offset << 1);
+	  }
+	  H(vec) = M(vec);
+	  T(vec) = ((char *)H(vec) + O(vec));
+	  vec->end = ((char *)(M(vec))) + (C(vec) * O(vec));
+	  offset = 0;
+	  S(vec) = 1;
+  }
+  if(H(vec) < T(vec)) {
+	  /* No wraparound */
+	  if (loc >= S(vec)) {
+	    S(vec) = loc + 1;
+	    T(vec) = offset + D(vec);
+	  }
+  } else if((void *)(D(vec) + offset) < vec->end) {
+	  /* Wraparound, but index is before end */
+	  if (loc >= S(vec)) {
+		  S(vec) = loc + 1;
+		  T(vec) = D(vec) + offset;
+	  }
+  } else {
+	  /* Wraparound, with index at beginning */
+	  ptrdiff_t spaces = ((char *)vec->end - D(vec));
+	  if(loc > S(vec)) {
+		  S(vec) = loc;
+		  T(vec) = (offset - spaces) + D(vec);
+	  }
+	  offset -= spaces;
+  }
+  vec->API.copy(D(vec) + offset, obj, O(vec));
+  return SUCCESS;
+}
+
+int8_t push_back_Vector(Vector *vec, void *obj, size_t objsize, int flag) {
+	CHECK_VARN(vec,EINVAL);
+	CHECK_VARN(obj,EINVAL);
+	if(objsize != O(vec)) {
+		flag = 0;
+		return EINVAL;
+	}
+
+	arr_push_back(Vector,vec,obj,objsize);
+	return SUCCESS;
+}
+
+int8_t push_front_Vector(Vector *vec, void *obj, size_t objsize, int flag) {
+	CHECK_VARN(vec,EINVAL);
+	CHECK_VARN(obj,EINVAL);
+	if(objsize != O(vec)) {
+		flag = 0;
+		return EINVAL;
+	}
+
+	arr_push_front(Vector,vec,obj,objsize);
+
+	return SUCCESS;
+}
+
+int8_t pop_back_Vector(Vector *vec) {
+	CHECK_VARN(vec,EINVAL);
+	CHECK_VARN(T(vec),EINVAL);
+	if(!S(vec)) {
+		return EEMPTY;
+	}
+
+	arr_pop_back(Vector,vec);
+	return SUCCESS;
+}
+
+int8_t pop_front_Vector(Vector *vec) {
+	CHECK_VARN(vec,EINVAL);
+	CHECK_VARN(H(vec),EINVAL);
+	if(!S(vec)) {
+		return EEMPTY;
+	}
+
+	arr_pop_front(Vector,vec);
+
+	return SUCCESS;
+}
+
+void *front_Vector(Vector *vec) {
+	CHECK_VARN(vec,CHECK(NULL));
+	CHECK_VARN(H(vec),CHECK(NULL));
+	return H(vec);
+}
+
+void *back_Vector(Vector *vec) {
+	CHECK_VARN(vec,CHECK(NULL));
+	CHECK_VARN(T(vec),CHECK(NULL));
+	return T(vec);
+}
+
+void *
+return_at_Vector(Vector * vec, uint32_t loc)
+{
+  register uint32_t offset = (loc * O(vec));
+  CHECK_VARN(vec, CHECK(NULL));
+  if(loc > C(vec)) {
+	  return CHECK(NULL);
+  }
+  if(H(vec) < T(vec)) {
+	  /* No wrap around */
+	  return (void *)(D(vec) + offset);
+  } else if((void *)((D(vec) + offset)) < vec->end) {
+		  /* wrap around exists, but the position
+		   * is before the end of the array */
+		  return (void *)(D(vec) + offset);
+  } else {
+	  /* wrap around exists and position is 
+	   * at beginning of array */
+	  ptrdiff_t spaces = ((char *)vec->end - D(vec));
+	  return (void *)((char *)vec->mem + (offset - spaces));
+  }
+}
+
+int8_t
+resize_Vector(Vector * vec, size_t size)
+{
+  void *ptr;
+  size_t offset = size * O(vec);
+
+  CHECK_VARN(vec, EINVAL);
+  CHECK_VARA(ptr = malloc(offset),EALLOCF);
+  arr_copy_wrap(Vector,ptr,vec,size);
+  /*offset = S(vec) * O(vec);
+  if(M(vec)) {
+	  if(S(vec) == 0) {
+		  printf("%d\n",__LINE__);
+	  } else if(H(vec) < T(vec)) {
+		  printf("%d\n",__LINE__);
+		  memcpy(ptr,H(vec),((char *)T(vec) - (char *)H(vec))/ sizeof (char *));
+	  } else if((void *)((char *)(H(vec)) + offset) < vec->end) {
+		  printf("%d\n",__LINE__);
+		  memcpy(ptr,H(vec),offset);
+	  } else {
+		  ptrdiff_t spaces = ((char *)vec->end - (char *)H(vec));
+		  memcpy(ptr,H(vec),(size_t)spaces);
+		  memcpy((char *)(ptr + spaces),M(vec),O(vec) * (S(vec) - spaces/O(vec)));
+	  }
+	  free(M(vec));
+  }*/
+  arr_setup_pointers(Vector,ptr,vec,size);
+  return SUCCESS;
+}
+
+create_iter_func(Arr_Based,Vector)
+
+function(size_of, Vector)
+function(set_compare, Vector)
+function(set_rcompare, Vector)
+function(set_print, Vector)
+function(set_copy, Vector)
+function(set_alloc, Vector)
+function(set_dealloc, Vector)
+function(set_free_objects, Vector)
+function(set_arr_object_size,Vector)
