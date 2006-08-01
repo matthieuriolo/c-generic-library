@@ -184,7 +184,9 @@
 	iter_proto(head,TYPE);\
 	iter_proto(tail,TYPE);\
 	iter_proto(create,TYPE);\
-	iter_proto(retrieve,TYPE);
+	iter_proto(retrieve,TYPE);\
+	iter_proto(copy,TYPE);\
+	iter_proto(swap,TYPE);
 
 #define iter_proto(FUNC,TYPE) proto_##FUNC(TYPE)
 
@@ -259,6 +261,25 @@
  */\
 	TYPE##Iter *create_##TYPE##Iter(TYPE *obj)
 
+#define proto_copy(TYPE)\
+		/**
+		 * @param src the source iterator
+		 * @param dst the destination iterator
+		 * @return zero on success, non-zero on error
+		 */\
+		int8_t copy_##TYPE##Iter(TYPE##Iter *iter)
+
+#define proto_swap(TYPE)\
+		/**
+		 * @param iter1 the first iterator
+		 * @param iter2 the second iterator
+		 * @brief swaps the position of iter1 and iter2
+		 * @warning iterators must be pointing to same parent
+		 * object or the swap will fail
+		 * @return 0 on success, non-zero on error
+		 */\
+		int8_t swap_##TYPE##Iter(TYPE##Iter *iter1,TYPE##Iter *iter2)
+
 #define create_iter_func(PTR,TYPE) \
 	generic_iter_func(PTR,prev,TYPE)\
 	generic_iter_func(PTR,next,TYPE)\
@@ -267,7 +288,10 @@
 	generic_iter_func(PTR,assign,TYPE)\
 	generic_iter_func(PTR,create,TYPE)\
 	generic_iter_func(PTR,destroy,TYPE)\
-	generic_iter_func(PTR,retrieve,TYPE)
+	generic_iter_func(PTR,retrieve,TYPE)\
+	generic_iter_func(PTR,copy,TYPE)\
+	generic_iter_func(PTR,swap,TYPE)
+
 
 #define generic_iter_func(PTR,FUNC,TYPE) gen_##PTR##_iter_##FUNC(TYPE)
 
@@ -287,6 +311,33 @@
 		}
 
 #define gen_Arr_Based_iter_create(TYPE) gen_Ptr_Based_iter_create(TYPE)
+
+#define gen_Ptr_Based_iter_copy(TYPE) \
+			int8_t copy_##TYPE##Iter(TYPE##Iter *dst, TYPE##Iter *src) {\
+				CHECK_VARN(src,EINVAL);\
+				CHECK_VARN(dst,EINVAL);\
+				dst->ptr = src->ptr;\
+				dst->parent = src->parent;\
+				return SUCCESS;\
+			}
+
+#define gen_Arr_Based_iter_copy(TYPE) gen_Ptr_Based_iter_copy(TYPE)
+
+#define gen_Ptr_Based_iter_swap(TYPE) \
+			int8_t swap_##TYPE##Iter(TYPE##Iter *iter1,TYPE##Iter *iter2) {\
+				TYPE##Iter tmp;\
+				CHECK_VARN(iter1,EINVAL);\
+				CHECK_VARN(iter2,EINVAL);\
+				if(iter1->parent != iter2->parent) {\
+					return EINVAL;\
+				}\
+				tmp->ptr = iter1->ptr;\
+				iter1->ptr = iter2->ptr;\
+				iter2->ptr = tmp->ptr;\
+				return 0;\
+			}
+
+#define gen_Arr_Based_iter_swap(TYPE) gen_Ptr_Based_iter_swap(TYPE)
 
 #define gen_Ptr_Based_iter_assign(TYPE) \
 		int8_t assign_##TYPE## Iter(ITER(TYPE)* iter,TYPE *obj) {\
