@@ -19,9 +19,9 @@ typedef struct _functor_api {
   /** Deallocation function pointer */
   void  (*dealloc) (void *);
   /** Comparison function pointer to compare objects */
-  int   (*cmp) (const void *, const void *);
+  int   (*cmp) (const void *, const void *,size_t);
                 /** Reverse comparison function pointer */
-  int   (*rcmp) (const void *, const void *);
+  int   (*rcmp) (const void *, const void *,size_t);
 
   /** Print function pointer */
   void  (*print) (const void *);
@@ -125,6 +125,25 @@ struct _array_iter {
 
     /** Pointer to the currently assigned vector */
   struct _array_struct *parent;
+};
+
+struct _Hash_List_Node {
+	/** Flags on whether the object is created from static or dynamic data */
+	int8_t flags;
+	/** Size of element being stored at the node */
+	size_t objsize;
+	/** Pointer to the memory that holds the object */
+	void *objptr;
+	/** Pointer to the next node in the list */
+	struct _Hash_List_Node *next;
+}; 
+struct _Hash_Node {
+	/** Flags on whether the object is created from static of dynamic data */
+	int8_t flags;
+	/** Size of element being stored at the node */
+	size_t objsize;
+	/** Pointer to the memory that holds the object */
+	void *objptr;
 };
 
 /* List based data types */

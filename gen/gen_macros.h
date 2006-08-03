@@ -267,7 +267,7 @@
 		 * @param dst the destination iterator
 		 * @return zero on success, non-zero on error
 		 */\
-		int8_t copy_##TYPE##Iter(TYPE##Iter *iter)
+		int8_t copy_##TYPE##Iter(TYPE##Iter *src, TYPE##Iter *dst)
 
 #define proto_swap(TYPE)\
 		/**
@@ -331,9 +331,9 @@
 				if(iter1->parent != iter2->parent) {\
 					return EINVAL;\
 				}\
-				tmp->ptr = iter1->ptr;\
+				tmp.ptr = iter1->ptr;\
 				iter1->ptr = iter2->ptr;\
-				iter2->ptr = tmp->ptr;\
+				iter2->ptr = tmp.ptr;\
 				return 0;\
 			}
 

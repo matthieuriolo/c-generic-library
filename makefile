@@ -9,12 +9,19 @@ OPTIMIZE =  -DOPTIMIZE -std=c9x -DNOCHECKS
 BASE	= $(CC) $(CCFLAGS)
 TESTING = $(BASE) $(DEBUG) $(CDEBUG)
 ALL	= $(TESTING) $(OPTIMIZE) $(LINKING)
-OBJECTS	= list.o node.o queue.o deque.o vector.o conversions.o stack.o binary_tree.o
+OBJECTS	= list.o node.o queue.o deque.o vector.o conversions.o stack.o binary_tree.o hashtable.o
 
-all: vec_tests list_tests tree_tests
+all: vec_tests list_tests tree_tests hash_tests
 list_tests: list_test.x queuelist_test.x dequelist_test.x stacklist_test.x
 vec_tests: vec_test.x queuevector_test.x dequevector_test.x stackvector_test.x basevector_test.x vector_test.x
 tree_tests: binarytree_test.x
+hash_tests: openhash_test.x closedhash_test.x
+
+openhash_test.x: openhash_test.c $(OBJECTS)
+	$(ALL) openhash_test.c -o openhash_test.x $(OBJECTS)
+
+closedhash_test.x: closedhash_test.c $(OBJECTS)
+	$(ALL) closedhash_test.c -o closedhash_test.x $(OBJECTS)
 
 list_test.x: list_test.c $(OBJECTS)
 	$(ALL) list_test.c -o list_test.x $(OBJECTS)
