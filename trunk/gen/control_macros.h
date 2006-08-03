@@ -123,10 +123,10 @@
 #endif
 
 #ifndef TRAVERSE_TREE
-#define TRAVERSE_TREE(PTR,TREE,NEW,RES) \
+#define TRAVERSE_TREE(PTR,TREE,NEW,RES,SIZE) \
 {\
   do {\
-	  (RES) = (TREE)->API.cmp((PTR)->objptr,(NEW));\
+	  (RES) = (TREE)->API.cmp((PTR)->objptr,(NEW),(SIZE));\
 	  if((RES) > 0) {\
 		  /* If the left child exists
 		   * go to that child, otherwise

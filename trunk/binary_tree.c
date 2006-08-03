@@ -74,7 +74,7 @@ construct_BinaryTree(BinaryTree * tree,size_t objsize, int flag)
   H(tree) = FL(tree) = NULL;
   E(tree) = NULL;
   tree->objfree = FREEOBJ;
-  tree->API.cmp = NULL;
+  tree->API.cmp = memcmp;
   tree->API.print = NULL;
   tree->API.rcmp = NULL;
   tree->API.alloc = malloc;
@@ -170,7 +170,7 @@ insert_BinaryTree(BinaryTree * tree, void *obj, size_t objsize, int flag)
 	  S(tree)++;
   } else {
 	  ptr = H(tree);
-	  TRAVERSE_TREE(ptr,tree,tmp->objptr,res);
+	  TRAVERSE_TREE(ptr,tree,tmp->objptr,res,objsize);
 	  if(res < 0) {
 		  if(ptr->ptr[RIGHT] == T(tree)) {
 			  T(tree) = tmp;
@@ -204,7 +204,7 @@ delete_BinaryTree(BinaryTree * tree, void *obj, size_t objsize)
   ptr = H(tree);
 
 repeat_delete:
-  TRAVERSE_TREE(ptr,tree,obj,res);
+  TRAVERSE_TREE(ptr,tree,obj,res,objsize);
   
   if(res == 0) {
 	  Node* tmp = ptr,*pnt = ptr->ptr[PARENT];
@@ -292,7 +292,7 @@ find_BinaryTree(BinaryTree * tree, void *obj, size_t objsize)
   CHECK_OBJSIZE(tree, objsize,NULL);
   CHECK_VARE(S(tree),NULL);
   ptr = H(tree);
-  TRAVERSE_TREE(ptr,tree,obj,res);
+  TRAVERSE_TREE(ptr,tree,obj,res,objsize);
   if(res == 0) {
 	  return ptr->objptr;
   } else {

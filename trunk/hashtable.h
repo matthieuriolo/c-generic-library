@@ -57,6 +57,7 @@ typedef struct _closed_hash_table CHTable;
 struct _closed_hash_table {
 	size_t capacity;
 	size_t cur_size;
+	uint16_t max_jumps;
 	int8_t objfree;
 	HashNode *data;
 	uint32_t (*hash)(void *,size_t);
