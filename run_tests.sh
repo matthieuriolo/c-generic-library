@@ -21,3 +21,5 @@ echo "Starting binarytree_test"
 time ./binarytree_test.x
 echo "Starting openhash_test"
 time ./openhash_test.x
+echo "Starting closedhash_test"
+time ./closedhash_test.x

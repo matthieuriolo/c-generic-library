@@ -75,7 +75,7 @@ construct_List(List * list,size_t objsize,int flag)
   E(list) = NULL;
   list->objsize = objsize;
   list->objfree = flag;
-  list->API.cmp = NULL;
+  list->API.cmp = memcmp;
   list->API.print = NULL;
   list->API.rcmp = NULL;
   list->API.alloc = malloc;
@@ -250,19 +250,11 @@ insert_List(List * list, void *obj, size_t objsize, int flag)
     H(list) = T(list) = tmp;
     S(list)++;
   } else {
-    if (list->API.cmp) {
-      FOR_EACH_NODE(iter, list) {
-        if (list->API.cmp(iter->objptr, obj) >= 0) {
-          break;
-        }
-      }
-    } else {
-      FOR_EACH_NODE(iter, list) {
-        if (memcmp(iter->objptr, obj, objsize) >= 0) {
-          break;
-        }
-      }
-    }
+  FOR_EACH_NODE(iter, list) {
+	if (list->API.cmp(iter->objptr, obj,objsize) >= 0) {
+	  break;
+	}
+  }
     if (!iter) {
       N(tmp) = NULL;
       P(tmp) = T(list);
@@ -292,19 +284,11 @@ delete_List(List * list, void *obj, size_t objsize)
   CHECK_VARE(objsize, EINVAL);
   CHECK_VARE(S(list), EEMPTY);
 
-  if (list->API.cmp) {
     FOR_EACH_NODE(iter, list) {
-      if (!list->API.cmp(iter->objptr, obj)) {
+      if (!list->API.cmp(iter->objptr, obj,objsize)) {
         break;
       }
     }
-  } else {
-    FOR_EACH_NODE(iter, list) {
-      if (!memcmp(iter->objptr, obj, objsize)) {
-        break;
-      }
-    }
-  }
   if (iter) {
     REMOVE_NODE(iter, list);
     DELETE_OBJPTR(list,iter);
@@ -323,19 +307,11 @@ find_List(List * list, void *obj, size_t objsize)
   if (!S(list)) {
     return NULL;
   }
-  if (list->API.cmp) {
-    FOR_EACH_NODE_REVERSE(iter, list) {
-      if (!list->API.cmp(iter->objptr, obj)) {
-        return iter->objptr;
-      }
-    }
-  } else {
-    FOR_EACH_NODE(iter, list) {
-      if (memcmp(iter->objptr, obj, objsize) >= 0) {
-        break;
-      }
-    }
-  }
+	FOR_EACH_NODE_REVERSE(iter, list) {
+	  if (!list->API.cmp(iter->objptr, obj,objsize)) {
+		return iter->objptr;
+	  }
+	}
   return NULL;
 }
 
