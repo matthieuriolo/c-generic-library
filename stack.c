@@ -242,6 +242,7 @@ function(set_dealloc, StackList)
 function(set_copy, StackList)
 function(set_object_size, StackList)
 function(set_free_objects, StackList)
+function(duplicate_ptr_struct,StackList)
 
 
 
@@ -257,4 +258,5 @@ function(set_dealloc, StackVector)
 function(set_copy, StackVector)
 function(set_arr_object_size, StackVector)
 function(set_free_objects, StackVector)
+function(duplicate_arr_struct,StackVector)
 

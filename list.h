@@ -130,6 +130,14 @@ void *front_List(List * list);
  */
 void *back_List(List * list);
 
+/**
+ * @fn List* duplicate_list(List* src)
+ * @param src the source list to copy
+ * @return an exact copy of the passed in list or NULL on error
+ */
+
+List *duplicate_List(List* src);
+
 
 /**
  * @fn void insert_List(List*,void*,size_t,int)

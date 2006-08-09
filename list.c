@@ -273,7 +273,43 @@ allocfail:
   return CHECK(E(list));
 
 }
-
+/*List* duplicate_List(List* src) {
+	List* dst;
+	Node* iter, *tmp;
+	int x;
+		CHECK_VARN(src,NULL);
+		CHECK_VARA((dst = malloc(sizeof *dst)),NULL);
+		dst->objfree = FREEOBJ;
+		dst->objsize = src->objsize;
+		dst->API.alloc = src->API.alloc;
+		dst->API.dealloc = src->API.dealloc;
+		dst->API.cmp = src->API.cmp;
+		dst->API.rcmp = src->API.rcmp;
+		dst->API.print = src->API.print;
+		dst->API.copy = src->API.copy;
+		dst->error = src->error;
+		dst->size = 0;
+		FL(dst) = H(dst) = T(dst) = NULL;
+		for(x = 0; x < (INITIAL_SIZE + src->size); x++) {
+			iter = construct_Node(NUM_LINKS);
+			N(iter) = P(iter) = NULL;
+			ADD_FREE_NODE(dst,iter);
+		}
+		for(iter = H(src); iter; iter = N(iter)) {
+			INITIALIZE_NODE(tmp,dst,iter->objptr,STATIC);
+			if(!S(dst)) {
+				H(dst) = T(dst) = tmp;
+				S(dst)++;
+			} else {
+				ADD_BACK(tmp,dst);
+			}
+		}
+		return dst;
+		allocobjfail:
+		allocfail:
+		destruct(List,dst);
+		return NULL;
+}*/
 int8_t
 delete_List(List * list, void *obj, size_t objsize)
 {
@@ -468,7 +504,7 @@ ITER(List) * extract_ListIter(ITER(List) * iter)
 }
 
 create_iter_func(Ptr_Based,List)
-
+function(duplicate_ptr_struct,List)
 function(size_of, List)
 function(set_compare, List)
 function(set_rcompare, List)

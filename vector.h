@@ -131,6 +131,7 @@ prototype(set_print, Vector);
 prototype(set_alloc, Vector);
 prototype(set_dealloc, Vector);
 prototype(set_copy, Vector);
+prototype(duplicate,Vector);
 
 create_iter_prototypes(Vector)
 #endif

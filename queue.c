@@ -153,6 +153,7 @@ function(set_print, QueueList)
 function(set_alloc, QueueList)
 function(set_dealloc, QueueList)
 function(set_copy, QueueList)
+function(duplicate_ptr_struct,QueueList)
 
 int8_t construct_QueueVector(QueueVector *queue,size_t objsize, int flag) {
 	CHECK_VARN(queue,EINVAL);
@@ -248,5 +249,6 @@ function(set_print, QueueVector)
 function(set_alloc, QueueVector)
 function(set_dealloc, QueueVector)
 function(set_copy, QueueVector)
+function(duplicate_arr_struct,QueueVector)
 
 

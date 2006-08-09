@@ -117,6 +117,7 @@ prototype(set_print, QueueList);
 prototype(set_alloc, QueueList);
 prototype(set_dealloc, QueueList);
 prototype(set_copy, QueueList);
+prototype(duplicate,QueueList);
 
 create_iter_prototypes(QueueList)
 
@@ -158,6 +159,7 @@ prototype(set_print, QueueVector);
 prototype(set_alloc, QueueVector);
 prototype(set_dealloc, QueueVector);
 prototype(set_copy, QueueVector);
+prototype(duplicate,QueueVector);
 
 create_iter_prototypes(QueueVector)
 

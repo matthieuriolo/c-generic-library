@@ -40,6 +40,9 @@
 #    define front(TYPE,STRUCT) \
 	front_##TYPE((STRUCT))
 
+#define duplicate(TYPE,STRUCT) \
+	duplicate_##TYPE((STRUCT))
+
 #define top(TYPE,STRUCT) \
 	top_##TYPE((STRUCT))
 

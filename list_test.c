@@ -18,6 +18,7 @@ int
 main(void)
 {
   List  object;
+  List *l_copy;
   ListIter *ptr,*ptr2;
 /*  Vector *vec;*/
   unsigned int x, y;
@@ -123,6 +124,14 @@ main(void)
   for(x = 0; x < 15; x++) {
 	  push_back(List,&object,&x,STATIC);
   }
+  l_copy = duplicate(List,&object);
+  ptr2 = create(ListIter,l_copy);
+  do{
+	  printf("%d ",*(unsigned int *)retrieve(ListIter,ptr2));
+  }while(!next(ListIter,ptr2));
+  printf("\n");
+  destruct(List,l_copy);
+  destroy(ListIter,ptr2);
   ptr2 = create(ListIter,&object);
   while(empty(List,&object)) {
 	  head(ListIter,ptr2);
@@ -133,7 +142,7 @@ main(void)
 	  do{ 
 		  value = (unsigned int *)retrieve(ListIter,ptr);
 		  if(value) {
-			  //printf("%d ",*value);
+		//	  printf("%d ",*value);
 		  }
 	  }while(!next(ListIter,ptr));
 	  destroy(ListIter,ptr);
@@ -153,6 +162,7 @@ main(void)
   }
   destroy(ListIter,ptr2);
   destruct(List,&object);
+  free(l_copy);
   return EXIT_SUCCESS;
 }
 

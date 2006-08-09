@@ -123,6 +123,7 @@ prototype(set_print, StackList);
 prototype(set_alloc, StackList);
 prototype(set_dealloc, StackList);
 prototype(set_copy, StackList);
+prototype(duplicate,StackList);
 
 create_iter_prototypes(StackList)
 
@@ -166,6 +167,7 @@ prototype(set_print, StackVector);
 prototype(set_alloc, StackVector);
 prototype(set_dealloc, StackVector);
 prototype(set_copy, StackVector);
+prototype(duplicate,StackVector);
 
 create_iter_prototypes(StackVector)
 #endif
