@@ -80,6 +80,49 @@ int8_t clear_Vector(Vector *vec) {
 	return SUCCESS;
 }
 
+/*Vector* duplicate_Vector(Vector* src) {
+	Vector *dst;
+	size_t off;
+	CHECK_VARN(src,NULL);
+	CHECK_VARA(dst = malloc(sizeof *dst),NULL);
+	dst->size = src->size;
+	dst->capacity = src->capacity;
+	dst->objsize = src->objsize;
+	dst->objfree = FREEOBJ;
+	dst->API.alloc = src->API.alloc;
+	dst->API.dealloc = src->API.dealloc;
+	dst->API.copy = src->API.copy;
+	dst->API.cmp = src->API.cmp;
+	dst->API.rcmp = src->API.rcmp;
+	dst->API.print = src->API.print;
+	dst->end = dst->head = dst->mem = dst->tail = NULL;
+	if(!(M(dst) = malloc(src->capacity * O(src)))) {
+		free(dst);
+		return NULL;
+	}
+	off = S(src) * O(src);
+	printf("Duplicating vector of size %d and capacity %d offset = %x\n",dst->size,dst->capacity,off);
+	printf("src = %p, %p, %p, %p\n",M(src),H(src),T(src),src->end);
+	memcpy(M(dst),M(src),off);
+	if(M(src) == H(src)) {
+		printf("head is pointing to the front\n");
+		H(dst) = M(dst);
+	} else {
+		ptrdiff_t offset = (char *)H(src) - (char *)M(src);
+		printf("head offset is %d\n",offset / O(src));
+		H(dst) = (char *)M(dst) + offset;
+	}
+	if(T(src) == M(src)) {
+		T(dst) = M(dst);
+		printf("tail is pointing to the front\n");
+	} else {
+		ptrdiff_t offset = (char *)T(src) - (char *)M(src);
+		printf("tail offset is %d\n",offset/O(src));
+		T(dst) = (char *)M(dst) + offset;
+	}
+	dst->end = (char *)M(dst) + (O(dst) * C(dst));
+	return dst;
+}*/
 
 int8_t
 insert_at_Vector(Vector * vec, void *obj, uint32_t loc)
@@ -225,7 +268,7 @@ resize_Vector(Vector * vec, size_t size)
 		  printf("%d\n",__LINE__);
 	  } else if(H(vec) < T(vec)) {
 		  printf("%d\n",__LINE__);
-		  memcpy(ptr,H(vec),((char *)T(vec) - (char *)H(vec))/ sizeof (char *));
+		  memcpy(ptr,H(vec),((char *)T(vec) - (char *)H(vec)));
 	  } else if((void *)((char *)(H(vec)) + offset) < vec->end) {
 		  printf("%d\n",__LINE__);
 		  memcpy(ptr,H(vec),offset);
@@ -251,3 +294,4 @@ function(set_alloc, Vector)
 function(set_dealloc, Vector)
 function(set_free_objects, Vector)
 function(set_arr_object_size,Vector)
+function(duplicate_arr_struct,Vector)

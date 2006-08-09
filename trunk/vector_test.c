@@ -3,7 +3,7 @@
 #include <string.h>
 #include "vector.h"
 #define RUNS 500
-#define BOUND 10000
+#define BOUND RUNS
 #define BASE 0
 #define NUMCASES 10
 
@@ -16,6 +16,7 @@ void *ckalloc(size_t);
 int
 main(void) {
   Vector  object;
+  Vector *v_copy = NULL;
   VectorIter *ptr;
   unsigned int x, y;
   unsigned int value;
@@ -69,14 +70,19 @@ main(void) {
   construct_func(Vector,&object,sizeof(x),FREEOBJ, ckalloc, ckfree, intcmp, intrcmp, print,
                  memcpy);
   for (x = 0; x < RUNS; x++) {
-	  value = rand();
+	  value = rand() % RUNS;
     push_back(Vector,  &object, &value, STATIC);
   }
 
   ptr = create(VectorIter,  &object);
   head(VectorIter, ptr);
+  printf("Head = %d\n",*(unsigned int *)retrieve(VectorIter,ptr));
+  tail(VectorIter,ptr);
+  printf("Tail = %d\n",*(unsigned int *)retrieve(VectorIter,ptr));
+  head(VectorIter,ptr);
   do {
     value = *(unsigned int *) retrieve(VectorIter, ptr);
+	printf("%d ",value);
   }
   while (!next(VectorIter, ptr));
   assign(VectorIter, ptr, &object);
@@ -84,6 +90,7 @@ main(void) {
   do {
     value = *(unsigned int *) retrieve(VectorIter, ptr);
   } while (!prev(VectorIter, ptr));
+  printf("\n");
   for(x = 0; x < RUNS; x++) {
 	  switch(rand() % 2) {
 		  case 1:
@@ -95,7 +102,17 @@ main(void) {
 	  }
   }
   destroy(VectorIter, ptr);
-  destruct(Vector,  &object);
+  v_copy = duplicate(Vector,&object);
+  ptr = create(VectorIter,v_copy);
+  do{
+	  value = *(unsigned int *)retrieve(VectorIter,ptr);
+	  printf("%d ",value);
+  }while(!next(VectorIter,ptr));
+  printf("\n");
+  destroy(VectorIter,ptr);
+  destruct(Vector,v_copy);
+  destruct(Vector,&object);
+  free(v_copy);
   return EXIT_SUCCESS;
 }
 

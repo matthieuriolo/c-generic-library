@@ -147,6 +147,7 @@ prototype(set_print, DequeList);
 prototype(set_alloc, DequeList);
 prototype(set_dealloc, DequeList);
 prototype(set_copy, DequeList);
+prototype(duplicate,DequeList);
 create_iter_prototypes(DequeList)
 
 /* beginning of vector based deque functions */
@@ -191,6 +192,7 @@ prototype(set_print, DequeVector);
 prototype(set_alloc, DequeVector);
 prototype(set_dealloc, DequeVector);
 prototype(set_copy, DequeVector);
+prototype(duplicate,DequeVector);
 
 create_iter_prototypes(DequeVector)
 

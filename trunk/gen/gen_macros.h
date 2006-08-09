@@ -56,6 +56,9 @@
 	int8_t set_copy_ ##X(X* obj, \
 			void* (*copy)(void*, const void*, size_t))
 
+#define proto_duplicate(X)\
+	X* duplicate_##X(X* src)
+
 #    define proto_set_alloc(X)\
 /**
  * @param obj the obj to set the alloc funtion for
@@ -82,7 +85,83 @@
 	size_t size_of_##X( X* obj)
 
 /** Beginning of macro definitions for function implementations */
+#define func_duplicate_ptr_struct(X)\
+	X* duplicate_##X(X* src) {\
+		X* dst;\
+		Node* iter, *tmp;\
+		int x;\
+		CHECK_VARN(src,NULL);\
+		CHECK_VARA((dst = malloc(sizeof *dst)),NULL);\
+		dst->objfree = FREEOBJ;\
+		dst->objsize = src->objsize;\
+		dst->API.alloc = src->API.alloc;\
+		dst->API.dealloc = src->API.dealloc;\
+		dst->API.cmp = src->API.cmp;\
+		dst->API.rcmp = src->API.rcmp;\
+		dst->API.print = src->API.print;\
+		dst->API.copy = src->API.copy;\
+		dst->error = src->error;\
+		dst->size = 0;\
+		FL(dst) = H(dst) = T(dst) = NULL;\
+		for(x = 0; x < (INITIAL_SIZE + src->size); x++) {\
+			iter = construct_Node(NUM_LINKS);\
+			N(iter) = P(iter) = NULL;\
+			ADD_FREE_NODE(dst,iter);\
+		}\
+		for(iter = H(src); iter; iter = N(iter)) {\
+			INITIALIZE_NODE(tmp,dst,iter->objptr,STATIC);\
+			if(!S(dst)) {\
+				H(dst) = T(dst) = tmp;\
+				S(dst)++;\
+			} else {\
+				ADD_BACK(tmp,dst);\
+			}\
+		}\
+		return dst;\
+		allocobjfail:\
+		allocfail:\
+		destruct_##X(dst);\
+		return NULL;\
+	}
 
+#define func_duplicate_arr_struct(X)\
+		X* duplicate_##X(X* src) {\
+			X* dst;\
+			size_t off;\
+			CHECK_VARN(src,NULL);\
+			CHECK_VARA(dst = malloc(sizeof *dst),NULL);\
+			dst->size = src->size;\
+			dst->capacity = src->capacity;\
+			dst->objsize = src->objsize;\
+			dst->objfree = FREEOBJ;\
+			dst->API.alloc = src->API.alloc;\
+			dst->API.dealloc = src->API.dealloc;\
+			dst->API.copy = src->API.copy;\
+			dst->API.cmp = src->API.cmp;\
+			dst->API.rcmp = src->API.rcmp;\
+			dst->API.print = src->API.print;\
+			dst->end = dst->head = dst->mem = dst->tail = NULL;\
+			if(!(M(dst) = malloc(src->capacity * O(src)))) {\
+				free(dst);\
+				return NULL;\
+			}\
+			off = S(src) * O(src);\
+			memcpy(M(dst),M(src),off);\
+			if(M(src) == H(src)) {\
+				H(dst) = M(dst);\
+			} else {\
+				ptrdiff_t offset = (char *)H(src) - (char *)M(src);\
+				H(dst) = (char *)M(dst) + offset;\
+			}\
+			if(T(src) == M(src)) {\
+				T(dst) = M(dst);\
+			} else {\
+				ptrdiff_t offset = (char *)T(src) - (char *)M(src);\
+				T(dst) = (char *)M(dst) + offset;\
+			}\
+			dst->end = (char *)M(dst) + (O(dst) * C(dst));\
+			return dst;\
+		}
 
 #    define func_set_compare(X) \
 	int8_t set_compare_##X (X* obj,\
@@ -567,7 +646,7 @@ do {\
 		/* header and tail are same, no need to copy */\
 	} else if(H((SRC)) < T((SRC))) {\
 		/* No wraparound */ \
-		memcpy((DST),H((SRC)),((char *)T((SRC)) - (char *)H((SRC)))/sizeof(char *));\
+		memcpy((DST),H((SRC)),((char *)T((SRC)) - (char *)H((SRC))));\
 	} else if((void *)((char *)(H((SRC))) + off) < (SRC)->end) {\
 		/* wraparound exists, but the new size fits between
 		 * the current head and the end of the memarray*/\

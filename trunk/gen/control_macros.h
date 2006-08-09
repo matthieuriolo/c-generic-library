@@ -111,7 +111,7 @@
 	if((FLAG) == DYNAMIC) {\
 		BASE_INIT2((NEW),(STRUCT),(OBJ));\
 	} else {\
-		if(!((NEW)->objptr = (STRUCT)->API.alloc(objsize))) {\
+		if(!((NEW)->objptr = (STRUCT)->API.alloc((STRUCT)->objsize))) {\
 			goto allocobjfail;\
 		}\
 		BASE_INIT((NEW),(STRUCT),(OBJ),(STRUCT)->objsize);\

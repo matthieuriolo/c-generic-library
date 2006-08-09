@@ -204,6 +204,7 @@ function(set_print, DequeList)
 function(set_alloc, DequeList)
 function(set_dealloc, DequeList)
 function(set_copy, DequeList)
+function(duplicate_ptr_struct,DequeList)
 
 int8_t construct_DequeVector(DequeVector *deque,size_t objsize, int flag) {
 	CHECK_VARN(deque,EINVAL);
@@ -328,3 +329,4 @@ function(set_print, DequeVector)
 function(set_alloc, DequeVector)
 function(set_dealloc, DequeVector)
 function(set_copy, DequeVector)
+function(duplicate_arr_struct,DequeVector)
