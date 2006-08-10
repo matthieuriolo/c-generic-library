@@ -102,6 +102,7 @@ int8_t insert_OHTable(OHTable *table, void *element, size_t elesize,int8_t flag)
 		}
 		ptr->next = NULL;
 		iter->next = ptr;
+		ptr->prev = iter;
 	} else {
 		ptr = &table->nodes[h_index];
 		table->cur_size++;
@@ -130,21 +131,24 @@ int8_t delete_OHTable(OHTable *table, void *element, size_t elesize) {
 		prev = NULL;
 		while(1) {
 			if(table->API.cmp(iter->objptr,element,elesize) == 0) {
+				DELETE_OBJPTR(table,iter);			
 				if(!prev) {
 					prev = iter->next;
-					DELETE_OBJPTR(table,iter);
 					if(prev) {
 						iter->next = prev->next;
+						if(iter->next) {
+							iter->next->prev = iter;
+						}
 						iter->objptr = prev->objptr;
 						iter->flags = prev->flags;
 						iter->objsize = prev->objsize;
 						prev->objptr = NULL;
 						prev->flags = 0;
 						prev->objsize = 0;
+						prev->prev = NULL;
 						prev->next = FL(table);
 						FL(table) = prev;
 					} else {
-						iter->next = NULL;
 						iter->objptr = 0;
 						iter->flags = 0;
 						iter->objsize = 0;
@@ -152,10 +156,13 @@ int8_t delete_OHTable(OHTable *table, void *element, size_t elesize) {
 					}
 				} else {
 					prev->next = iter->next;
-					DELETE_OBJPTR(table,iter);			
+					if(iter->next) {
+						iter->next->prev = prev;
+					}
 					iter->objptr = NULL;
 					iter->flags = 0;
 					iter->objsize = 0;
+					iter->prev = NULL;
 					iter->next = FL(table);
 					FL(table) = iter;
 				}
@@ -196,11 +203,8 @@ void *find_OHTable(OHTable *table, void *element, size_t elesize) {
 }
 
 void print_hash_OHTable(OHTable *table) {
-	size_t x;
+	/*size_t x;
 	HashListNode *ptr;
-	printf("Open Hash Table: %p Capacity: %d Size: %d\n",table,table->capacity,table->cur_size);
-	printf("Flags: %d Hash_Function: %p Element: %d\n",table->objfree,table->hash,table->num_elem);
-	/*printf("Current nodes:\n");
 	for(x = 0; x < table->capacity; x++) {
 		ptr = &table->nodes[x];
 		printf("%d) ",x);
@@ -211,14 +215,152 @@ void print_hash_OHTable(OHTable *table) {
 			ptr = ptr->next;
 		}while(ptr);
 		printf("\n");
-	}*/
-	printf("\n");
+	}
+	printf("\n");*/
+	printf("Open Hash Table: %p Capacity: %d Size: %d\n",table,table->capacity,table->cur_size);
+	printf("Flags: %d Hash_Function: %p Element: %d\n",table->objfree,table->hash,table->num_elem);
+	printf("Current nodes:\n");
 }
 
-int8_t set_hash_OHTable(OHTable *table, int (*hash)(void *,size_t)) {
+int8_t set_hash_OHTable(OHTable *table, uint32_t (*hash)(void *,size_t)) {
 	CHECK_VARN(table,EINVAL);
 	CHECK_VARN(hash,EINVAL);
 	table->hash = hash;
+	return SUCCESS;
+}
+
+int8_t prev_OHTableIter(OHTableIter *iter) {
+	CHECK_VARN(iter,EINVAL);
+	CHECK_VARN(iter->parent,EINVAL);
+	if((iter->ptr == iter->parent->nodes) &&
+	   (iter->nptr == iter->ptr)) {
+		return EINVAL;
+	}
+	if((iter->nptr == iter->ptr) || (iter->ptr->objptr == NULL)) {
+		do {
+			if(iter->ptr == iter->parent->nodes) {
+				return EINVAL;
+			}
+			iter->ptr--;
+		}while(iter->ptr->objptr == NULL);
+		iter->nptr = iter->ptr;
+		while(iter->nptr->next) {
+			iter->nptr = iter->nptr->next;
+		}
+	} else {
+		iter->nptr = iter->nptr->prev;
+	}
+	return SUCCESS;
+}
+
+int8_t next_OHTableIter(OHTableIter *iter) {
+	CHECK_VARN(iter,EINVAL);
+	CHECK_VARN(iter->parent,EINVAL);
+	if((iter->ptr == (iter->parent->nodes + (iter->parent->capacity-1))) &&
+	   (iter->nptr == NULL)) {
+		return EINVAL;
+	}
+	/*if(iter->nptr->objptr)
+	fprintf(stderr,"Cur val = %d,ptr = %p, index = %d, nptr = %p\n",*(int *)iter->nptr->objptr,iter->ptr,
+			(iter->ptr - iter->parent->nodes),iter->nptr);*/
+	if(iter->nptr->next) {
+		iter->nptr = iter->nptr->next;
+	} else {
+		do {
+/*			fprintf(stderr,"%d) Ptr = %p, capacity = %p(%d)\n",iter->ptr - iter->parent->nodes,
+					iter->ptr,iter->parent->nodes+ (iter->parent->capacity-1),iter->parent->capacity);*/
+			if(iter->ptr == (iter->parent->nodes + (iter->parent->capacity-1))) {
+				iter->ptr = iter->nptr;
+				while(iter->ptr->prev) {
+					iter->ptr = iter->ptr->prev;
+				}
+				return EINVAL;
+			}
+			iter->ptr++;
+		}while(iter->ptr->objptr == NULL);
+		iter->nptr = iter->ptr;
+	}
+	return SUCCESS;
+}
+
+int8_t head_OHTableIter(OHTableIter *iter) {
+	CHECK_VARN(iter,EINVAL);
+	CHECK_VARN(iter->parent,EINVAL);
+	iter->ptr = iter->parent->nodes;
+	iter->nptr = iter->ptr;
+	return SUCCESS;
+}
+
+int8_t tail_OHTableIter(OHTableIter *iter) {
+	CHECK_VARN(iter,EINVAL);
+	CHECK_VARN(iter->parent,EINVAL);
+	iter->ptr = (iter->parent->nodes + (iter->parent->capacity-1));
+	while(!iter->ptr->objptr) {
+		iter->ptr--;
+	}
+	iter->nptr = iter->ptr;
+	while(iter->nptr->next) {
+		iter->nptr = iter->nptr->next;
+	}
+	return SUCCESS;
+}
+
+int8_t assign_OHTableIter(OHTableIter *iter,OHTable *obj) {
+	CHECK_VARN(iter,EINVAL);
+	CHECK_VARN(obj,EINVAL);
+	iter->ptr = obj->nodes;
+	iter->nptr = obj->nodes;
+	iter->parent = obj;
+	return SUCCESS;
+}
+
+void *retrieve_OHTableIter(OHTableIter *iter) {
+	CHECK_VARN(iter,NULL);
+	CHECK_VARN(iter->nptr,NULL);
+	return iter->nptr->objptr;
+}
+
+void destroy_OHTableIter(OHTableIter *iter) {
+	if(iter) {
+		free(iter);
+	}
+}
+
+OHTableIter *create_OHTableIter(OHTable *obj) {
+	OHTableIter *iter;
+	CHECK_VARN(obj,NULL);
+	CHECK_VARA(iter = malloc(sizeof *iter),NULL);
+	iter->ptr = obj->nodes;
+	iter->nptr = obj->nodes;
+	iter->parent = obj;
+	if(iter->ptr->objptr == NULL) {
+		next(OHTableIter,iter);
+	}
+	return iter;
+}
+
+int8_t copy_OHTableIter(OHTableIter *dst, OHTableIter *src) {
+	CHECK_VARN(src,EINVAL);
+	CHECK_VARN(dst,EINVAL);
+	dst->ptr = src->ptr;
+	dst->nptr = src->nptr;
+	dst->parent = src->parent;
+	return SUCCESS;
+}
+
+int8_t swap_OHTableIter(OHTableIter *first, OHTableIter* second) {
+	OHTableIter tmp;
+	CHECK_VARN(first,EINVAL);
+	CHECK_VARN(second,EINVAL);
+	if(first->parent != second->parent) {
+		return EINVAL;
+	}
+	tmp.ptr = first->ptr;
+	tmp.nptr = first->nptr;
+	first->ptr = second->ptr;
+	first->nptr = second->nptr;
+	second->ptr = tmp.ptr;
+	second->nptr = tmp.nptr;
 	return SUCCESS;
 }
 
@@ -300,10 +442,12 @@ int8_t insert_CHTable(CHTable *table, void *element, size_t elesize, int8_t flag
 	table->data[h_index].objsize = elesize;
 	if(flag == DYNAMIC) {
 		table->data[h_index].objptr = element;
-	} else if((table->data[h_index].objptr = table->API.alloc(elesize))) {
-		table->API.copy(table->data[h_index].objptr,element,elesize);
 	} else {
-		return EALLOCF;
+		if((table->data[h_index].objptr = table->API.alloc(elesize))) {
+			table->API.copy(table->data[h_index].objptr,element,elesize);
+		} else {
+			return EALLOCF;
+		}
 	}
 	table->cur_size++;
 	return SUCCESS;
@@ -372,8 +516,6 @@ int8_t set_probe_CHTable(CHTable *table, uint32_t (*prob)(uint32_t)) {
 int8_t print_hash_CHTable(CHTable *table) {
 	size_t x;
 	CHECK_VARN(table,EINVAL);
-	printf("Open Hash Table: %p Capacity: %d Size: %d\n",table,table->capacity,table->cur_size);
-	printf("Flags: %d Hash_Function: %p Prob_Function: %p\n",table->objfree,table->hash,table->prob);
 	/*for(x = 0; x < table->capacity; x++) {
 		printf("%d) ",x);
 		if((table->data[x].objptr) && (table->API.print)) {
@@ -385,8 +527,107 @@ int8_t print_hash_CHTable(CHTable *table) {
 			printf("  ");
 		}
 	}*/
+	printf("Open Hash Table: %p Capacity: %d Size: %d\n",table,table->capacity,table->cur_size);
+	printf("Flags: %d Hash_Function: %p Prob_Function: %p\n",table->objfree,table->hash,table->prob);
 	return SUCCESS;
 }
+
+int8_t prev_CHTableIter(CHTableIter *iter) {
+	CHECK_VARN(iter,EINVAL);
+	CHECK_VARN(iter->parent,EINVAL);
+	do{
+		CHECK_VARE((iter->ptr != iter->parent->data),EINVAL);
+		iter->ptr--;
+	}while(!iter->ptr->objptr);
+	return SUCCESS;
+}
+
+int8_t next_CHTableIter(CHTableIter *iter) {
+	CHECK_VARN(iter,EINVAL);
+	CHECK_VARN(iter->parent,EINVAL);
+	do{
+		CHECK_VARE((iter->ptr != (iter->parent->data + (iter->parent->capacity-1))),EINVAL);
+		iter->ptr++;
+	}while(!iter->ptr->objptr);
+	return SUCCESS;
+}
+
+int8_t head_CHTableIter(CHTableIter *iter) {
+	CHECK_VARN(iter,EINVAL);
+	CHECK_VARN(iter->parent,EINVAL);
+	iter->ptr = iter->parent->data;
+	if(iter->ptr->objptr == NULL) {
+		return next(CHTableIter,iter);
+	}
+	return SUCCESS;
+}
+
+int8_t tail_CHTableIter(CHTableIter *iter) {
+	CHECK_VARN(iter,EINVAL);
+	CHECK_VARN(iter->parent,EINVAL);
+	iter->ptr = iter->parent->data + (iter->parent->capacity - 1);
+	if(iter->ptr->objptr == NULL) {
+		return prev(CHTableIter,iter);
+	}
+	return SUCCESS;
+}
+
+int8_t assign_CHTableIter(CHTableIter *iter, CHTable *obj) {
+	CHECK_VARN(iter,EINVAL);
+	CHECK_VARN(obj,EINVAL);
+	iter->ptr = obj->data;
+	iter->parent = obj;
+	if(iter->ptr->objptr == NULL) {
+		next(CHTableIter,iter);
+	}
+	return SUCCESS;
+}
+
+void *retrieve_CHTableIter(CHTableIter *iter) {
+	CHECK_VARN(iter,NULL);
+	CHECK_VARN(iter->parent,NULL);
+	return iter->ptr->objptr;
+}
+
+void destroy_CHTableIter(CHTableIter *iter) {
+	if(iter) {
+		free(iter);
+	}
+}
+
+CHTableIter *create_CHTableIter(CHTable *obj) {
+	CHTableIter *iter;
+	CHECK_VARN(obj,NULL);
+	CHECK_VARA(iter = malloc(sizeof *iter),NULL);
+	iter->ptr = obj->data;
+	iter->parent = obj;
+	if(iter->ptr->objptr == NULL) {
+		next(CHTableIter,iter);
+	}
+	return iter;
+}
+
+int8_t copy_CHTableIter(CHTableIter *dst, CHTableIter *src) {
+	CHECK_VARN(dst,EINVAL);
+	CHECK_VARN(src,EINVAL);
+	dst->ptr = src->ptr;
+	dst->parent = src->parent;
+	return SUCCESS;
+}
+
+int8_t swap_CHTableIter(CHTableIter *first, CHTableIter *second) {
+	CHTableIter tmp;
+	CHECK_VARN(first,EINVAL);
+	CHECK_VARN(second,EINVAL);
+	if(first->parent != second->parent) {
+		return EINVAL;
+	}
+	tmp.ptr = first->ptr;
+	first->ptr = second->ptr;
+	second->ptr = tmp.ptr;
+	return SUCCESS;
+}
+
 function(set_compare,CHTable)
 function(set_rcompare,CHTable)
 function(set_print,CHTable)
@@ -398,7 +639,7 @@ function(set_dealloc,CHTable)
 
 uint32_t char_hash(void *key, size_t len) {
 	uint32_t val = 0;
-	while(len--) {
+	while(len-- > 0) {
 		val = (val << 5) + tolower(*(char *)(key++));
 	}
 	return val;
@@ -406,7 +647,7 @@ uint32_t char_hash(void *key, size_t len) {
 
 uint32_t num_hash(void *key, size_t len) {
 	uint32_t val =0;
-	while(len--) {
+	while(len-- > 0) {
 		val = (val << 5) + *(char *)(key++);
 	}
 	return val;

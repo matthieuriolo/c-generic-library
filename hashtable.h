@@ -39,7 +39,7 @@ void destruct_OHTable(OHTable *table);
 int8_t insert_OHTable(OHTable *table, void *element, size_t elesize,int8_t flag);
 int8_t delete_OHTable(OHTable *table, void *element, size_t elesize);
 void *find_OHTable(OHTable *table, void *element, size_t elesize);
-int8_t set_hash_OHTable(OHTable *table, int (*hash)(void *,size_t));
+int8_t set_hash_OHTable(OHTable *table, uint32_t (*hash)(void *,size_t));
 int8_t clear_OHTable(OHTable* table);
 void print_hash_OHTable(OHTable *table);
 
@@ -50,9 +50,23 @@ prototype(set_alloc,OHTable);
 prototype(set_dealloc,OHTable);
 prototype(set_copy,OHTable);
 
-typedef struct _Hash_Node HashNode;
+
+/* Open Hash Iterator */
+typedef struct _open_hash_iterator {
+	/** Pointer to the current entry in the hash table */
+	HashListNode *ptr;
+	/** Pointer to the current node in the entry */
+	HashListNode *nptr;
+	/** Pointer to the parent object */
+	OHTable *parent;
+} OHTableIter;
+
+create_iter_prototypes(OHTable)
+
+
 
 /* Closed hash table */
+typedef struct _Hash_Node HashNode;
 typedef struct _closed_hash_table CHTable;
 struct _closed_hash_table {
 	size_t capacity;
@@ -81,6 +95,18 @@ prototype(set_print,CHTable);
 prototype(set_alloc,CHTable);
 prototype(set_dealloc,CHTable);
 prototype(set_copy,CHTable);
+
+/* Closed Hash Iterator */
+
+typedef struct _closed_hash_iterator {
+	/** Pointer to the current entry in the hash table */
+	HashNode *ptr;
+	/** Pointer to the parent object */
+	CHTable *parent;
+} CHTableIter;
+
+create_iter_prototypes(CHTable);
+
 
 /* Extensible hash table */
 /*

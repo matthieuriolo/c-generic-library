@@ -27,7 +27,7 @@
  * @return 0 on success, non-zero on error
  */\
 	int8_t set_compare_##X(X* obj,\
-			int (*cmp)(const void*, const void*))
+			int (*cmp)(const void*, const void*,size_t))
 
 #    define proto_set_rcompare(X)\
 /** 
@@ -36,7 +36,7 @@
  * @return 0 on success, non-zero on error
  */\
 	int8_t set_rcompare_##X(X* obj,\
-			int (*rcmp)(const void*, const void*))
+			int (*rcmp)(const void*, const void*,size_t))
 
 #    define proto_set_print(X)\
 /**
@@ -89,7 +89,7 @@
 	X* duplicate_##X(X* src) {\
 		X* dst;\
 		Node* iter, *tmp;\
-		int x;\
+		size_t x;\
 		CHECK_VARN(src,NULL);\
 		CHECK_VARA((dst = malloc(sizeof *dst)),NULL);\
 		dst->objfree = FREEOBJ;\
@@ -165,7 +165,7 @@
 
 #    define func_set_compare(X) \
 	int8_t set_compare_##X (X* obj,\
-			int (*cmp)(const void*,const void*)) {\
+			int (*cmp)(const void*,const void*,size_t)) {\
 		CHECK_VARN(obj,EINVAL);\
 		CHECK_VARN(cmp,EINVAL);\
 		obj->API.cmp = cmp;\
@@ -174,7 +174,7 @@
 
 #    define func_set_rcompare(X) \
 	int8_t set_rcompare_##X(X* obj,\
-			int (*rcmp)(const void*,const void*)) {\
+			int (*rcmp)(const void*,const void*,size_t)) {\
 		CHECK_VARN(obj,EINVAL);\
 		CHECK_VARN(rcmp,EINVAL);\
 		obj->API.rcmp = rcmp;\
@@ -451,7 +451,7 @@
 		int8_t next_##TYPE##Iter(ITER(TYPE) *iter) {\
 			CHECK_VARN(iter,EINVAL);\
 			CHECK_VARN(iter->ptr,EINVAL);\
-			if(iter->ptr == T(iter->parent) - O(iter->parent)) {\
+			if(iter->ptr == ((char *)T(iter->parent)) - O(iter->parent)) {\
 				return EINVAL;\
 			}\
 			if((char *)H(iter->parent) < (char *)T(iter->parent)) {\
@@ -515,7 +515,7 @@
 		int8_t tail_##TYPE## Iter(ITER(TYPE) *iter) { \
 			CHECK_VARN(iter,EINVAL);\
 			CHECK_VARN(iter->parent,EINVAL);\
-			iter->ptr = iter->parent->tail - O(iter->parent);\
+			iter->ptr = ((char *)iter->parent->tail) - O(iter->parent);\
 			return 0;\
 		}
 

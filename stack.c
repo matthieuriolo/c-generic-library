@@ -104,8 +104,8 @@ int8_t
 construct_func_StackList(StackList * stack,size_t objsize, int flag,
                          void *(*alloc) (size_t),
                          void (*dealloc) (void *),
-                         int (*cmp) (const void *, const void *),
-                         int (*rcmp) (const void *, const void *),
+                         int (*cmp) (const void *, const void *,size_t),
+                         int (*rcmp) (const void *, const void *,size_t),
                          void (*print) (const void *),
                          void *(*copy) (void *, const void *, size_t))
 {
@@ -158,8 +158,8 @@ int8_t construct_StackVector(StackVector *stack,size_t objsize, int flag) {
 int8_t construct_func_StackVector(StackVector *stack,size_t objsize, int flag,
                          void *(*alloc) (size_t),
                          void (*dealloc) (void *),
-                         int (*cmp) (const void *, const void *),
-                         int (*rcmp) (const void *, const void *),
+                         int (*cmp) (const void *, const void *,size_t),
+                         int (*rcmp) (const void *, const void *,size_t),
                          void (*print) (const void *),
                          void *(*copy) (void *, const void *, size_t)) {
 	CHECK_VARN(stack,EINVAL);
@@ -230,6 +230,7 @@ int8_t resize_StackVector(StackVector *stack,size_t size) {
 	arr_copy_wrap(StackVector,ptr,stack,size);
 
 	arr_setup_pointers(StackVector,ptr,stack,size);
+
 	return 0;
 }
 
@@ -240,8 +241,8 @@ function(set_print, StackList)
 function(set_alloc, StackList)
 function(set_dealloc, StackList)
 function(set_copy, StackList)
-function(set_object_size, StackList)
-function(set_free_objects, StackList)
+/*function(set_object_size, StackList)
+function(set_free_objects, StackList)*/
 function(duplicate_ptr_struct,StackList)
 
 
@@ -256,7 +257,7 @@ function(set_print, StackVector)
 function(set_alloc, StackVector)
 function(set_dealloc, StackVector)
 function(set_copy, StackVector)
-function(set_arr_object_size, StackVector)
-function(set_free_objects, StackVector)
+/*function(set_arr_object_size, StackVector)
+function(set_free_objects, StackVector)*/
 function(duplicate_arr_struct,StackVector)
 
