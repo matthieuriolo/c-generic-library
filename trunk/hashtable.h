@@ -135,7 +135,9 @@ prototype(set_print,EHTable);
 prototype(set_alloc,EHTable);
 prototype(set_dealloc,EHTable);
 prototype(set_copy,EHTable);
+
 */
+
 /* Generic hashing techinques */
 uint32_t char_hash(void *key, size_t len);
 uint32_t num_hash(void *key, size_t len);

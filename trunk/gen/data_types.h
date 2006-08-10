@@ -72,20 +72,29 @@ struct _ptr_iter {
 };
 
 struct _bfs_iter {
+	/** Pointer to the current node */
 	struct _Node *ptr;
-	/* Stack is used for getting to the previous node
-	 * if the stack is empty, then we are at the beginning
-	 * of the tree */
-	struct _ptr_struct stack;
-	/* Queue is used for getting to the next node
+	/** Queue is used for getting to the next node
 	 * if queue is empty, then we are at the end
 	 * of the tree */
 	struct _ptr_struct queue;
+	/** Pointer to the parent object */
 	struct _ptr_struct *parent;
 };
+
 struct _dfs_iter {
+	/** Pointer to the current node */
 	struct _Node *ptr;
-	int dir_flag;
+	/** Stack is used for getting to the next node
+	 * If the stack is empty, then we are at the
+	 * end of the tree */
+	struct _ptr_struct stack;
+	/** Pointer to the parent object */
+	struct _ptr_struct *parent;
+};
+
+struct _binary_tree_iter {
+	struct _Node *ptr;
 	struct _ptr_struct *parent;
 };
 
@@ -226,14 +235,14 @@ typedef struct _ptr_struct BinaryTree;
 #endif
 #ifndef BINARYTREE_ITER_DEFINED
 #define BINARYTREE_ITER_DEFINED
-typedef struct _dfs_iter BinaryTreeIter;
+typedef struct _binary_tree_iter BinaryTreeIter;
 #endif
-/*#ifndef BINARYTREE_DFS_ITER_DEFINED
+#ifndef BINARYTREE_DFS_ITER_DEFINED
 #define BINARYTREE_DFS_ITER_DEFINED
 typedef struct _dfs_iter BinaryTreeDFSIter;
 #endif
 #ifndef BINARYTREE_BFS_ITER_DEFINED
 #define BINARYTREE_BFS_ITER_DEFINED
 typedef struct _bfs_iter BinaryTreeBFSIter;
-#endif*/
+#endif
 #endif

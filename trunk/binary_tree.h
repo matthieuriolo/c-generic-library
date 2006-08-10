@@ -24,7 +24,6 @@
 #define BINARYTREE_DEFINED
 typedef struct _ptr_struct BinaryTree;
 #endif
-/*
 #ifndef BINARYTREE_DFS_ITER_DEFINED
 #define BINARYTREE_DFS_ITER_DEFINED
 typedef struct _ptr_iter BinaryTreeDFSIter;
@@ -34,7 +33,6 @@ typedef struct _ptr_iter BinaryTreeDFSIter;
 #define BINARYTREE_BFS_ITER_DEFINED
 typedef struct _ptr_iter BinaryTreeBFSIter;
 #endif
-*/
 /**
  * @fn int8_t construct_BinaryTree()
  * @param tree pointer to the tree to construc
@@ -144,14 +142,15 @@ prototype(set_print, BinaryTree);
 prototype(set_alloc, BinaryTree);
 prototype(set_dealloc, BinaryTree);
 prototype(set_copy, BinaryTree);
-/*
-iter_proto(prev,BinaryTreeDFS);
+
+/*iter_proto(prev,BinaryTreeDFS);*/
 iter_proto(next,BinaryTreeDFS);
 iter_proto(destroy,BinaryTreeDFS);
 iter_proto(head,BinaryTreeDFS);
 iter_proto(tail,BinaryTreeDFS);
 iter_proto(retrieve,BinaryTreeDFS);
-iter_proto(prev,BinaryTreeBFS);
+
+/*iter_proto(prev,BinaryTreeBFS);*/
 iter_proto(next,BinaryTreeBFS);
 iter_proto(destroy,BinaryTreeBFS);
 iter_proto(head,BinaryTreeBFS);
@@ -160,7 +159,7 @@ iter_proto(retrieve,BinaryTreeBFS);
 int8_t assign_BinaryTreeDFSIter(BinaryTreeDFSIter* iter, BinaryTree* obj);
 int8_t assign_BinaryTreeBFSIter(BinaryTreeBFSIter* iter, BinaryTree* obj);
 BinaryTreeBFSIter* create_BinaryTreeBFSIter(BinaryTree* obj);
-BinaryTreeDFSIter* create_BinaryTreeDFSIter(BinaryTree* obj);*/
+BinaryTreeDFSIter* create_BinaryTreeDFSIter(BinaryTree* obj);
 
 create_iter_prototypes(BinaryTree)
 

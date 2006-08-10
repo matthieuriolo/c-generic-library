@@ -17,7 +17,7 @@
  * the data and store that data instead.
  */
 #    ifndef STATIC
-#        define STATIC  (0)
+#        define STATIC  (0x2)
 #    endif
 
 /**
@@ -29,16 +29,16 @@
  * point to the dynamically allocated memory.
  */
 #    ifndef DYNAMIC
-#        define DYNAMIC (1)
+#        define DYNAMIC (0x01)
 #    endif
 #    ifndef INITIAL_SIZE
 #        define INITIAL_SIZE 256
 #    endif
 #    ifndef FREEOBJ
-#        define FREEOBJ 1
+#        define FREEOBJ 0x1
 #    endif
 #    ifndef NOFREE
-#        define NOFREE	0
+#        define NOFREE	0x2
 #    endif
 #    ifndef T
 #        define T(X)	((X)->tail)
