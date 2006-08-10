@@ -7,6 +7,7 @@
 #define HASHTABLE_H_
 #include "gen/data_types.h"
 #include "gen/gen_macros.h"
+#include "gen/function_signatures.h"
 
 
 typedef struct _Hash_List_Node HashListNode;
@@ -21,10 +22,11 @@ typedef struct _open_hash_table {
 	Functor_API API;
 	uint32_t (*hash)(void *,size_t);
 } OHTable;
+
 /**
- * @fn int8_t construct_OHTable(OHTable *table,size_t, int8_t flag)
- * @param table the table to construct the hash table of
- * @param init_capacity the initial capacity of the hash table
+ * @fn int8_t construct_OHTable(OHTable *obj,size_t datasize, int8_t flag)
+ * @param obj the obj to construct the hash table of
+ * @param datasize the initial capacity of the hash table
  * @param flag flag to know whether to automatically free objects or not
  * @return 0 on success, non-zero on failure
  * @brief Setup and construct a open addressing hash table
@@ -34,23 +36,11 @@ typedef struct _open_hash_table {
  * of the tables life or NOFREE to not free DYNAMIC objects
  * @sa construct_CHTable, construct_EHTable
  */
-int8_t construct_OHTable(OHTable *table,size_t init_capacity,int8_t flag);
-void destruct_OHTable(OHTable *table);
+COMMON_FUNCTION_PROTOTYPES(OHTable)
 int8_t insert_OHTable(OHTable *table, void *element, size_t elesize,int8_t flag);
 int8_t delete_OHTable(OHTable *table, void *element, size_t elesize);
 void *find_OHTable(OHTable *table, void *element, size_t elesize);
 int8_t set_hash_OHTable(OHTable *table, uint32_t (*hash)(void *,size_t));
-int8_t clear_OHTable(OHTable* table);
-void print_hash_OHTable(OHTable *table);
-OHTable* duplicate_OHTable(OHTable *src);
-
-prototype(set_compare,OHTable);
-prototype(set_rcompare,OHTable);
-prototype(set_print,OHTable);
-prototype(set_alloc,OHTable);
-prototype(set_dealloc,OHTable);
-prototype(set_copy,OHTable);
-
 
 /* Open Hash Iterator */
 typedef struct _open_hash_iterator {
@@ -61,7 +51,6 @@ typedef struct _open_hash_iterator {
 	/** Pointer to the parent object */
 	OHTable *parent;
 } OHTableIter;
-
 create_iter_prototypes(OHTable)
 
 
@@ -79,24 +68,12 @@ struct _closed_hash_table {
 	uint32_t (*prob)(uint32_t);
 	Functor_API API;
 };
-
-int8_t construct_CHTable(CHTable *table, size_t init_capacity,int8_t flag);
-void destruct_CHTable(CHTable *table);
+COMMON_FUNCTION_PROTOTYPES(CHTable)
 int8_t insert_CHTable(CHTable *table, void *element, size_t elesize,int8_t flag);
 int8_t delete_CHTable(CHTable *table, void *element, size_t elesize);
 void *find_CHTable(CHTable *table, void *element, size_t elesize);
 int8_t set_hash_CHTable(CHTable *table, int32_t (*hash)(void *,size_t));
 int8_t set_probe_CHTable(CHTable *table, uint32_t (*prob)(uint32_t));
-int8_t clear_CHTable(CHTable* table);
-int8_t print_hash_CHTable(CHTable *table);
-CHTable *duplicate_CHTable(CHTable *table);
-
-prototype(set_compare,CHTable);
-prototype(set_rcompare,CHTable);
-prototype(set_print,CHTable);
-prototype(set_alloc,CHTable);
-prototype(set_dealloc,CHTable);
-prototype(set_copy,CHTable);
 
 /* Closed Hash Iterator */
 
@@ -107,7 +84,7 @@ typedef struct _closed_hash_iterator {
 	CHTable *parent;
 } CHTableIter;
 
-create_iter_prototypes(CHTable);
+create_iter_prototypes(CHTable)
 
 
 /* Extensible hash table */

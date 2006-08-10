@@ -8,7 +8,6 @@
 #define NUMCASES 10
 
 int32_t intcmp(const void *, const void *,size_t);
-int32_t intrcmp(const void *, const void *,size_t);
 void  print(const void *);
 void  ckfree(void *);
 void *ckalloc(size_t);
@@ -27,7 +26,6 @@ main(void) {
   set_alloc(BinaryTree,  &object, ckalloc);
   set_dealloc(BinaryTree,  &object, ckfree);
   set_compare(BinaryTree,  &object, intcmp);
-  set_rcompare(BinaryTree,  &object, intrcmp);
   set_print(BinaryTree,  &object, print);
   for (y = 0; y < x; y++) {
     srand((x * y) / (x - y) + (x + y / x));
@@ -68,7 +66,7 @@ main(void) {
   }
   destruct(BinaryTree,  &object);
   fprintf(stderr, "Now testing the iterators!\n");
-  construct_func(BinaryTree,&object,sizeof(x),FREEOBJ, ckalloc, ckfree, intcmp, intrcmp, print,
+  construct_func(BinaryTree,&object,sizeof(x),FREEOBJ, ckalloc, ckfree, intcmp,  print,
                  memcpy);
   for (x = 0; x < 15; x++) {
 	  value = rand() % 30;
@@ -153,18 +151,6 @@ int32_t
 intcmp(const void *a, const void *b,size_t size)
 {
 	return (*(const int *)a > *(const int *)b) - (*(const int *)a < *(const int *)b);
-}
-
-int32_t
-intrcmp(const void *a, const void *b,size_t size)
-{
-  if ((*(const int *) a) > (*(const int *) b)) {
-    return -1;
-  } else if ((*(const int *) a) < (*(const int *) b)) {
-    return 1;
-  } else {
-    return 0;
-  }
 }
 
 void

@@ -15,77 +15,43 @@
 #include "gen/access_macros.h"
 #include "gen/control_macros.h"
 #include "gen/function_macros.h"
+#include "gen/control_arr_macros.h"
+#include "gen/function_signatures.h"
 
 #ifdef NUM_LINKS
 #undef NUM_LINKS
 #endif
 #define NUM_LINKS 2
       
- int8_t
-construct_DequeList(DequeList* deque,size_t objsize, int flag)
-{
-  int16_t x = 0;
-  Node *ptr;
-
-  CHECK_VARN(deque, EINVAL);
-  if (S(deque)) {
-    destruct(DequeList, deque);
+F_CONSTRUCT(DequeList) {
+  CHECK_VARN(obj, EINVAL);
+  if (S(obj)) {
+    destruct(DequeList, obj);
   }
-  S(deque) = 0;
-  H(deque) = T(deque) = NULL;
-  E(deque) = NULL;
-  deque->objfree = flag;
-  deque->objsize = objsize;
-  deque->API.cmp = NULL;
-  deque->API.print = NULL;
-  deque->API.rcmp = NULL;
-  deque->API.alloc = malloc;
-  deque->API.dealloc = free;
-  deque->API.copy = memcpy;
-  for (x = 0; x < INITIAL_SIZE; x++) {
-    ptr = construct_Node(NUM_LINKS);
-    N(ptr) = P(ptr) = NULL;
-    ADD_FREE_NODE(deque, ptr);
-  }
+  PTR_STRUCT_SETUP(obj,datasize,flag);
+  API_DEFAULT_SETUP(obj);
   return 0;
 }
 
- int8_t
-construct_func_DequeList(DequeList * deque,size_t objsize, int flag,
-                     void *(*alloc) (size_t),
-                     void (*dealloc) (void *),
-                     int (*cmp) (const void *, const void *,size_t),
-                     int (*rcmp) (const void *, const void *,size_t),
-                     void (*print) (const void *),
-                     void *(*copy) (void *, const void *, size_t))
-{
-  S(deque) = 0;
-  construct(DequeList, deque,objsize,flag);
-  deque->API.alloc = alloc;
-  deque->API.dealloc = dealloc;
-  deque->API.cmp = cmp;
-  deque->API.rcmp = rcmp;
-  deque->API.print = print;
-  deque->API.copy = copy;
+F_CONSTRUCT_FUNC(DequeList) {
+  PTR_STRUCT_SETUP(obj,datasize,flag);
+  obj->API.alloc = alloc;
+  obj->API.dealloc = dealloc;
+  obj->API.cmp = cmp;
+  obj->API.print = print;
+  obj->API.copy = copy;
   return 0;
 }
 
- int8_t
-destruct_DequeList(DequeList * deque)
-{
+F_DESTRUCT(DequeList) {
   Node *tmp, *ptr;
-
-  CHECK_VARN(deque, EINVAL);
-  clear(DequeList, deque);
-  for (ptr = FL(deque); ptr; ptr = tmp) {
+  CHECK_VARN(obj, EINVAL);
+  clear(DequeList, obj);
+  for (ptr = FL(obj); ptr; ptr = tmp) {
     tmp = N(ptr);
     destruct(Node, ptr);
   }
-  if (E(deque)) {
-    free(E(deque));
-  }
-  FL(deque) = NULL;
-  memset(deque,0,sizeof *deque);
+  memset(obj,0,sizeof *obj);
   return 0;
 }
 
@@ -188,54 +154,55 @@ back_DequeList(DequeList *deque) {
 	CHECK_VARE(T(deque),NULL);
 	return T(deque)->objptr;
 }
-
- int8_t
-clear_DequeList(DequeList *deque) {
-  ptr_clear(DequeList,deque);
+F_CLEAR(DequeList) {
+  PTR_CLEAR(DequeList,obj);
   return 0;
+}
+
+F_EMPTY(DequeList) {
+	CHECK_VARN(obj,SUCCESS);
+	CHECK_VARN(H(obj),SUCCESS);
+	return 1;
+}
+
+F_SIZE(DequeList) {
+	CHECK_VARN(obj,0);
+	return S(obj);
 }
 
 create_iter_func(Ptr_Based,DequeList)
 
 function(size_of, DequeList)
 function(set_compare, DequeList)
-function(set_rcompare, DequeList)
 function(set_print, DequeList)
 function(set_alloc, DequeList)
 function(set_dealloc, DequeList)
 function(set_copy, DequeList)
 function(duplicate_ptr_struct,DequeList)
 
-int8_t construct_DequeVector(DequeVector *deque,size_t objsize, int flag) {
-	CHECK_VARN(deque,EINVAL);
-
-	arr_construct(DequeVector,deque,objsize,flag);
-
+F_CONSTRUCT(DequeVector) {
+	CHECK_VARN(obj,EINVAL);
+	ARR_CONSTRUCT(DequeVector,obj,datasize,flag);
 	return 0;
 }
 
-int8_t construct_func_DequeVector(DequeVector *deque,size_t objsize, int flag,
-                         void *(*alloc) (size_t),
-                         void (*dealloc) (void *),
-                         int (*cmp) (const void *, const void *,size_t),
-                         int (*rcmp) (const void *, const void *,size_t),
-                         void (*print) (const void *),
-                         void *(*copy) (void *, const void *, size_t)) {
-	CHECK_VARN(deque,EINVAL);
-	arr_construct(DequeVector,deque,objsize,flag);
-	deque->API.alloc = alloc;
-	deque->API.dealloc = dealloc;
-	deque->API.cmp = cmp;
-	deque->API.rcmp = rcmp;
-	deque->API.print = print;
-	deque->API.copy = copy;
+
+F_CONSTRUCT_FUNC(DequeVector) {
+	CHECK_VARN(obj,EINVAL);
+	ARR_STRUCT_SETUP(obj,datasize,flag);
+	obj->API.alloc = alloc;
+	obj->API.dealloc = dealloc;
+	obj->API.cmp = cmp;
+	obj->API.print = print;
+	obj->API.copy = copy;
 	return 0;
 }
 
-int8_t destruct_DequeVector(DequeVector *deque) {
-	CHECK_VARN(deque,EINVAL);
-	free(M(deque));
-	memset(deque,0,sizeof *deque);
+F_DESTRUCT(DequeVector) {
+	CHECK_VARN(obj,EINVAL);
+	clear(DequeVector,obj);
+	free(M(obj));
+	memset(obj,0,sizeof *obj);
 	return 0;
 }
 
@@ -246,7 +213,7 @@ int8_t pop_front_DequeVector(DequeVector *deque) {
 		return 0;
 	}
 
-	arr_pop_front(DequeVector,deque);
+	ARR_POP_FRONT(DequeVector,deque);
 
 	return 0;
 }
@@ -257,7 +224,7 @@ int8_t pop_back_DequeVector(DequeVector *deque) {
 		return 0;
 	}
 
-	arr_pop_back(DequeVector,deque);
+	ARR_POP_BACK(DequeVector,deque);
 
 	return 0;
 }
@@ -273,14 +240,12 @@ void *front_DequeVector(DequeVector *deque) {
 	return H(deque);
 }
 
-int8_t clear_DequeVector(DequeVector *deque) {
-	CHECK_VARN(deque,EINVAL);
-	if(!C(deque)) {
+F_CLEAR(DequeVector) {
+	CHECK_VARN(obj,EINVAL);
+	if(!C(obj)) {
 		return 0;
 	}
-
-	arr_clear(DequeVector,deque);
-
+	ARR_CLEAR(DequeVector,obj);
 	return 0;
 }
 
@@ -292,7 +257,7 @@ int8_t push_front_DequeVector(DequeVector *deque, void *obj, size_t objsize, int
 		return EINVAL;
 	}
 
-	arr_push_front(DequeVector,deque,obj,objsize);
+	ARR_PUSH_FRONT(DequeVector,deque,obj,objsize);
 
 	return 0;
 }
@@ -305,7 +270,7 @@ int8_t push_back_DequeVector(DequeVector *deque, void *obj, size_t objsize, int 
 		return EINVAL;
 	}
 
-	arr_push_back(DequeVector,deque,obj,objsize);
+	ARR_PUSH_BACK(DequeVector,deque,obj,objsize);
 
 	return 0;
 }
@@ -315,16 +280,15 @@ int8_t resize_DequeVector(DequeVector *deque,size_t size) {
 	CHECK_VARN(deque,EINVAL);
 	CHECK_VARA(ptr = malloc(size * O(deque)),EALLOCF);
 	
-	arr_copy_wrap(DequeVector,ptr,deque,size);
+	ARR_COPY_WRAP(DequeVector,ptr,deque,size);
 
-	arr_setup_pointers(DequeVector,ptr,deque,size);
+	ARR_SETUP_POINTERS(DequeVector,ptr,deque,size);
 	return 0;
 }
 create_iter_func(Arr_Based,DequeVector)
 
 function(size_of, DequeVector)
 function(set_compare, DequeVector)
-function(set_rcompare, DequeVector)
 function(set_print, DequeVector)
 function(set_alloc, DequeVector)
 function(set_dealloc, DequeVector)

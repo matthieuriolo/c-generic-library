@@ -8,7 +8,6 @@
 #define NUMCASES 10
 
 int32_t intcmp(const void *, const void *);
-int32_t intrcmp(const void *, const void *);
 void  print(const void *);
 void  ckfree(void *);
 void *ckalloc(size_t);
@@ -25,7 +24,6 @@ main(void) {
   set_alloc(StackList,  &object, ckalloc);
   set_dealloc(StackList,  &object, ckfree);
   set_compare(StackList,  &object, intcmp);
-  set_rcompare(StackList,  &object, intrcmp);
   set_print(StackList,  &object, print);
   for (y = 0; y < x; y++) {
     srand((x * y) / (x - y) + (x + y / x));
@@ -62,7 +60,7 @@ main(void) {
   }
   destruct(StackList,  &object);
   fprintf(stderr, "Now testing the iterators!\n");
-  construct_func(StackList,&object, sizeof(x),FREEOBJ, ckalloc, ckfree, intcmp, intrcmp, print,
+  construct_func(StackList,&object, sizeof(x),FREEOBJ, ckalloc, ckfree, intcmp,  print,
                  memcpy);
   for (x = 0; x < RUNS; x++) {
 	  value = ckalloc(sizeof *value);
@@ -100,12 +98,6 @@ int32_t
 intcmp(const void *a, const void *b)
 {
 	return (*(const int *)a > *(const int *)b) - (*(const int *)a < *(const int *)b);
-}
-
-int32_t
-intrcmp(const void *a, const void *b)
-{
-	return (*(const int *)a < *(const int *)b) - (*(const int *)a > *(const int *)b);
 }
 
 void

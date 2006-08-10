@@ -84,9 +84,6 @@
 #        define O(X)	((X)->objsize)
 #    endif
 
-#    ifndef E
-#        define E(X)	((X)->error)
-#    endif
 #ifndef M
 #define M(X)		((X)->mem)
 #endif

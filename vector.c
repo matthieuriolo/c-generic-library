@@ -15,68 +15,42 @@
 #include "gen/error_macros.h"
 #include "gen/access_macros.h"
 #include "gen/function_macros.h"
+#include "gen/control_arr_macros.h"
+#include "gen/function_signatures.h"
 
 #define D(X)	((char *)(H((X))))
 
-int8_t
-construct_Vector(Vector * vec,size_t objsize, int flag)
-{
-  CHECK_VARN(vec, EINVAL);
-  if(S(vec) > 0) {
-	  destruct(Vector,vec);
-  }
-  S(vec) = 0;
-  C(vec) = 0;
-  vec->end = M(vec) = H(vec) = T(vec) = NULL;
-  vec->API.alloc = malloc;
-  vec->API.dealloc = free;
-  vec->API.copy = memcpy;
-  vec->API.cmp = NULL;
-  vec->API.rcmp = NULL;
-  vec->API.print = NULL;
-  vec->objfree = flag;
-  vec->objsize = objsize;
+F_CONSTRUCT(Vector) {
+  CHECK_VARN(obj, EINVAL);
+  ARR_CONSTRUCT(Vector,obj,datasize,flag);
   return SUCCESS;
 }
 
-
-int8_t
-construct_func_Vector(Vector * vec, size_t objsize, int flag,
-                      void *(*alloc) (size_t),
-                      void (*dealloc) (void *),
-                      int (*cmp) (const void *, const void *,size_t),
-                      int (*rcmp) (const void *, const void *,size_t),
-                      void (*print) (const void *),
-                      void *(*copy) (void *, const void *, size_t))
-{
-  construct(Vector,vec,objsize,flag);
-  vec->API.alloc = alloc;
-  vec->API.dealloc = dealloc;
-  vec->API.cmp = cmp;
-  vec->API.rcmp = rcmp;
-  vec->API.print = print;
-  vec->API.copy = copy;
+F_CONSTRUCT_FUNC(Vector) {
+  CHECK_VARN(obj,EINVAL);
+  ARR_STRUCT_SETUP(obj,datasize,flag);
+  obj->API.alloc = alloc;
+  obj->API.dealloc = dealloc;
+  obj->API.cmp = cmp;
+  obj->API.print = print;
+  obj->API.copy = copy;
   return SUCCESS;
 }
 
-
-int8_t
-destruct_Vector(Vector * vec)
-{
-  CHECK_VARN(vec, EINVAL);
-  free(M(vec));
-  memset(vec,0,sizeof *vec);
+F_DESTRUCT(Vector) {
+  CHECK_VARN(obj, EINVAL);
+  clear(Vector,obj);
+  free(M(obj));
+  memset(obj,0,sizeof *obj);
   return SUCCESS;
 }
 
-int8_t clear_Vector(Vector *vec) {
-	CHECK_VARN(vec,EINVAL);
-	if(!C(vec)) {
+F_CLEAR(Vector) {
+	CHECK_VARN(obj,EINVAL);
+	if(!C(obj)) {
 		return SUCCESS;
 	}
-
-	arr_clear(Vector,vec);
-
+	ARR_CLEAR(Vector,obj);
 	return SUCCESS;
 }
 
@@ -177,8 +151,7 @@ int8_t push_back_Vector(Vector *vec, void *obj, size_t objsize, int flag) {
 		flag = 0;
 		return EINVAL;
 	}
-
-	arr_push_back(Vector,vec,obj,objsize);
+	ARR_PUSH_BACK(Vector,vec,obj,objsize);
 	return SUCCESS;
 }
 
@@ -190,7 +163,7 @@ int8_t push_front_Vector(Vector *vec, void *obj, size_t objsize, int flag) {
 		return EINVAL;
 	}
 
-	arr_push_front(Vector,vec,obj,objsize);
+	ARR_PUSH_FRONT(Vector,vec,obj,objsize);
 
 	return SUCCESS;
 }
@@ -202,7 +175,7 @@ int8_t pop_back_Vector(Vector *vec) {
 		return EEMPTY;
 	}
 
-	arr_pop_back(Vector,vec);
+	ARR_POP_BACK(Vector,vec);
 	return SUCCESS;
 }
 
@@ -213,7 +186,7 @@ int8_t pop_front_Vector(Vector *vec) {
 		return EEMPTY;
 	}
 
-	arr_pop_front(Vector,vec);
+	ARR_POP_FRONT(Vector,vec);
 
 	return SUCCESS;
 }
@@ -261,7 +234,7 @@ resize_Vector(Vector * vec, size_t size)
 
   CHECK_VARN(vec, EINVAL);
   CHECK_VARA(ptr = malloc(offset),EALLOCF);
-  arr_copy_wrap(Vector,ptr,vec,size);
+  ARR_COPY_WRAP(Vector,ptr,vec,size);
   /*offset = S(vec) * O(vec);
   if(M(vec)) {
 	  if(S(vec) == 0) {
@@ -279,7 +252,7 @@ resize_Vector(Vector * vec, size_t size)
 	  }
 	  free(M(vec));
   }*/
-  arr_setup_pointers(Vector,ptr,vec,size);
+  ARR_SETUP_POINTERS(Vector,ptr,vec,size);
   return SUCCESS;
 }
 
@@ -287,7 +260,6 @@ create_iter_func(Arr_Based,Vector)
 
 function(size_of, Vector)
 function(set_compare, Vector)
-function(set_rcompare, Vector)
 function(set_print, Vector)
 function(set_copy, Vector)
 function(set_alloc, Vector)

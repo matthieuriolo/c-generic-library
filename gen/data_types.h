@@ -20,8 +20,6 @@ typedef struct _functor_api {
   void  (*dealloc) (void *);
   /** Comparison function pointer to compare objects */
   int   (*cmp) (const void *, const void *,size_t);
-                /** Reverse comparison function pointer */
-  int   (*rcmp) (const void *, const void *,size_t);
 
   /** Print function pointer */
   void  (*print) (const void *);
@@ -61,8 +59,6 @@ struct _ptr_struct {
   struct _Node *tail;
   /** Pointer to free nodes */
   struct _Node *free_list;
-  /** Pointer to allocated memory of 1/0's */
-  void *error;
   Functor_API API;
 };
 
@@ -117,9 +113,6 @@ struct _array_struct {
   /** Pointer to the first available slot of the vector */
   void *tail;
 
-  /** Pointer to random 1's and 0's of allocated memory  to
-			 be returned on an invalid access.*/
-  void *error;  
   Functor_API API;
 };
 
@@ -221,6 +214,14 @@ typedef struct _array_struct DequeVector;
 #ifndef DEQUEVECTOR_ITER_DEFINED
 #define DEQUEVECTOR_ITER_DEFINED
 typedef struct _array_iter ITER(DequeVector);
+#endif
+#ifndef HEAP_DEFINED
+#define HEAP_DEFINED
+typedef struct _array_struct Heap;
+#endif
+#ifndef HEAP_ITER_DEFINED
+#define HEAP_ITER_DEFINED
+typedef struct _array_iter ITER(Heap);
 #endif
 
 

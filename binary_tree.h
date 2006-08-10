@@ -10,6 +10,7 @@
 #include "gen/data_types.h"
 #include "gen/gen_macros.h"
 #include "gen/function_macros.h"
+#include "gen/function_signatures.h"
 
 /**
  * @struct BinaryTree
@@ -24,56 +25,8 @@
 #define BINARYTREE_DEFINED
 typedef struct _ptr_struct BinaryTree;
 #endif
-/**
- * @fn int8_t construct_BinaryTree()
- * @param tree pointer to the tree to construc
- * @return 0 on success, non-zero on failure
- *
- * @warning memory should be cleared out before calling
- * this function. 
- * @sa BinaryTree_construct_func
- */
-int8_t construct_BinaryTree(BinaryTree * tree,size_t objsize, int flag);
 
-/**
- * @fn int8_t construct_func_BinaryTree()
- * @param tree the tree to initialize
- * @param alloc the allocation function to use
- * @param dealloc the deallocation function to use
- * @param cmp the comparison function to use
- * @param rcmp the reverse comparison function to use
- * @param print the print function to use
- * @param copy the copy function to use 
- * @return 0 on success, non-zero on failure
- *
- * @brief Zero's out the BinaryTree and assigns all
- * the function pointers in once function call
- */
-int8_t construct_func_BinaryTree(BinaryTree * tree,size_t objsize, int flag,
-                                  void *(*alloc) (size_t),
-                                  void (*dealloc) (void *),
-                                  int (*cmp) (const void *, const void *,size_t),
-                                  int (*rcmp) (const void *, const void *,size_t),
-                                  void (*print) (const void *),
-                                  void *(*copy) (void *, const void *,
-                                                 size_t));
-
-/**
- * @fn int8_t BinaryTree_destruct(BinaryTree*)
- * @param tree the tree to destroy
- * @return 0 on success, non-zero on failure
- */
-int8_t destruct_BinaryTree(BinaryTree * tree);
-
-/**
- * @fn int8_t clear_BinaryTree(BinaryTree*)
- * @param tree the tree to clear nodes from
- * @return 0 on success, non-zero on failure
- *
- * @brief removes all the nodes from the tree
- * without destroying the tree
- */
-int8_t clear_BinaryTree(BinaryTree *);
+COMMON_FUNCTION_PROTOTYPES(BinaryTree)
 
 /**
  * @fn int8_t insert_BinaryTree()
@@ -106,7 +59,6 @@ int8_t delete_BinaryTree(BinaryTree * tree, void *obj, size_t objsize);
  */
 void *find_BinaryTree(BinaryTree * tree, void *obj, size_t objsize);
 
-BinaryTree* duplicate_BinaryTree(BinaryTree *src);
 
 /**
  * @fn void* max_BinaryTree()
@@ -122,19 +74,6 @@ void *max_BinaryTree(BinaryTree* tree);
  */
 void* min_BinaryTree(BinaryTree* tree);
 
-/**
- * @fn void dump_BinaryTree()
- * @param tree the tree to dump the structure of
- */
-void dump_BinaryTree(BinaryTree *tree);
-
-prototype(size_of, BinaryTree);
-prototype(set_compare, BinaryTree);
-prototype(set_rcompare, BinaryTree);
-prototype(set_print, BinaryTree);
-prototype(set_alloc, BinaryTree);
-prototype(set_dealloc, BinaryTree);
-prototype(set_copy, BinaryTree);
 
 /*iter_proto(prev,BinaryTreeDFS);*/
 iter_proto(next,BinaryTreeDFS);

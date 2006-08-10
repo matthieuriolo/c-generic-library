@@ -10,6 +10,7 @@
 #    include <stdint.h>
 #    include <stdlib.h>
 #include "gen/data_types.h"
+#include "gen/function_signatures.h"
 
 typedef struct _Node Node;
 

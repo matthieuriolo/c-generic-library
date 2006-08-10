@@ -13,6 +13,7 @@
 #include "gen/data_types.h"
 #include "gen/gen_macros.h"
 #include "gen/function_macros.h"
+#include "gen/function_signatures.h"
 
 /**
  * @struct StackList
@@ -32,7 +33,7 @@ typedef struct _stack_list StackList;
 #define STACKLIST_ITER_DEFINED
 typedef struct _ptr_iter ITER(StackList);
 #endif
-
+COMMON_FUNCTION_PROTOTYPES(StackList)
 /**
  * @fn int8_t push_StackList(StackList*, void*, size_t, int8_t)
  * @param stack the stack to push an item onto
@@ -67,64 +68,6 @@ int8_t pop_StackList(StackList * stack);
  */
 void *top_StackList(StackList * stack);
 
-/**
- * @fn int8_t clear_StackList(StackList* stack)
- * @param stack the stack to clear
- * @return 0 on success, non-zero on failure
- * @brief removes all items from the stack
- */
-int8_t clear_StackList(StackList *stack);
-/**
- * @fn int8_t construct_StackList(StackList* stack)
- * @param stack the stack to initalize
- * @return 0 on success, non-zero on failure
- *
- * @warning clear out the memory of the object before
- * calling this function using memset or bzer
- */
-int8_t construct_StackList(StackList * stack,size_t objsize, int flag);
-
-/**
- * @fn int8_t construct_func_StackList(StackList*,void*,void,int,int,void,void*)
- * @param stack the stack to initialize
- * @param alloc the allocation functor
- * @param dealloc the deallocation functor
- * @param cmp the comparison functor
- * @param rcmp the reverse comparison functor
- * @param print the print functor
- * @param copy the copy functor
- * @return 0 on success, non-zero on failure
- *
- * @brief Zero's out the stack and assigns all the
- * function pointers in one function call
- */
-int8_t construct_func_StackList(StackList * stack,size_t objsize, int flag,
-                                       void *(*alloc) (size_t),
-                                       void (*dealloc) (void *),
-                                       int (*cmp) (const void *,
-                                                   const void *,size_t),
-                                       int (*rcmp) (const void *,
-                                                    const void *,size_t),
-                                       void (*print) (const void *),
-                                       void *(*copy) (void *, const void *,
-                                                      size_t));
-
-/**
- * @fn int8_t destruct_StackList(StackList *stack)
- * @param stack the stack to destroy
- * @return 0 on success, non-zero on failure
- */
-int8_t destruct_StackList(StackList * stack);
-
-prototype(size_of, StackList);
-prototype(set_compare, StackList);
-prototype(set_rcompare, StackList);
-prototype(set_print, StackList);
-prototype(set_alloc, StackList);
-prototype(set_dealloc, StackList);
-prototype(set_copy, StackList);
-prototype(duplicate,StackList);
-
 create_iter_prototypes(StackList)
 
 
@@ -139,35 +82,14 @@ typedef struct _array_struct StackVector;
 typedef struct _array_iter ITER(StackVector);
 #endif
 
-int8_t construct_StackVector(StackVector *stack,size_t objsize, int flag);
-int8_t construct_func_StackVector(StackVector *stack, size_t objsize, int flag,
-                                       void *(*alloc) (size_t),
-                                       void (*dealloc) (void *),
-                                       int (*cmp) (const void *,
-                                                   const void *,size_t),
-                                       int (*rcmp) (const void *,
-                                                    const void *,size_t),
-                                       void (*print) (const void *),
-                                       void *(*copy) (void *, const void *,
-                                                      size_t));
-
-int8_t destruct_StackVector(StackVector *stack);
+COMMON_FUNCTION_PROTOTYPES(StackVector)
 int8_t pop_StackVector(StackVector *stack);
 void * top_StackVector(StackVector *stack);
-int8_t clear_StackVector(StackVector *stack);
 int8_t push_StackVector(StackVector *stack, void *obj, size_t objsize, int flag);
 int8_t resize_StackVector(StackVector *stack,size_t size);
 
 #define convert_StackVector(A,B,C,D)	push_StackVector((A),(B),(C),(D))
 
-prototype(size_of, StackVector);
-prototype(set_compare, StackVector);
-prototype(set_rcompare, StackVector);
-prototype(set_print, StackVector);
-prototype(set_alloc, StackVector);
-prototype(set_dealloc, StackVector);
-prototype(set_copy, StackVector);
-prototype(duplicate,StackVector);
 
 create_iter_prototypes(StackVector)
 #endif
