@@ -209,5 +209,38 @@
 	}\
 }
 #endif
+
+#define PTR_CLEAR(TYPE,OBJ) \
+do {\
+	Node *iter, *iter2;\
+	\
+	CHECK_VARN((OBJ),EINVAL);\
+	for(iter = H((OBJ));iter;iter = iter2) {\
+		iter2 = N(iter);\
+		REMOVE_NODE(iter,(OBJ));\
+		DELETE_OBJPTR((OBJ),iter);\
+		ADD_FREE_NODE((OBJ),iter);\
+	}\
+	H((OBJ)) = T((OBJ)) = NULL;\
+	S((OBJ)) = 0;\
+}while(0)
+
+
+#ifndef PTR_STRUCT_SETUP
+#define PTR_STRUCT_SETUP(X,Y,Z) \
+	do{\
+		int16_t x;\
+		Node *ptr;\
+		S((X)) = 0;\
+		H((X)) = T((X)) = NULL;\
+		(X)->objsize = (Y);\
+		(X)->objfree = (Z);\
+		for(x = 0; x < INITIAL_SIZE; x++) {\
+			ptr = construct_Node(NUM_LINKS);\
+			ADD_FREE_NODE((X),ptr);\
+		}\
+	}while(0)
+#endif
+
 #endif
 

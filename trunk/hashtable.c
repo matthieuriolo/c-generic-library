@@ -14,60 +14,64 @@
 #include "gen/error_macros.h"
 #include "gen/control_macros.h"
 
-int8_t construct_OHTable(OHTable *table, size_t init_capacity, int8_t flag) {
-	CHECK_VARN(table,EINVAL);
-	if(table->capacity > 0) {
-		destruct(OHTable,table);
+F_CONSTRUCT(OHTable) {
+	CHECK_VARN(obj,EINVAL);
+	if(obj->capacity > 0) {
+		destruct(OHTable,obj);
 	}
-	table->capacity = init_capacity;
-	table->cur_size = 0;
-	table->num_elem = 0;
-	table->objfree = flag;
-	table->hash = num_hash;
-	table->API.copy = memcpy;
-	table->API.alloc = malloc;
-	table->API.dealloc = free;
-	table->API.cmp = memcmp;
-	table->API.rcmp = NULL;
-	table->API.print = NULL;
-	table->nodes = malloc(sizeof *table->nodes * init_capacity);
-	memset(table->nodes,0,sizeof *table->nodes * init_capacity);
+	obj->capacity = datasize;
+	obj->cur_size = 0;
+	obj->num_elem = 0;
+	obj->objfree = flag;
+	obj->hash = num_hash;
+	API_DEFAULT_SETUP(obj);
+	obj->nodes = malloc(sizeof *obj->nodes * datasize);
+	memset(obj->nodes,0,sizeof *obj->nodes * datasize);
 	return SUCCESS;
 }
-
-
-void destruct_OHTable(OHTable *table) {
+F_CONSTRUCT_FUNC(OHTable) {
+	CHECK_VARN(obj,EINVAL);
+	construct(OHTable,obj,datasize,flag);
+  obj->API.alloc = alloc;
+  obj->API.dealloc = dealloc;
+  obj->API.cmp = cmp;
+  obj->API.print = print;
+  obj->API.copy = copy;
+  return SUCCESS;
+}
+F_DESTRUCT(OHTable) {
 	HashListNode *ptr, *tmp;
-	clear(OHTable,table);
-	for(ptr = table->free_list;ptr; ptr = tmp) {
+	clear(OHTable,obj);
+	for(ptr = obj->free_list;ptr; ptr = tmp) {
 		tmp = ptr->next;
 		free(ptr);
 	}
-	table->capacity = 0;
-	table->cur_size = 0;
-	table->num_elem = 0;
-	table->objfree = 0;
-	table->hash = NULL;
-	free(table->nodes);
+	obj->capacity = 0;
+	obj->cur_size = 0;
+	obj->num_elem = 0;
+	obj->objfree = 0;
+	obj->hash = NULL;
+	free(obj->nodes);
+	return SUCCESS;
 }
 
-int8_t clear_OHTable(OHTable *table) {
+F_CLEAR(OHTable) {
 	HashListNode *ptr, *iter;
 	size_t x = 0;
-	CHECK_VARN(table,EINVAL);
-	for(x = 0; x < table->capacity; x++) {
-		if(table->nodes[x].objptr) {
-			ptr = &table->nodes[x];
-			DELETE_OBJPTR(table,ptr);
+	CHECK_VARN(obj,EINVAL);
+	for(x = 0; x < obj->capacity; x++) {
+		if(obj->nodes[x].objptr) {
+			ptr = &obj->nodes[x];
+			DELETE_OBJPTR(obj,ptr);
 			iter = ptr->next;
 			while(iter) {
-				DELETE_OBJPTR(table,iter);
+				DELETE_OBJPTR(obj,iter);
 				iter->objptr = NULL;
 				iter->objsize = 0;
 				iter->flags = 0;
 				ptr = iter->next;
-				iter->next = FL(table);
-				FL(table) = iter;
+				iter->next = FL(obj);
+				FL(obj) = iter;
 				iter = ptr;
 			}
 		}
@@ -202,23 +206,23 @@ void *find_OHTable(OHTable *table, void *element, size_t elesize) {
 	return NULL;
 }
 
-void print_hash_OHTable(OHTable *table) {
+F_PRINT(OHTable) {
 	/*size_t x;
 	HashListNode *ptr;
-	for(x = 0; x < table->capacity; x++) {
-		ptr = &table->nodes[x];
+	for(x = 0; x < obj->capacity; x++) {
+		ptr = &obj->nodes[x];
 		printf("%d) ",x);
 		do{
 			if(ptr->objptr) {
-				table->API.print(ptr->objptr);
+				obj->API.print(ptr->objptr);
 			}
 			ptr = ptr->next;
 		}while(ptr);
 		printf("\n");
 	}
 	printf("\n");*/
-	printf("Open Hash Table: %p Capacity: %d Size: %d\n",table,table->capacity,table->cur_size);
-	printf("Flags: %d Hash_Function: %p Element: %d\n",table->objfree,table->hash,table->num_elem);
+	printf("Open Hash obj: %p Capacity: %d Size: %d\n",obj,obj->capacity,obj->cur_size);
+	printf("Flags: %d Hash_Function: %p Element: %d\n",obj->objfree,obj->hash,obj->num_elem);
 	printf("Current nodes:\n");
 }
 
@@ -229,25 +233,23 @@ int8_t set_hash_OHTable(OHTable *table, uint32_t (*hash)(void *,size_t)) {
 	return SUCCESS;
 }
 
-OHTable* duplicate_OHTable(OHTable *src) {
+F_DUPLICATE(OHTable) {
 	OHTable* dst;
 	OHTableIter *ohiter;
-	size_t x;
-	CHECK_VARN(src,NULL);
+	CHECK_VARN(obj,NULL);
 	CHECK_VARN(dst = malloc(sizeof *dst),NULL);
 	memset(dst,0,sizeof *dst);
 	dst->objfree = FREEOBJ;
-	dst->capacity = src->capacity;
-	dst->API.alloc = src->API.alloc;
-	dst->API.dealloc = src->API.dealloc;
-	dst->API.copy = src->API.copy;
-	dst->API.cmp = src->API.cmp;
-	dst->API.rcmp = src->API.rcmp;
-	dst->API.print = src->API.print;
-	dst->hash = src->hash;
+	dst->capacity = obj->capacity;
+	dst->API.alloc = obj->API.alloc;
+	dst->API.dealloc = obj->API.dealloc;
+	dst->API.copy = obj->API.copy;
+	dst->API.cmp = obj->API.cmp;
+	dst->API.print = obj->API.print;
+	dst->hash = obj->hash;
 	dst->nodes = malloc(sizeof *dst->nodes * dst->capacity);
 	memset(dst->nodes,0,sizeof *dst->nodes * dst->capacity);
-	ohiter = create(OHTableIter,src);
+	ohiter = create(OHTableIter,obj);
 	do{
 		insert_OHTable(dst,retrieve(OHTableIter,ohiter),ohiter->ptr->objsize,STATIC);
 	}while(!next(OHTableIter,ohiter));
@@ -394,55 +396,50 @@ int8_t swap_OHTableIter(OHTableIter *first, OHTableIter* second) {
 }
 
 function(set_compare,OHTable)
-function(set_rcompare,OHTable)
 function(set_print,OHTable)
 function(set_copy,OHTable)
 function(set_alloc,OHTable)
 function(set_dealloc,OHTable)
 
-int8_t construct_CHTable(CHTable *table, size_t init_capacity, int8_t flag) {
-	CHECK_VARN(table,EINVAL);
-	if(table->capacity > 0) {
-		destruct(CHTable,table);
+F_CONSTRUCT(CHTable) {
+	CHECK_VARN(obj,EINVAL);
+	if(obj->capacity > 0) {
+		destruct(CHTable,obj);
 	}
-	table->capacity = init_capacity;
-	table->cur_size = 0;
-	table->objfree = flag;
-	table->hash = num_hash;
-	table->prob = linear_probing;
-	table->API.alloc = malloc;
-	table->API.dealloc = free;
-	table->API.copy = memcpy;
-	table->API.cmp = memcmp;
-	table->API.rcmp = NULL;
-	table->API.print = NULL;
-	if(!(table->data = malloc(sizeof *table->data * init_capacity))) {
+	obj->capacity = datasize;
+	obj->cur_size = 0;
+	obj->objfree = flag;
+	obj->hash = num_hash;
+	obj->prob = linear_probing;
+	API_DEFAULT_SETUP(obj);
+	if(!(obj->data = malloc(sizeof *obj->data * datasize))) {
 		return EALLOCF;
 	}
-	memset(table->data,0,sizeof *table->data * init_capacity);
+	memset(obj->data,0,sizeof *obj->data * datasize);
 	return SUCCESS;
 }
-void destruct_CHTable(CHTable *table) {
-	if(table) {
-		clear(CHTable,table);
-		table->capacity = 0;
-		table->cur_size = 0;
-		table->objfree = 0;
-		table->hash = NULL;
-		table->prob = NULL;
-		free(table->data);
-		table->data = NULL;
+F_DESTRUCT(CHTable) {
+	if(obj) {
+		clear(CHTable,obj);
+		obj->capacity = 0;
+		obj->cur_size = 0;
+		obj->objfree = 0;
+		obj->hash = NULL;
+		obj->prob = NULL;
+		free(obj->data);
+		obj->data = NULL;
 	}
 }
-int8_t clear_CHTable(CHTable *table) {
+
+F_CLEAR(CHTable) {
 	HashNode *iter;
-	CHECK_VARN(table,EINVAL);
-	for(iter = table->data; 
-		iter < &table->data[table->capacity]; iter++) {
+	CHECK_VARN(obj,EINVAL);
+	for(iter = obj->data; 
+		iter < &obj->data[obj->capacity]; iter++) {
 		if(iter->objptr) {
 			if((iter->flags == STATIC) || 
-			   (iter->flags == DYNAMIC && table->objfree == FREEOBJ)) {
-				table->API.dealloc(iter->objptr);
+			   (iter->flags == DYNAMIC && obj->objfree == FREEOBJ)) {
+				obj->API.dealloc(iter->objptr);
 			}
 		}
 	}
@@ -528,26 +525,25 @@ void *find_CHTable(CHTable *table, void* element, size_t elesize) {
 	return NULL;
 }
 
-CHTable* duplicate_CHTable(CHTable *src) {
+F_DUPLICATE(CHTable) {
 	CHTable* dst;
 	CHTableIter *ohiter;
 	size_t x;
-	CHECK_VARN(src,NULL);
+	CHECK_VARN(obj,NULL);
 	CHECK_VARN(dst = malloc(sizeof *dst),NULL);
 	memset(dst,0,sizeof *dst);
 	dst->objfree = FREEOBJ;
-	dst->capacity = src->capacity;
-	dst->API.alloc = src->API.alloc;
-	dst->API.dealloc = src->API.dealloc;
-	dst->API.copy = src->API.copy;
-	dst->API.cmp = src->API.cmp;
-	dst->API.rcmp = src->API.rcmp;
-	dst->API.print = src->API.print;
-	dst->hash = src->hash;
-	dst->prob = src->prob;
+	dst->capacity = obj->capacity;
+	dst->API.alloc = obj->API.alloc;
+	dst->API.dealloc = obj->API.dealloc;
+	dst->API.copy = obj->API.copy;
+	dst->API.cmp = obj->API.cmp;
+	dst->API.print = obj->API.print;
+	dst->hash = obj->hash;
+	dst->prob = obj->prob;
 	dst->data = malloc(sizeof *dst->data * dst->capacity);
 	memset(dst->data,0,sizeof *dst->data * dst->capacity);
-	ohiter = create(CHTableIter,src);
+	ohiter = create(CHTableIter,obj);
 	do{
 		insert_CHTable(dst,retrieve(CHTableIter,ohiter),ohiter->ptr->objsize,STATIC);
 	}while(!next(CHTableIter,ohiter));
@@ -569,13 +565,13 @@ int8_t set_probe_CHTable(CHTable *table, uint32_t (*prob)(uint32_t)) {
 	return SUCCESS;
 }
 
-int8_t print_hash_CHTable(CHTable *table) {
+F_PRINT(CHTable) {
 	size_t x;
-	CHECK_VARN(table,EINVAL);
-	/*for(x = 0; x < table->capacity; x++) {
+	CHECK_VARN(obj,EINVAL);
+	/*for(x = 0; x < obj->capacity; x++) {
 		printf("%d) ",x);
-		if((table->data[x].objptr) && (table->API.print)) {
-			table->API.print(table->data[x].objptr);
+		if((obj->data[x].objptr) && (obj->API.print)) {
+			obj->API.print(obj->data[x].objptr);
 		}
 		if(!((x+1) % 5)) {
 			printf("\n");
@@ -583,8 +579,8 @@ int8_t print_hash_CHTable(CHTable *table) {
 			printf("  ");
 		}
 	}*/
-	printf("Open Hash Table: %p Capacity: %d Size: %d\n",table,table->capacity,table->cur_size);
-	printf("Flags: %d Hash_Function: %p Prob_Function: %p\n",table->objfree,table->hash,table->prob);
+	printf("Open Hash obj: %p Capacity: %d Size: %d\n",obj,obj->capacity,obj->cur_size);
+	printf("Flags: %d Hash_Function: %p Prob_Function: %p\n",obj->objfree,obj->hash,obj->prob);
 	return SUCCESS;
 }
 
@@ -685,7 +681,6 @@ int8_t swap_CHTableIter(CHTableIter *first, CHTableIter *second) {
 }
 
 function(set_compare,CHTable)
-function(set_rcompare,CHTable)
 function(set_print,CHTable)
 function(set_copy,CHTable)
 function(set_alloc,CHTable)

@@ -14,76 +14,44 @@
 #include "gen/access_macros.h"
 #include "gen/control_macros.h"
 #include "gen/function_macros.h"
+#include "gen/control_arr_macros.h"
+#include "gen/function_signatures.h"
 #ifdef NUM_LINKS
 #undef NUM_LINKS
 #endif
 #define NUM_LINKS 2
 
       
- int8_t
-construct_QueueList(QueueList * queue,size_t objsize, int flag)
-{
-  int16_t x = 0;
-  Node *ptr;
-
-  CHECK_VARN(queue, EINVAL);
-  if (S(queue)) {
-    destruct(QueueList, queue);
+F_CONSTRUCT(QueueList) {
+  CHECK_VARN(obj, EINVAL);
+  if (S(obj)) {
+    destruct(QueueList, obj);
   }
-  S(queue) = 0;
-  H(queue) = T(queue) = NULL;
-  E(queue) = NULL;
-  queue->objsize = objsize;
-  queue->objfree = flag;
-  queue->API.cmp = NULL;
-  queue->API.print = NULL;
-  queue->API.rcmp = NULL;
-  queue->API.alloc = malloc;
-  queue->API.dealloc = free;
-  queue->API.copy = memcpy;
-  for (x = 0; x < INITIAL_SIZE; x++) {
-    ptr = construct_Node(NUM_LINKS);
-    N(ptr) = P(ptr) = NULL;
-    ADD_FREE_NODE(queue, ptr);
-  }
+  PTR_STRUCT_SETUP(obj,datasize,flag);
+  API_DEFAULT_SETUP(obj);
   return 0;
 }
 
- int8_t
-construct_func_QueueList(QueueList * queue,size_t objsize, int flag,
-                     void *(*alloc) (size_t),
-                     void (*dealloc) (void *),
-                     int (*cmp) (const void *, const void *,size_t),
-                     int (*rcmp) (const void *, const void *,size_t),
-                     void (*print) (const void *),
-                     void *(*copy) (void *, const void *, size_t))
-{
-  S(queue) = 0;
-  construct(QueueList, queue,objsize,flag);
-  queue->API.alloc = alloc;
-  queue->API.dealloc = dealloc;
-  queue->API.cmp = cmp;
-  queue->API.rcmp = rcmp;
-  queue->API.print = print;
-  queue->API.copy = copy;
+F_CONSTRUCT_FUNC(QueueList) {
+  PTR_STRUCT_SETUP(obj,datasize,flag);
+  obj->API.alloc = alloc;
+  obj->API.dealloc = dealloc;
+  obj->API.cmp = cmp;
+  obj->API.print = print;
+  obj->API.copy = copy;
   return 0;
 }
 
- int8_t
-destruct_QueueList(QueueList * queue)
-{
+F_DESTRUCT(QueueList) {
   Node *tmp, *ptr;
 
-  CHECK_VARN(queue, EINVAL);
-  clear(QueueList, queue);
-  for (ptr = FL(queue); ptr; ptr = tmp) {
+  CHECK_VARN(obj, EINVAL);
+  clear(QueueList, obj);
+  for (ptr = FL(obj); ptr; ptr = tmp) {
     tmp = N(ptr);
     destruct(Node, ptr);
   }
-  if (E(queue)) {
-    free(E(queue));
-  }
-  memset(queue,0,sizeof *queue);
+  memset(obj,0,sizeof *obj);
   return 0;
 }
 
@@ -137,54 +105,63 @@ front_QueueList(QueueList * queue)
   return H(queue)->objptr;
 }
 
- int8_t
-clear_QueueList(QueueList *queue) {
-  ptr_clear(QueueList,queue);
+F_CLEAR(QueueList) {
+  PTR_CLEAR(QueueList,obj);
   return 0;
 }
 
+F_PRINT(QueueList) {
+  Node *iter;
+  CHECK_VARN(obj, EINVAL);
+  CHECK_VARN(obj->API.print, ENOPRINT);
+  FOR_EACH_NODE(iter, obj) {
+    obj->API.print(iter->objptr);
+  }
+  return SUCCESS;
+}
 
+F_EMPTY(QueueList) {
+	CHECK_VARN(obj,SUCCESS);
+	CHECK_VARN(H(obj),SUCCESS);
+	return 1;
+}
+
+F_SIZE(QueueList) {
+	CHECK_VARN(obj,0);
+	return S(obj);
+}
 create_iter_func(Ptr_Based,QueueList)
 
 function(size_of, QueueList)
 function(set_compare, QueueList)
-function(set_rcompare, QueueList)
 function(set_print, QueueList)
 function(set_alloc, QueueList)
 function(set_dealloc, QueueList)
 function(set_copy, QueueList)
 function(duplicate_ptr_struct,QueueList)
 
-int8_t construct_QueueVector(QueueVector *queue,size_t objsize, int flag) {
-	CHECK_VARN(queue,EINVAL);
-
-	arr_construct(QueueVector,queue,objsize,flag);
-
+F_CONSTRUCT(QueueVector) {
+	CHECK_VARN(obj,EINVAL);
+	ARR_CONSTRUCT(QueueVector,obj,datasize,flag);
 	return 0;
 }
 
-int8_t construct_func_QueueVector(QueueVector *queue,size_t objsize, int flag,
-                         void *(*alloc) (size_t),
-                         void (*dealloc) (void *),
-                         int (*cmp) (const void *, const void *,size_t),
-                         int (*rcmp) (const void *, const void *,size_t),
-                         void (*print) (const void *),
-                         void *(*copy) (void *, const void *, size_t)) {
-	CHECK_VARN(queue,EINVAL);
-	arr_construct(QueueVector,queue,objsize,flag);
-	queue->API.alloc = alloc;
-	queue->API.dealloc = dealloc;
-	queue->API.cmp = cmp;
-	queue->API.rcmp = rcmp;
-	queue->API.print = print;
-	queue->API.copy = copy;
-	return 0;
+F_CONSTRUCT_FUNC(QueueVector) {
+  CHECK_VARN(obj,EINVAL);
+  ARR_STRUCT_SETUP(obj,datasize,flag);
+  obj->API.alloc = alloc;
+  obj->API.dealloc = dealloc;
+  obj->API.cmp = cmp;
+  obj->API.print = print;
+  obj->API.copy = copy;
+  return SUCCESS;
 }
 
-int8_t destruct_QueueVector(QueueVector *queue) {
-	CHECK_VARN(queue,EINVAL);
-	free(M(queue));
-	memset(queue,0,sizeof *queue);
+F_DESTRUCT(QueueVector) {
+	CHECK_VARN(obj,EINVAL);
+	clear(QueueVector,obj);
+	free(M(obj));
+	memset(obj,0,sizeof *obj);
 	return 0;
 }
 
@@ -195,7 +172,7 @@ int8_t pop_QueueVector(QueueVector *queue) {
 		return 0;
 	}
 
-	arr_pop_front(QueueVector,queue);
+	ARR_POP_FRONT(QueueVector,queue);
 
 	return 0;
 }
@@ -206,13 +183,13 @@ void *front_QueueVector(QueueVector *queue) {
 	return H(queue);
 }
 
-int8_t clear_QueueVector(QueueVector *queue) {
-	CHECK_VARN(queue,EINVAL);
-	if(!C(queue)) {
+F_CLEAR(QueueVector) {
+	CHECK_VARN(obj,EINVAL);
+	if(!C(obj)) {
 		return 0;
 	}
 
-	arr_clear(QueueVector,queue);
+	ARR_CLEAR(QueueVector,obj);
 
 	return 0;
 }
@@ -225,7 +202,7 @@ int8_t push_QueueVector(QueueVector *queue, void *obj, size_t objsize, int flag)
 		return EINVAL;
 	}
 
-	arr_push_back(QueueVector,queue,obj,objsize);
+	ARR_PUSH_BACK(QueueVector,queue,obj,objsize);
 
 	return 0;
 }
@@ -235,16 +212,15 @@ int8_t resize_QueueVector(QueueVector *queue,size_t size) {
 	CHECK_VARN(queue,EINVAL);
 	CHECK_VARA(ptr = malloc(size * O(queue)),EALLOCF);
 	
-	arr_copy_wrap(QueueVector,ptr,queue,size);
+	ARR_COPY_WRAP(QueueVector,ptr,queue,size);
 
-	arr_setup_pointers(QueueVector,ptr,queue,size);
+	ARR_SETUP_POINTERS(QueueVector,ptr,queue,size);
 	return 0;
 }
 create_iter_func(Arr_Based,QueueVector)
 
 function(size_of, QueueVector)
 function(set_compare, QueueVector)
-function(set_rcompare, QueueVector)
 function(set_print, QueueVector)
 function(set_alloc, QueueVector)
 function(set_dealloc, QueueVector)

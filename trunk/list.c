@@ -15,6 +15,7 @@
 #include "gen/access_macros.h"
 #include "gen/control_macros.h"
 #include "gen/function_macros.h"
+#include "gen/function_signatures.h"
 
 #ifdef NUM_LINKS
 #undef NUM_LINKS
@@ -60,76 +61,40 @@
 
 
 /* See header file for comments for all functions */
-int8_t
-construct_List(List * list,size_t objsize,int flag)
-{
-  int16_t x = 0;
-  Node *ptr;
-
-  CHECK_VARN(list, EINVAL);
-  if (S(list)) {
-    destruct(List, list);
+F_CONSTRUCT(List) {
+  CHECK_VARN(obj, EINVAL);
+  if (S(obj)) {
+    destruct(List, obj);
   }
-  S(list) = 0;
-  H(list) = T(list) = NULL;
-  E(list) = NULL;
-  list->objsize = objsize;
-  list->objfree = flag;
-  list->API.cmp = memcmp;
-  list->API.print = NULL;
-  list->API.rcmp = NULL;
-  list->API.alloc = malloc;
-  list->API.dealloc = free;
-  list->API.copy = memcpy;
-  for (x = 0; x < INITIAL_SIZE; x++) {
-    ptr = construct_Node(NUM_LINKS);
-    N(ptr) = P(ptr) = NULL;
-    ADD_FREE_NODE(list, ptr);
-  }
+  PTR_STRUCT_SETUP(obj,datasize,flag);
+  API_DEFAULT_SETUP(obj);
   return 0;
 }
 
-int8_t
-construct_func_List(List * list,size_t objsize, int flag,
-                    void *(*alloc) (size_t),
-                    void (*dealloc) (void *),
-                    int (*cmp) (const void *, const void *,size_t),
-                    int (*rcmp) (const void *, const void *,size_t),
-                    void (*print) (const void *),
-                    void *(*copy) (void *, const void *, size_t))
-{
-  construct(List, list,objsize,flag);
-  list->API.alloc = alloc;
-  list->API.dealloc = dealloc;
-  list->API.cmp = cmp;
-  list->API.rcmp = rcmp;
-  list->API.print = print;
-  list->API.copy = copy;
+F_CONSTRUCT_FUNC(List) {
+  PTR_STRUCT_SETUP(obj,datasize,flag);
+  obj->API.alloc = alloc;
+  obj->API.dealloc = dealloc;
+  obj->API.cmp = cmp;
+  obj->API.print = print;
+  obj->API.copy = copy;
   return 0;
 }
 
-int8_t
-destruct_List(List * list)
-{
+F_DESTRUCT(List) {
   Node *tmp, *ptr;
-
-  CHECK_VARN(list, EINVAL);
-  clear(List, list);
-  for (ptr = FL(list); ptr; ptr = tmp) {
+  CHECK_VARN(obj, EINVAL);
+  clear(List, obj);
+  for (ptr = FL(obj); ptr; ptr = tmp) {
     tmp = N(ptr);
     destruct(Node, ptr);
   }
-  if (E(list)) {
-    free(E(list));
-  }
-  memset(list,0,sizeof *list);
+  memset(obj,0,sizeof *obj);
   return 0;
 }
 
-int8_t
-clear_List(List * list)
-{
-  ptr_clear(List,list);
+F_CLEAR(List) {
+  PTR_CLEAR(List,obj);
   return 0;
 }
 
@@ -239,10 +204,10 @@ insert_List(List * list, void *obj, size_t objsize, int flag)
 {
   Node *iter, *tmp;
 
-  CHECK_VARN(list, CHECK(E(list)));
-  CHECK_VARN(obj, CHECK(E(list)));
-  CHECK_VARE(objsize, CHECK(E(list)));
-  CHECK_OBJSIZE(list,objsize,CHECK(E(list)));
+  CHECK_VARN(list, NULL);
+  CHECK_VARN(obj, NULL);
+  CHECK_VARE(objsize, NULL);
+  CHECK_OBJSIZE(list,objsize,NULL);
 
   INITIALIZE_NODE(tmp,list,obj,flag);
 
@@ -270,7 +235,7 @@ allocobjfail:
   ADD_FREE_NODE(list,tmp);
 allocfail:
   ALLOCFAIL(object);
-  return CHECK(E(list));
+  return NULL;
 
 }
 /*List* duplicate_List(List* src) {
@@ -284,10 +249,8 @@ allocfail:
 		dst->API.alloc = src->API.alloc;
 		dst->API.dealloc = src->API.dealloc;
 		dst->API.cmp = src->API.cmp;
-		dst->API.rcmp = src->API.rcmp;
 		dst->API.print = src->API.print;
 		dst->API.copy = src->API.copy;
-		dst->error = src->error;
 		dst->size = 0;
 		FL(dst) = H(dst) = T(dst) = NULL;
 		for(x = 0; x < (INITIAL_SIZE + src->size); x++) {
@@ -374,7 +337,7 @@ sort_List(List * list, size_t objsize)
   free(array);
   return SUCCESS;
 }
-
+/*
 int8_t
 rsort_List(List * list, size_t objsize)
 {
@@ -409,34 +372,27 @@ rsort_List(List * list, size_t objsize)
   free(array[0]);
   free(array[1]);
   return SUCCESS;
-}
+}*/
 
-int8_t
-print_List(List * list)
-{
+F_PRINT(List) {
   Node *iter;
-
-  CHECK_VARN(list, EINVAL);
-  CHECK_VARN(list->API.print, ENOPRINT);
-  FOR_EACH_NODE(iter, list) {
-    list->API.print(iter->objptr);
+  CHECK_VARN(obj, EINVAL);
+  CHECK_VARN(obj->API.print, ENOPRINT);
+  FOR_EACH_NODE(iter, obj) {
+    obj->API.print(iter->objptr);
   }
   return SUCCESS;
 }
 
-int8_t empty_List(List* list) {
-	CHECK_VARN(list,SUCCESS);
-	if(!H(list)) {
-		return SUCCESS;
-	} else {
-		return 1;
-	}
+F_EMPTY(List) {
+	CHECK_VARN(obj,SUCCESS);
+	CHECK_VARN(H(obj),SUCCESS);
+	return 1;
 }
 
-size_t size_List(List* list) {
-	CHECK_VARN(list,0);
-	CHECK_VARN(H(list),0);
-	return S(list);
+F_SIZE(List) {
+	CHECK_VARN(obj,0);
+	return S(obj);
 }
 
 
@@ -507,22 +463,19 @@ create_iter_func(Ptr_Based,List)
 function(duplicate_ptr_struct,List)
 function(size_of, List)
 function(set_compare, List)
-function(set_rcompare, List)
 function(set_print, List)
 function(set_copy, List)
 function(set_alloc, List)
 function(set_dealloc, List)
 
 #ifdef DEBUG
-  int8_t
-dump_List(List * list)
-{
+F_DUMP(List) {
   Node *iter;
 
-  CHECK_VARN(list, EINVAL);
+  CHECK_VARN(obj, EINVAL);
   /*printf("cmp = %p, print = %p, size = %d\n", (void *) list->API.cmp,
          (void *) list->print, (int) S(list));*/
-  FOR_EACH_NODE(iter, list) {
+  FOR_EACH_NODE(iter, obj) {
     printf("Prev = %p, Node = %p, Next = %p\n", (void *) P(iter),
            (void *) iter, (void *) N(iter));
   }

@@ -12,6 +12,7 @@
 #include "gen/gen_macros.h"
 #include "gen/data_types.h"
 #include "gen/function_macros.h"
+#include "gen/function_signatures.h"
 
 #ifndef VECTOR_ITER_DEFINED
 #define VECTOR_ITER_DEFINED
@@ -26,52 +27,7 @@ typedef struct _array_struct Vector;
 
 #    define FUNC(X,Y)	((X)->API.Y(X));
 
-
-/**
- * @fn int8_t construct_Vector(Vector *vec)
- * @param vec the vector to initialize
- * @return 0 on success, non-zero on failure
- *
- * @warning if you are using a local variable
- * clear out the memory before calling this function
- * using memset or bzero
- */
-int8_t construct_Vector(Vector * vec,size_t objsize, int flag);
-
-/**
- * @fn int8_t construct_func()
- * @param vec the vector to initialize
- * @param alloc the allocation functor
- * @param dealloc the deallocation functor
- * @param cmp the comparison functor
- * @param rcmp the reverse comparison functor
- * @param print the print functor
- * @param copy the copy functor
- * @return 0 on success, non-zero on failure
- *
- * @brief assigns all the
- * function pointers in one function call
- */
-int8_t construct_func_Vector(Vector * vec,size_t objsize, int flag,
-                             void *(*alloc) (size_t),
-                             void (*dealloc) (void *),
-                             int (*cmp) (const void *, const void *,size_t),
-                             int (*rcmp) (const void *, const void *,size_t),
-                             void (*print) (const void *),
-                             void *(*copy) (void *, const void *, size_t));
-
-/**
- * @fn int8_t destruct_Vector(Vector *vec)
- * @param vec the vector to destroy
- * @return 0 on succes, non-zero on failure
- */
-int8_t destruct_Vector(Vector * vec);
-/**
- * @fn int8_t clear_Vector(Vector* vec)
- * @param vec the vector to clear 
- * @return 0 on success, non-zero on failure
- */
-int8_t clear_Vector(Vector* vec);
+COMMON_FUNCTION_PROTOTYPES(Vector)
 
 #define convert_Vector(A,B,C,D) push_back_Vector((A),(B),(C),(D))
 
@@ -123,15 +79,6 @@ void *return_at_Vector(Vector * vec, uint32_t loc);
  * and copies the first n objects over to the new array
  */
 int8_t resize_Vector(Vector * vec, size_t size);
-
-prototype(size_of, Vector);
-prototype(set_compare, Vector);
-prototype(set_rcompare, Vector);
-prototype(set_print, Vector);
-prototype(set_alloc, Vector);
-prototype(set_dealloc, Vector);
-prototype(set_copy, Vector);
-prototype(duplicate,Vector);
 
 create_iter_prototypes(Vector)
 #endif

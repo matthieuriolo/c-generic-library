@@ -11,13 +11,14 @@
 #include <string.h>
 
 #include "node.h"
-/*#include "queue.h"
-#include "stack.h"*/
+#include "queue.h"
+#include "stack.h"
 #include "binary_tree.h"
 #include "gen/error_macros.h"
 #include "gen/access_macros.h"
 #include "gen/control_macros.h"
 #include "gen/function_macros.h"
+#include "gen/function_signatures.h"
 
 
 #ifdef NUM_LINKS
@@ -32,7 +33,7 @@
 
 #define PARENT (NUM_LINKS-1)
 
-void dump_node(Node *ptr);
+int8_t dump_Node(Node *ptr);
 void move_to_free(BinaryTree *tree, Node *root);
 
 
@@ -56,75 +57,37 @@ void move_to_free(BinaryTree *tree, Node *root);
 }
 #endif
 
-int8_t
-construct_BinaryTree(BinaryTree * tree,size_t objsize, int flag)
-{
-  int16_t x = 0;
-  Node *ptr = NULL;
-
-  CHECK_VARN(tree, -1);
-  if (S(tree)) {
-    destruct(BinaryTree, tree);
+F_CONSTRUCT(BinaryTree) {
+  CHECK_VARN(obj, -1);
+  if (S(obj)) {
+    destruct(BinaryTree, obj);
   }
-  S(tree) = tree->objsize = 0;
-  tree->objfree = 0;
-  H(tree) = FL(tree) = NULL;
-  E(tree) = NULL;
-  tree->objfree = FREEOBJ;
-  tree->API.cmp = memcmp;
-  tree->API.print = NULL;
-  tree->API.rcmp = NULL;
-  tree->API.alloc = malloc;
-  tree->API.dealloc = free;
-  tree->API.copy = memcpy;
-  tree->objsize = objsize;
-  tree->objfree = flag;
-  for (x = 0; x < INITIAL_SIZE; x++) {
-    ptr = construct_Node(NUM_LINKS);
-    N(ptr) = P(ptr) = NULL;
-    ADD_FREE_NODE(tree, ptr);
-  }
+  PTR_STRUCT_SETUP(obj,datasize,flag);
+  API_DEFAULT_SETUP(obj);
   return SUCCESS;
 }
 
-int8_t
-construct_func_BinaryTree(BinaryTree * tree,size_t objsize, int flag,
-                           void *(*alloc) (size_t),
-                           void (*dealloc) (void *),
-                           int (*cmp) (const void *, const void *,size_t),
-                           int (*rcmp) (const void *, const void *,size_t),
-                           void (*print) (const void *),
-                           void *(*copy) (void *, const void *, size_t))
-{
-  memset(tree, 0, sizeof (tree));
-  construct(BinaryTree, tree,objsize,flag);
-  tree->API.alloc = alloc;
-  tree->API.dealloc = dealloc;
-  tree->API.cmp = cmp;
-  tree->API.rcmp = rcmp;
-  tree->API.print = print;
-  tree->API.copy = copy;
+F_CONSTRUCT_FUNC(BinaryTree) {
+	PTR_STRUCT_SETUP(obj,datasize,flag);
+  obj->API.alloc = alloc;
+  obj->API.dealloc = dealloc;
+  obj->API.cmp = cmp;
+  obj->API.print = print;
+  obj->API.copy = copy;
   return SUCCESS;
 }
 
-int8_t
-destruct_BinaryTree(BinaryTree * tree)
-{
+F_DESTRUCT(BinaryTree) {
   Node *tmp = NULL, *ptr = NULL;
+  CHECK_VARN(obj, EINVAL);
 
+  clear(BinaryTree, obj);
 
-  CHECK_VARN(tree, EINVAL);
-
-  clear(BinaryTree, tree);
-
-  for (ptr = FL(tree); ptr; ptr = tmp) {
+  for (ptr = FL(obj); ptr; ptr = tmp) {
     tmp = N(ptr);
     destruct(Node, ptr);
   }
-  if (E(tree)) {
-    free(E(tree));
-  }
-  memset(tree,0,sizeof *tree);
+  memset(obj,0,sizeof *obj);
   return SUCCESS;
 }
 void move_to_free(BinaryTree *tree, Node *root) {
@@ -141,13 +104,12 @@ void move_to_free(BinaryTree *tree, Node *root) {
 	DELETE_OBJPTR(tree,root);
 	ADD_FREE_NODE(tree,root);
 }
-int8_t
-clear_BinaryTree(BinaryTree * tree)
-{
-  CHECK_VARN(tree, EINVAL);
-  move_to_free(tree,H(tree));
-  H(tree) = NULL;
-  S(tree) = 0;
+
+F_CLEAR(BinaryTree) {
+  CHECK_VARN(obj, EINVAL);
+  move_to_free(obj,H(obj));
+  H(obj) = NULL;
+  S(obj) = 0;
   return SUCCESS;
 }
 
@@ -156,9 +118,9 @@ insert_BinaryTree(BinaryTree * tree, void *obj, size_t objsize, int flag)
 {
   Node *ptr = NULL, *tmp = NULL;
   int res = 0;
-  CHECK_VARN(tree,CHECK(E(tree)));
-  CHECK_VARN(obj,CHECK(E(tree)));
-  CHECK_OBJSIZE(tree, objsize,CHECK(E(tree)));
+  CHECK_VARN(tree,NULL);
+  CHECK_VARN(obj,NULL);
+  CHECK_OBJSIZE(tree, objsize,NULL);
   INITIALIZE_NODE(tmp,tree,obj,flag);
 
   if(!S(tree)) {
@@ -185,7 +147,7 @@ allocobjfail:
   ADD_FREE_NODE(tree,tmp);
 allocfail:
   ALLOCFAIL(object);
-  return CHECK(E(tree));
+  return NULL;
 }
 
 int8_t
@@ -297,38 +259,32 @@ find_BinaryTree(BinaryTree * tree, void *obj, size_t objsize)
   }
 }
 
-BinaryTree* duplicate_BinaryTree(BinaryTree* src) {
+F_DUPLICATE(BinaryTree) {
 	BinaryTree *dst;
 	BinaryTreeDFSIter *dfsiter;
 	Node *tmp;
 	size_t x;
-	CHECK_VARN(src,NULL);
+	CHECK_VARN(obj,NULL);
 	CHECK_VARA(dst = malloc(sizeof *dst),NULL);
 	dst->objfree = FREEOBJ;
-	dst->objsize = src->objsize;
-	dst->API.alloc = src->API.alloc;
-	dst->API.dealloc = src->API.dealloc;
-	dst->API.cmp = src->API.cmp;
-	dst->API.rcmp = src->API.rcmp;
-	dst->API.print = src->API.print;
-	dst->API.copy = src->API.copy;
-	dst->error = src->error;
+	dst->objsize = obj->objsize;
+	dst->API.alloc = obj->API.alloc;
+	dst->API.dealloc = obj->API.dealloc;
+	dst->API.cmp = obj->API.cmp;
+	dst->API.print = obj->API.print;
+	dst->API.copy = obj->API.copy;
 	dst->size = 0;
 	FL(dst) = H(dst) = T(dst) = NULL;
-	for(x = 0; x < (INITIAL_SIZE + src->size); x++) {
+	for(x = 0; x < (INITIAL_SIZE + obj->size); x++) {
 		tmp = construct_Node(NUM_LINKS);
 		ADD_FREE_NODE(dst,tmp);
 	}
-	dfsiter = create(BinaryTreeDFSIter,src);
+	dfsiter = create(BinaryTreeDFSIter,obj);
 	do {
 		insert_BinaryTree(dst,retrieve(BinaryTreeDFSIter,dfsiter),dst->objsize,STATIC);
 	}while(!next(BinaryTreeDFSIter,dfsiter));
 	destroy(BinaryTreeDFSIter,dfsiter);
 	return dst;
-allocobjfail:
-allocfail:
-	destruct_BinaryTree(dst);
-	return NULL;
 }
 
 void*
@@ -355,31 +311,30 @@ min_BinaryTree(BinaryTree* tree) {
 	return ptr;
 }
 
-void dump_BinaryTree(BinaryTree* tree) {
-	fprintf(stderr,"Tree = %p, objfree = %u, objsize = %u, size = %u\n",tree,tree->objfree,O(tree),S(tree));
-	fprintf(stderr,"head = %p, tail = %p, FL = %p, E = %p\n",H(tree),T(tree),FL(tree),E(tree));
-	dump_node(H(tree));
+F_DUMP(BinaryTree) {
+	fprintf(stderr,"obj = %p, objfree = %u, objsize = %u, size = %u\n",obj,obj->objfree,O(obj),S(obj));
+	fprintf(stderr,"head = %p, tail = %p, FL = %p\n",H(obj),T(obj),FL(obj));
+	dump(Node,H(obj));
 }
 
-void dump_node(Node *root) {
+F_DUMP(Node) {
 	int x = 0;
-	if(!root) {
+	if(!obj) {
 		return;
 	}
-	fprintf(stderr,"node = %p, parent = %p, flags = %p, objptr = %u children:\n",root,root->ptr[PARENT],root->flags,*(int *)root->objptr);
+	fprintf(stderr,"node = %p, parent = %p, flags = %p, objptr = %u children:\n",obj,obj->ptr[PARENT],obj->flags,*(int *)obj->objptr);
 	for(x = 0; x < NUM_LINKS-1; x++) {
-		fprintf(stderr,"%d) %p ",x,root->ptr[x]);
+		fprintf(stderr,"%d) %p ",x,obj->ptr[x]);
 	}
 	fprintf(stderr,"\n");
 	for(x = 0; x < NUM_LINKS-1; x++) {
-		dump_node(root->ptr[x]);
+		dump(Node,obj->ptr[x]);
 	}
 }
 
 
 function(size_of, BinaryTree)
 function(set_compare, BinaryTree)
-function(set_rcompare, BinaryTree)
 function(set_print, BinaryTree)
 function(set_alloc, BinaryTree)
 function(set_dealloc, BinaryTree)

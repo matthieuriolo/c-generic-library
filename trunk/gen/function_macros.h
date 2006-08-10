@@ -19,8 +19,8 @@
 #    define construct(TYPE,STRUCT,OBJSIZE,FLAG)\
 	construct_##TYPE((STRUCT),OBJSIZE,FLAG)
 
-#    define construct_func(TYPE,STRUCT,OBJSIZE,FLAG,ALLOC,DEALLOC,CMP,RCMP,PRINT,COPY) \
-	construct_func_##TYPE(STRUCT,OBJSIZE,FLAG,ALLOC,DEALLOC,CMP,RCMP,PRINT,COPY)
+#    define construct_func(TYPE,STRUCT,OBJSIZE,FLAG,ALLOC,DEALLOC,CMP,PRINT,COPY) \
+	construct_func_##TYPE(STRUCT,OBJSIZE,FLAG,ALLOC,DEALLOC,CMP,PRINT,COPY)
 
 #    define destruct(TYPE,STRUCT)\
 	destruct_##TYPE((STRUCT))
@@ -84,6 +84,9 @@
 
 #define dump(TYPE,STRUCT)\
 	dump_##TYPE((STRUCT))
+
+#define print_all(TYPE,STRUCT)\
+	print_##TYPE((STRUCT))
 
 #    define set_object_size(TYPE,STRUCT,OBJ)\
 	set_object_size_##TYPE((STRUCT),(OBJ))

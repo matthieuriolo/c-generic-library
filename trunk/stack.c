@@ -16,6 +16,8 @@
 #include "gen/access_macros.h"
 #include "gen/control_macros.h"
 #include "gen/function_macros.h"
+#include "gen/control_arr_macros.h"
+#include "gen/function_signatures.h"
 #ifdef NUM_LINKS
 #undef NUM_LINKS
 #endif
@@ -66,117 +68,74 @@ pop_StackList(StackList * stack)
 void *
 top_StackList(StackList * stack)
 {
-	CHECK_VARN(stack,CHECK(E(stack)));
-	CHECK_VARN(T(stack),CHECK(E(stack)));
+	CHECK_VARN(stack,NULL);
+	CHECK_VARN(T(stack),NULL);
 	return T(stack)->objptr;
 }
 
-int8_t
-construct_StackList(StackList * stack,size_t objsize, int flag)
-{
-  int16_t x = 0;
-  Node *ptr;
-
-  CHECK_VARN(stack, EINVAL);
-  if (S(stack)) {
-    destruct(StackList, stack);
+F_CONSTRUCT(StackList) {
+  CHECK_VARN(obj, EINVAL);
+  if (S(obj)) {
+    destruct(StackList, obj);
   }
-  S(stack) = 0;
-  H(stack) = T(stack) = NULL;
-  E(stack) = NULL;
-  stack->objfree = flag;
-  stack->objsize = objsize;
-  stack->API.cmp = NULL;
-  stack->API.print = NULL;
-  stack->API.rcmp = NULL;
-  stack->API.alloc = malloc;
-  stack->API.dealloc = free;
-  stack->API.copy = memcpy;
-  for (x = 0; x < INITIAL_SIZE; x++) {
-    ptr = construct_Node(NUM_LINKS);
-    N(ptr) = P(ptr) = NULL;
-    ADD_FREE_NODE(stack, ptr);
-  }
+  PTR_STRUCT_SETUP(obj,datasize,flag);
+  API_DEFAULT_SETUP(obj);
   return 0;
 }
 
-int8_t
-construct_func_StackList(StackList * stack,size_t objsize, int flag,
-                         void *(*alloc) (size_t),
-                         void (*dealloc) (void *),
-                         int (*cmp) (const void *, const void *,size_t),
-                         int (*rcmp) (const void *, const void *,size_t),
-                         void (*print) (const void *),
-                         void *(*copy) (void *, const void *, size_t))
-{
-  S(stack) = 0;
-  construct(StackList, stack,objsize,flag);
-  stack->API.alloc = alloc;
-  stack->API.dealloc = dealloc;
-  stack->API.cmp = cmp;
-  stack->API.rcmp = rcmp;
-  stack->API.print = print;
-  stack->API.copy = copy;
+F_CONSTRUCT_FUNC(StackList) {
+  PTR_STRUCT_SETUP(obj,datasize,flag);
+  obj->API.alloc = alloc;
+  obj->API.dealloc = dealloc;
+  obj->API.cmp = cmp;
+  obj->API.print = print;
+  obj->API.copy = copy;
   return 0;
 }
 
-int8_t
-destruct_StackList(StackList * stack)
-{
+F_DESTRUCT(StackList) {
   Node *tmp, *ptr;
-
-  CHECK_VARN(stack, EINVAL);
-  clear(StackList, stack);
-  for (ptr = FL(stack); ptr; ptr = tmp) {
+  CHECK_VARN(obj, EINVAL);
+  clear(StackList, obj);
+  for (ptr = FL(obj); ptr; ptr = tmp) {
     tmp = N(ptr);
     destruct(Node, ptr);
   }
-  if (E(stack)) {
-    free(E(stack));
-  }
-  memset(stack,0,sizeof *stack);
+  memset(obj,0,sizeof *obj);
   return 0;
 }
 
-int8_t 
-clear_StackList(StackList* stack) {
-  ptr_clear(StackList,stack);
+F_CLEAR(StackList) {
+  PTR_CLEAR(StackList,obj);
   return 0;
 }
 
 /* Array based functions */
 
 create_iter_func(Ptr_Based,StackList)
-int8_t construct_StackVector(StackVector *stack,size_t objsize, int flag) {
-	CHECK_VARN(stack,EINVAL);
 
-	arr_construct(StackVector,stack,objsize,flag);
-
+F_CONSTRUCT(StackVector) {
+	CHECK_VARN(obj,EINVAL);
+	ARR_CONSTRUCT(StackVector,obj,datasize,flag);
 	return 0;
 }
 
-int8_t construct_func_StackVector(StackVector *stack,size_t objsize, int flag,
-                         void *(*alloc) (size_t),
-                         void (*dealloc) (void *),
-                         int (*cmp) (const void *, const void *,size_t),
-                         int (*rcmp) (const void *, const void *,size_t),
-                         void (*print) (const void *),
-                         void *(*copy) (void *, const void *, size_t)) {
-	CHECK_VARN(stack,EINVAL);
-	arr_construct(StackVector,stack,objsize,flag);
-	stack->API.alloc = alloc;
-	stack->API.dealloc = dealloc;
-	stack->API.cmp = cmp;
-	stack->API.rcmp = rcmp;
-	stack->API.print = print;
-	stack->API.copy = copy;
+F_CONSTRUCT_FUNC(StackVector) {
+	CHECK_VARN(obj,EINVAL);
+	ARR_STRUCT_SETUP(obj,datasize,flag);
+	obj->API.alloc = alloc;
+	obj->API.dealloc = dealloc;
+	obj->API.cmp = cmp;
+	obj->API.print = print;
+	obj->API.copy = copy;
 	return 0;
 }
 
-int8_t destruct_StackVector(StackVector *stack) {
-	CHECK_VARN(stack,EINVAL);
-	free(M(stack));
-	memset(stack,0,sizeof *stack);
+F_DESTRUCT(StackVector) {
+	CHECK_VARN(obj,EINVAL);
+	clear(StackVector,obj);
+	free(M(obj));
+	memset(obj,0,sizeof *obj);
 	return 0;
 }
 
@@ -186,9 +145,7 @@ int8_t pop_StackVector(StackVector *stack) {
 	if(!S(stack)) {
 		return 0;
 	}
-
-	arr_pop_back(StackVector,stack);
-
+	ARR_POP_BACK(StackVector,stack);
 	return 0;
 }
 
@@ -198,14 +155,12 @@ void *top_StackVector(StackVector *stack) {
 	return T(stack);
 }
 
-int8_t clear_StackVector(StackVector *stack) {
-	CHECK_VARN(stack,EINVAL);
-	if(!C(stack)) {
+F_CLEAR(StackVector) {
+	CHECK_VARN(obj,EINVAL);
+	if(!C(obj)) {
 		return 0;
 	}
-
-	arr_clear(StackVector,stack);
-
+	ARR_CLEAR(StackVector,obj);
 	return 0;
 }
 
@@ -217,7 +172,7 @@ int8_t push_StackVector(StackVector *stack, void *obj, size_t objsize, int flag)
 		return EINVAL;
 	}
 
-	arr_push_back(StackVector,stack,obj,objsize);
+	ARR_PUSH_BACK(StackVector,stack,obj,objsize);
 
 	return 0;
 }
@@ -227,22 +182,19 @@ int8_t resize_StackVector(StackVector *stack,size_t size) {
 	CHECK_VARN(stack,EINVAL);
 	CHECK_VARA(ptr = malloc(size * O(stack)),EALLOCF);
 	
-	arr_copy_wrap(StackVector,ptr,stack,size);
+	ARR_COPY_WRAP(StackVector,ptr,stack,size);
 
-	arr_setup_pointers(StackVector,ptr,stack,size);
+	ARR_SETUP_POINTERS(StackVector,ptr,stack,size);
 
 	return 0;
 }
 
 function(size_of, StackList)
 function(set_compare, StackList)
-function(set_rcompare, StackList)
 function(set_print, StackList)
 function(set_alloc, StackList)
 function(set_dealloc, StackList)
 function(set_copy, StackList)
-/*function(set_object_size, StackList)
-function(set_free_objects, StackList)*/
 function(duplicate_ptr_struct,StackList)
 
 
@@ -252,12 +204,9 @@ create_iter_func(Arr_Based,StackVector)
 
 function(size_of, StackVector)
 function(set_compare, StackVector)
-function(set_rcompare, StackVector)
 function(set_print, StackVector)
 function(set_alloc, StackVector)
 function(set_dealloc, StackVector)
 function(set_copy, StackVector)
-/*function(set_arr_object_size, StackVector)
-function(set_free_objects, StackVector)*/
 function(duplicate_arr_struct,StackVector)
 

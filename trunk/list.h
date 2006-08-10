@@ -10,6 +10,7 @@
 #    include "gen/data_types.h"
 #    include "gen/gen_macros.h"
 #    include "gen/function_macros.h"
+#include "gen/function_signatures.h"
 
 
 
@@ -30,54 +31,7 @@ typedef struct _ptr_struct List;
 #define LIST_ITER_DEFINED
 typedef struct _ptr_iter ITER(List);
 #endif
-/**
- * @fn int8_t construct_List(List*list)
- * @param list the list to initialize
- * @return 0 on success, non-zero on failure
- *
- * @warning if you are using a local variable
- * clear out the memory before calling this 
- * function using memset or bzero
- */
-int8_t construct_List(List * list,size_t objsize, int flag);
-
-/**
- * @fn int8_t construct_func_List()
- * @param list the list to initialize
- * @param alloc the allocation functor
- * @param dealloc the deallocation functor
- * @param cmp the comparison functor
- * @param rcmp the reverse comparison functor
- * @param print the print functor
- * @param copy the copy functor
- * @return 0 on success, non-zero on failure
- *
- * @brief assigns all the
- * function pointers in one function call
- */
-int8_t construct_func_List(List * list,size_t objsize, int flag,
-                           void *(*alloc) (size_t),
-                           void (*dealloc) (void *),
-                           int (*cmp) (const void *, const void *,size_t),
-                           int (*rcmp) (const void *, const void *,size_t),
-                           void (*print) (const void *),
-                           void *(*copy) (void *, const void *, size_t));
-
-/**
- * @fn int8_t destruct_List(List*list)
- * @param list the list to destroy
- * @return 0 on success, non-zero on failure
- */
-int8_t destruct_List(List * list);
-
-/**
- * @fn int8_t clear_List(List*list)
- * @param list the list to clear nodes from
- * @return 0 on success, non-zero on failure
- *
- * @brief move all nodes to the free lis
- */
-int8_t clear_List(List * list);
+COMMON_FUNCTION_PROTOTYPES(List)
 
 /**
  * @fn int8_t push_front_List(List*,void*,size_t,int);
@@ -121,23 +75,12 @@ int8_t pop_back_List(List * list);
  */
 void *front_List(List * list);
 
-
-
 /**
  * @fn void *back_List(List*)
  * @param list the list to get the back object from
  * @return pointer to obj on success, NULL otherwise
  */
 void *back_List(List * list);
-
-/**
- * @fn List* duplicate_list(List* src)
- * @param src the source list to copy
- * @return an exact copy of the passed in list or NULL on error
- */
-
-List *duplicate_List(List* src);
-
 
 /**
  * @fn void insert_List(List*,void*,size_t,int)
@@ -174,27 +117,6 @@ int8_t sort_List(List * list, size_t objsize);
  */
 int8_t rsort_List(List * list, size_t objsize);
 
-/**
- * @fn int8_t print_List(List*)
- * @param list the list to print objects for
- * @return 0 on success, non-zero on error
- */
-int8_t print_List(List * list);
-
-/**
- * @fn int8_t empty_List(List*)
- * @param list the list to check for emptyness
- * @return 0 on empty, non-zero otherwise
- */
-int8_t empty_List(List*);
-
-/**
- * @fn size_t size_List(List*)
- * @param list the list to get size of
- * @return size of list or 0 on error
- */
-size_t size_List(List* list);
-
 
 /**
  * @fn void *find_List(List*list,void *obj,size_t objsize)
@@ -213,7 +135,6 @@ void *find_List(List * list, void *obj, size_t objsize);
   */
 void *to_array_List(List * list, size_t objsize);
 
-
 /**
   @fn ListIter* extract_ListIter(List*list,ListIter* iter);
   @param list the list to extract the node from
@@ -226,22 +147,6 @@ void *to_array_List(List * list, size_t objsize);
   points to the tail of the list, it will point to the new tail.
   */
 ITER(List) * extract_ListIter(ITER(List) * iter);
-
-/**
- * @fn int32_t dump_List(List*)
- * @param list the list to dump objects for
- * @return 0 on sucess, non-zero on error
- */
-int8_t dump_List(List * list);
-
-
-prototype(size_of, List);
-prototype(set_compare, List);
-prototype(set_rcompare, List);
-prototype(set_print, List);
-prototype(set_alloc, List);
-prototype(set_dealloc, List);
-prototype(set_copy, List);
 
 create_iter_prototypes(List)
 #endif

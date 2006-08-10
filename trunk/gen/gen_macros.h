@@ -13,102 +13,43 @@
 #ifndef GEN_MACROS_H_
 #    define GEN_MACROS_H_
 #include <stddef.h>
+#include "function_signatures.h"
 
-#    define prototype(FUNC,TYPE)	proto_##FUNC(TYPE)
 #    define function(FUNC,TYPE)	func_##FUNC(TYPE)
 
-/**
- * Beginning of macro definitions for function prototypes 
- */
-#    define proto_set_compare(X) \
-/**
- * @param obj the obj to set the compare function of
- * @param cmp the function pointer to the comparison function
- * @return 0 on success, non-zero on error
- */\
-	int8_t set_compare_##X(X* obj,\
-			int (*cmp)(const void*, const void*,size_t))
-
-#    define proto_set_rcompare(X)\
-/** 
- * @param obj the obj to set the reverse comparison function of
- * @param rcmp the function pointer to the reverse comparison function
- * @return 0 on success, non-zero on error
- */\
-	int8_t set_rcompare_##X(X* obj,\
-			int (*rcmp)(const void*, const void*,size_t))
-
-#    define proto_set_print(X)\
-/**
- * @param obj the obj to set the print function of
- * @param print the function pointer to the print function
- * @return 0 on success, non-zero on error
- */\
-	int8_t set_print_##X(X* obj, \
-			void (*print)(const void *))
-
-#    define proto_set_copy(X)\
-/**
- * @param obj the object to set the copy function for
- * @param copy the function pointer to the copy function
- * @return 0 on success, non-zero on error
- */\
-	int8_t set_copy_ ##X(X* obj, \
-			void* (*copy)(void*, const void*, size_t))
-
-#define proto_duplicate(X)\
-	X* duplicate_##X(X* src)
-
-#    define proto_set_alloc(X)\
-/**
- * @param obj the obj to set the alloc funtion for
- * @param alloc the function pointer to the alloc function
- * @return 0 on success, non-zero on error
- */\
-	int8_t set_alloc_##X(X* obj, \
-			void* (*alloc)(size_t))
-
-#    define proto_set_dealloc(X)\
-/**
- * @param ptr the obj to set the dealloc function for
- * @param dealloc the function pointer to the dealloc function
- * @return 0 on success, non-zero on error
- */\
-	int8_t set_dealloc_##X(X* obj, \
-			void (*dealloc)(void *))
-
-#    define proto_size_of(X) \
-	/**
-	 * @param obj the tree to get the size of
-	 * @return size of tree or 0 on error
-	 */\
-	size_t size_of_##X( X* obj)
-
+#ifndef API_DEFAULT_SETUP
+#define API_DEFAULT_SETUP(X)\
+	do {\
+		(X)->API.alloc = malloc;\
+		(X)->API.dealloc = free;\
+		(X)->API.cmp = memcmp;\
+		(X)->API.copy = memcpy;\
+		(X)->API.print = NULL;\
+	}while(0)
+#endif
 /** Beginning of macro definitions for function implementations */
 #define func_duplicate_ptr_struct(X)\
-	X* duplicate_##X(X* src) {\
+	F_DUPLICATE(X) {\
 		X* dst;\
 		Node* iter, *tmp;\
 		size_t x;\
-		CHECK_VARN(src,NULL);\
+		CHECK_VARN(obj,NULL);\
 		CHECK_VARA((dst = malloc(sizeof *dst)),NULL);\
 		dst->objfree = FREEOBJ;\
-		dst->objsize = src->objsize;\
-		dst->API.alloc = src->API.alloc;\
-		dst->API.dealloc = src->API.dealloc;\
-		dst->API.cmp = src->API.cmp;\
-		dst->API.rcmp = src->API.rcmp;\
-		dst->API.print = src->API.print;\
-		dst->API.copy = src->API.copy;\
-		dst->error = src->error;\
+		dst->objsize = obj->objsize;\
+		dst->API.alloc = obj->API.alloc;\
+		dst->API.dealloc = obj->API.dealloc;\
+		dst->API.cmp = obj->API.cmp;\
+		dst->API.print = obj->API.print;\
+		dst->API.copy = obj->API.copy;\
 		dst->size = 0;\
 		FL(dst) = H(dst) = T(dst) = NULL;\
-		for(x = 0; x < (INITIAL_SIZE + src->size); x++) {\
+		for(x = 0; x < (INITIAL_SIZE + obj->size); x++) {\
 			iter = construct_Node(NUM_LINKS);\
 			N(iter) = P(iter) = NULL;\
 			ADD_FREE_NODE(dst,iter);\
 		}\
-		for(iter = H(src); iter; iter = N(iter)) {\
+		for(iter = H(obj); iter; iter = N(iter)) {\
 			INITIALIZE_NODE(tmp,dst,iter->objptr,STATIC);\
 			if(!S(dst)) {\
 				H(dst) = T(dst) = tmp;\
@@ -125,38 +66,37 @@
 	}
 
 #define func_duplicate_arr_struct(X)\
-		X* duplicate_##X(X* src) {\
+	F_DUPLICATE(X) {\
 			X* dst;\
 			size_t off;\
-			CHECK_VARN(src,NULL);\
+			CHECK_VARN(obj,NULL);\
 			CHECK_VARA(dst = malloc(sizeof *dst),NULL);\
-			dst->size = src->size;\
-			dst->capacity = src->capacity;\
-			dst->objsize = src->objsize;\
+			dst->size = obj->size;\
+			dst->capacity = obj->capacity;\
+			dst->objsize = obj->objsize;\
 			dst->objfree = FREEOBJ;\
-			dst->API.alloc = src->API.alloc;\
-			dst->API.dealloc = src->API.dealloc;\
-			dst->API.copy = src->API.copy;\
-			dst->API.cmp = src->API.cmp;\
-			dst->API.rcmp = src->API.rcmp;\
-			dst->API.print = src->API.print;\
+			dst->API.alloc = obj->API.alloc;\
+			dst->API.dealloc = obj->API.dealloc;\
+			dst->API.copy = obj->API.copy;\
+			dst->API.cmp = obj->API.cmp;\
+			dst->API.print = obj->API.print;\
 			dst->end = dst->head = dst->mem = dst->tail = NULL;\
-			if(!(M(dst) = malloc(src->capacity * O(src)))) {\
+			if(!(M(dst) = malloc(obj->capacity * O(obj)))) {\
 				free(dst);\
 				return NULL;\
 			}\
-			off = S(src) * O(src);\
-			memcpy(M(dst),M(src),off);\
-			if(M(src) == H(src)) {\
+			off = S(obj) * O(obj);\
+			memcpy(M(dst),M(obj),off);\
+			if(M(obj) == H(obj)) {\
 				H(dst) = M(dst);\
 			} else {\
-				ptrdiff_t offset = (char *)H(src) - (char *)M(src);\
+				ptrdiff_t offset = (char *)H(obj) - (char *)M(obj);\
 				H(dst) = (char *)M(dst) + offset;\
 			}\
-			if(T(src) == M(src)) {\
+			if(T(obj) == M(obj)) {\
 				T(dst) = M(dst);\
 			} else {\
-				ptrdiff_t offset = (char *)T(src) - (char *)M(src);\
+				ptrdiff_t offset = (char *)T(obj) - (char *)M(obj);\
 				T(dst) = (char *)M(dst) + offset;\
 			}\
 			dst->end = (char *)M(dst) + (O(dst) * C(dst));\
@@ -164,26 +104,15 @@
 		}
 
 #    define func_set_compare(X) \
-	int8_t set_compare_##X (X* obj,\
-			int (*cmp)(const void*,const void*,size_t)) {\
+	F_SET_COMPARE(X) {\
 		CHECK_VARN(obj,EINVAL);\
 		CHECK_VARN(cmp,EINVAL);\
 		obj->API.cmp = cmp;\
 		return 0;\
 	}
 
-#    define func_set_rcompare(X) \
-	int8_t set_rcompare_##X(X* obj,\
-			int (*rcmp)(const void*,const void*,size_t)) {\
-		CHECK_VARN(obj,EINVAL);\
-		CHECK_VARN(rcmp,EINVAL);\
-		obj->API.rcmp = rcmp;\
-		return 0;\
-	}
-
 #    define func_set_print(X) \
-	int8_t set_print_##X(X* obj,\
-			void (*print)(const void *)) {\
+	F_SET_PRINT(X) {\
 		CHECK_VARN(obj,EINVAL);\
 		CHECK_VARN(print,EINVAL);\
 		obj->API.print = print;\
@@ -191,8 +120,7 @@
 	}
 
 #    define func_set_copy(X) \
-	int8_t set_copy_##X(X* obj, \
-			void* (*copy)(void*, const void*,size_t)) {\
+	F_SET_COPY(X) {\
 		CHECK_VARN(obj,EINVAL);\
 		CHECK_VARN(copy,EINVAL);\
 		obj->API.copy = copy;\
@@ -200,8 +128,7 @@
 	}
 
 #    define func_set_alloc(X) \
-	int8_t set_alloc_##X(X* obj,\
-			void* (*alloc)(size_t)){\
+	F_SET_ALLOC(X) {\
 		CHECK_VARN(obj,EINVAL);\
 		CHECK_VARN(alloc,EINVAL);\
 		obj->API.alloc = alloc;\
@@ -209,8 +136,7 @@
 	}
 
 #    define func_set_dealloc(X) \
-	int8_t set_dealloc_##X(X* obj,\
-			void (*dealloc)(void *)){\
+	F_SET_DEALLOC(X) {\
 		CHECK_VARN(obj,EINVAL);\
 		CHECK_VARN(dealloc,EINVAL);\
 		obj->API.dealloc = dealloc;\
@@ -219,7 +145,7 @@
 
 
 #    define func_size_of(X) \
-	size_t size_of_##X( X* obj) {\
+	F_SIZE_OF(X) {\
 		CHECK_VARN(obj,0);\
 		return S(obj);\
 	}
@@ -228,18 +154,6 @@
 	void set_object_size_##X( X *obj, size_t objsize) {\
 		char *ptr;\
 		O(obj) = objsize;\
-		if(!E(obj)) {\
-			if(!(E(obj) = malloc(objsize))) {\
-				return;\
-			}\
-			for(ptr = E(obj); ptr < ((char *)E(obj) + objsize); ptr++) {\
-			    /*
-			     * This assigns the bit mask: 1010(B) 0101(5)
-			     * * to each byte that the pointer points to 
-			     */\
-				*ptr = (char)0xB5;\
-			}\
-		}\
 	}
 
 #define func_set_arr_object_size(X) \
@@ -521,162 +435,131 @@
 
 #define gen_Ptr_Based_iter_retrieve(TYPE) \
 		void* retrieve_##TYPE## Iter(ITER(TYPE) *iter) {\
-			CHECK_VARN(iter,CHECK(E(iter->parent)));\
-			CHECK_VARN(iter->ptr,CHECK(E(iter->parent)));\
-			CHECK_VARN(iter->ptr->objptr,CHECK(E(iter->parent)));\
+			CHECK_VARN(iter,NULL);\
+			CHECK_VARN(iter->ptr,NULL);\
+			CHECK_VARN(iter->ptr->objptr,NULL);\
 			return ITERLIST_OBJ(iter);\
 		}
 
 #define gen_Arr_Based_iter_retrieve(TYPE) \
 		void* retrieve_##TYPE## Iter(ITER(TYPE) *iter) {\
-			CHECK_VARN(iter,CHECK(E(iter->parent)));\
-			CHECK_VARN(iter->ptr,CHECK(E(iter->parent)));\
+			CHECK_VARN(iter,NULL);\
+			CHECK_VARN(iter->ptr,NULL);\
 			return ITERARRAY_OBJ(iter);\
 		}
 
-#define ptr_clear(TYPE,OBJ) \
-do {\
-	Node *iter, *iter2;\
-	\
-	CHECK_VARN((OBJ),EINVAL);\
-	for(iter = H((OBJ));iter;iter = iter2) {\
-		iter2 = N(iter);\
-		REMOVE_NODE(iter,(OBJ));\
-		DELETE_OBJPTR((OBJ),iter);\
-		ADD_FREE_NODE((OBJ),iter);\
-	}\
-	H((OBJ)) = T((OBJ)) = NULL;\
-	S((OBJ)) = 0;\
-}while(0)
 
-#define arr_construct(TYPE,OBJ,OBJSIZE,FLAG) \
-do{\
-	if(S((OBJ)) > 0) {\
-		destruct(TYPE,(OBJ));\
-	}\
-	S((OBJ)) = 0;\
-	C((OBJ)) = 0;\
-	(OBJ)->end = M((OBJ)) = H((OBJ)) = T((OBJ)) = NULL;\
-	(OBJ)->API.alloc = malloc;\
-	(OBJ)->API.dealloc = free;\
-	(OBJ)->API.copy = memcpy;\
-	(OBJ)->API.cmp = NULL;\
-	(OBJ)->API.rcmp = NULL;\
-	(OBJ)->API.print = NULL;\
-	(OBJ)->objsize = (OBJSIZE);\
-	(OBJ)->objfree = (FLAG);\
-}while(0)
-
-#define arr_pop_back(TYPE,OBJ) \
-do{\
-	if(T((OBJ)) == M((OBJ))) {\
-		T((OBJ)) = (OBJ)->end;\
-	} else {\
-		T((OBJ)) = ((char *)T((OBJ))) - O((OBJ));\
-	}\
-	S((OBJ))--;\
-}while(0)
-
-#define arr_pop_front(TYPE,OBJ) \
-do {\
-	if(H((OBJ)) >= (OBJ)->end) {\
-		H((OBJ)) = M((OBJ));\
-	} else { \
-		H((OBJ)) = ((char *)H((OBJ))) + O((OBJ));\
-	}\
-	S((OBJ))--;\
-}while(0)
-
-#define arr_clear(TYPE,OBJ) \
-do{ \
-	H((OBJ)) = M((OBJ));\
-	T((OBJ)) = ((char *)H((OBJ)) + O((OBJ)));\
-	E((OBJ)) = (char *)H((OBJ)) + (O((OBJ)) * C((OBJ)));\
-	S((OBJ)) = 0;\
-}while(0)
-
-#define arr_push_back(TYPE,OBJ,ITEM,ITEMSIZE) \
-do{ \
-	if(S((OBJ)) == C((OBJ))) {\
-		if(C((OBJ))) {\
-			resize(TYPE,(OBJ),C((OBJ)) << 1);\
-		} else {\
-			CHECK_VARA(M((OBJ)) = malloc(O((OBJ)) * INITIAL_SIZE),EALLOCF);\
-			H((OBJ)) = T((OBJ)) = M((OBJ));\
-			C((OBJ)) = INITIAL_SIZE;\
-			S((OBJ)) = 0;\
-			(OBJ)->end = (char *)M((OBJ)) + (O((OBJ)) * C((OBJ)));\
-		 }\
-	}\
-	if(T((OBJ)) >= (OBJ)->end) {\
-		T((OBJ)) = M((OBJ));\
-	}\
-	(OBJ)->API.copy(T((OBJ)),(ITEM),(ITEMSIZE));\
-	S((OBJ))++;\
-	T((OBJ)) = ((char *)T((OBJ))) + O((OBJ));\
-}while(0)
-
-#define arr_push_front(TYPE,OBJ,ITEM,ITEMSIZE) \
-do{ \
-	if(S((OBJ)) == C((OBJ))) {\
-		if(C((OBJ))) {\
-			resize(TYPE,(OBJ),C((OBJ)) << 1);\
-		} else {\
-			CHECK_VARA(M((OBJ)) = malloc(O((OBJ)) * INITIAL_SIZE),EALLOCF);\
-			H((OBJ)) = T((OBJ)) = M((OBJ));\
-			C((OBJ)) = INITIAL_SIZE;\
-			S((OBJ)) = 0;\
-			(OBJ)->end = (char *)M((OBJ)) + (O((OBJ)) * C((OBJ)));\
-		 }\
-	}\
-	S((OBJ))++;\
-	if(H((OBJ)) == M((OBJ))) {\
-		H((OBJ)) = ((char *)(OBJ)->end) - O((OBJ));\
-	} else {\
-		H((OBJ)) = ((char *)H((OBJ))) - O((OBJ));\
-	}\
-    (OBJ)->API.copy(H((OBJ)),(ITEM),(ITEMSIZE));\
-}while(0)
-
-#define arr_copy_wrap(TYPE,DST,SRC,SIZE) \
-do {\
-	if(M((SRC))) {\
-	size_t off = S((SRC)) * O((SRC));\
-	if(S((SRC)) == 0) {\
-		/* header and tail are same, no need to copy */\
-	} else if(H((SRC)) < T((SRC))) {\
-		/* No wraparound */ \
-		memcpy((DST),H((SRC)),((char *)T((SRC)) - (char *)H((SRC))));\
-	} else if((void *)((char *)(H((SRC))) + off) < (SRC)->end) {\
-		/* wraparound exists, but the new size fits between
-		 * the current head and the end of the memarray*/\
-		memcpy((DST),H((SRC)),off);\
-	} else {\
-		/* wraparound exists, and the new size
-		 * overruns into the beginning, need to
-		 * do a double copy
-		 */\
-		ptrdiff_t spaces = ((char *)(SRC)->end - (char *)H((SRC)));\
-		memcpy((DST),H((SRC)),(size_t)spaces);\
-		memcpy((char *)(DST) + spaces,M((SRC)),((O((SRC)) * (S((SRC))) - spaces/O((SRC)))));\
-	}\
-	free(M((SRC)));\
-	}\
-}while(0)
-		
-
-#define arr_setup_pointers(TYPE,DST,SRC,SIZE) \
-do{\
-	M((SRC)) = H((SRC)) = (DST);\
-	C((SRC)) = SIZE;\
-	(SRC)->end = (char *)M((SRC)) + (O((SRC)) * C((SRC)));\
-	if(S((SRC)) > C((SRC))) {\
-	  S((SRC)) = C((SRC));\
-	}\
-	T((SRC)) = (char *)H((SRC)) + (S((SRC)) * O((SRC)));\
-	if(T((SRC)) == H((SRC))) {\
-		T((SRC)) == (char *)H((SRC)) + O((SRC));\
-	}\
-}while(0)
+#ifndef INIT_FUNCTION_PROTOTYPES 
+#define COMMON_FUNCTION_PROTOTYPES(STRUCT)\
+	/**
+	 * @param obj the object to initialize
+	 * @param datasize the size of the data to store
+	 * @param flag the flag for how to handle memory
+	 * @return 0 on success, non-zero on failure
+	 *
+	 * @warning if you are using a local variable
+	 * clear out the memory before calling this 
+	 * function using memset or bzero
+	 */\
+	F_CONSTRUCT(STRUCT);\
+	/**
+	 * @param obj the object to initialize
+	 * @param datasize the size of the data to store
+	 * @param flag the flag for how to handle memory
+	 * @param alloc the allocation functor
+	 * @param dealloc the deallocation functor
+	 * @param cmp the comparison functor
+	 * @param print the print functor
+	 * @param copy the copy functor
+	 * @return 0 on success, non-zero on failure
+	 *
+	 * @brief assigns all the
+	 * function pointers in one function call
+	 */\
+	F_CONSTRUCT_FUNC(STRUCT);\
+	/**
+	 * @param obj the object to deinitialize
+	 * @return 0 on succss, non-zero on failure
+	 * @brief Removes all the allocated memory for
+	 * the object
+	 */\
+	F_DESTRUCT(STRUCT);\
+	/**
+	 * @param obj the object to clear
+	 * @return 0 on success, non-zero on failure
+	 * @brief removes all the data from the object
+	 */\
+	F_CLEAR(STRUCT);\
+	/**
+	 * @param obj the object to duplicate
+	 * @return copy of the object or NULL on error
+	 * @brief duplicates the object
+	 *
+	 * Duplicates all the data that the object holds
+	 * and returns it in its own object. The new object
+	 * has copies of the data and does not use copy
+	 * on write semantics. Therefor the new object will
+	 * handle the deallocation of data memory
+	 * when destroyed.
+	 */\
+	F_DUPLICATE(STRUCT);\
+	/**
+	 * @param obj the object to print
+	 * @return 0 on success, non-zero on error
+	 * @brief prints out the data inside the object
+	 */\
+	F_PRINT(STRUCT);\
+	/**
+	 * @param obj the object to check for emptiness
+	 * @return 0 on empty, non-zero otherwise
+	 */\
+	F_EMPTY(STRUCT);\
+	/**
+	 * @param obj the object to get the size of
+	 * @return size of object or zero on failure
+	 */\
+	F_SIZE(STRUCT);\
+	/**
+	 * @param obj the object to dump the internal structure of
+	 * @return 0 on success,non-zero on error
+	 * @brief dumps out the internal structure of the object
+	 */\
+	F_DUMP(STRUCT);\
+	/**
+	 * @param obj the obj to get the size of
+	 * @return size of the object or 0 on error/empty
+	 */\
+	F_SIZE_OF(STRUCT);\
+	/**
+	 * @param obj the obj to set the compare function of
+	 * @param cmp the function pointer to the comparison function
+	 * @return 0 on success, non-zero on error
+	 */\
+	F_SET_COMPARE(STRUCT);\
+	/**
+	 * @param obj the obj to set the print function of
+	 * @param print the function pointer to the print function
+	 * @return 0 on success, non-zero on error
+	 */\
+	F_SET_PRINT(STRUCT);\
+	/**
+	 * @param obj the obj to set the alloc funtion for
+	 * @param alloc the function pointer to the alloc function
+	 * @return 0 on success, non-zero on error
+	 */\
+	F_SET_ALLOC(STRUCT);\
+	/**
+	 * @param ptr the obj to set the dealloc function for
+	 * @param dealloc the function pointer to the dealloc function
+	 * @return 0 on success, non-zero on error
+	 */\
+	F_SET_DEALLOC(STRUCT);\
+	/**
+	 * @param obj the object to set the copy function for
+	 * @param copy the function pointer to the copy function
+	 * @return 0 on success, non-zero on error
+	 */\
+	F_SET_COPY(STRUCT);
+#endif
 
 #endif
