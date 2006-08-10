@@ -229,6 +229,32 @@ int8_t set_hash_OHTable(OHTable *table, uint32_t (*hash)(void *,size_t)) {
 	return SUCCESS;
 }
 
+OHTable* duplicate_OHTable(OHTable *src) {
+	OHTable* dst;
+	OHTableIter *ohiter;
+	size_t x;
+	CHECK_VARN(src,NULL);
+	CHECK_VARN(dst = malloc(sizeof *dst),NULL);
+	memset(dst,0,sizeof *dst);
+	dst->objfree = FREEOBJ;
+	dst->capacity = src->capacity;
+	dst->API.alloc = src->API.alloc;
+	dst->API.dealloc = src->API.dealloc;
+	dst->API.copy = src->API.copy;
+	dst->API.cmp = src->API.cmp;
+	dst->API.rcmp = src->API.rcmp;
+	dst->API.print = src->API.print;
+	dst->hash = src->hash;
+	dst->nodes = malloc(sizeof *dst->nodes * dst->capacity);
+	memset(dst->nodes,0,sizeof *dst->nodes * dst->capacity);
+	ohiter = create(OHTableIter,src);
+	do{
+		insert_OHTable(dst,retrieve(OHTableIter,ohiter),ohiter->ptr->objsize,STATIC);
+	}while(!next(OHTableIter,ohiter));
+	destroy(OHTableIter,ohiter);
+	return dst;
+}
+
 int8_t prev_OHTableIter(OHTableIter *iter) {
 	CHECK_VARN(iter,EINVAL);
 	CHECK_VARN(iter->parent,EINVAL);
@@ -288,6 +314,9 @@ int8_t head_OHTableIter(OHTableIter *iter) {
 	CHECK_VARN(iter->parent,EINVAL);
 	iter->ptr = iter->parent->nodes;
 	iter->nptr = iter->ptr;
+	if(iter->nptr->objptr == NULL) {
+		return next(OHTableIter,iter);
+	}
 	return SUCCESS;
 }
 
@@ -497,6 +526,33 @@ void *find_CHTable(CHTable *table, void* element, size_t elesize) {
 		}
 	}
 	return NULL;
+}
+
+CHTable* duplicate_CHTable(CHTable *src) {
+	CHTable* dst;
+	CHTableIter *ohiter;
+	size_t x;
+	CHECK_VARN(src,NULL);
+	CHECK_VARN(dst = malloc(sizeof *dst),NULL);
+	memset(dst,0,sizeof *dst);
+	dst->objfree = FREEOBJ;
+	dst->capacity = src->capacity;
+	dst->API.alloc = src->API.alloc;
+	dst->API.dealloc = src->API.dealloc;
+	dst->API.copy = src->API.copy;
+	dst->API.cmp = src->API.cmp;
+	dst->API.rcmp = src->API.rcmp;
+	dst->API.print = src->API.print;
+	dst->hash = src->hash;
+	dst->prob = src->prob;
+	dst->data = malloc(sizeof *dst->data * dst->capacity);
+	memset(dst->data,0,sizeof *dst->data * dst->capacity);
+	ohiter = create(CHTableIter,src);
+	do{
+		insert_CHTable(dst,retrieve(CHTableIter,ohiter),ohiter->ptr->objsize,STATIC);
+	}while(!next(CHTableIter,ohiter));
+	destroy(CHTableIter,ohiter);
+	return dst;
 }
 
 int8_t set_hash_CHTable(CHTable *table, int32_t (*hash)(void *,size_t)) {

@@ -24,15 +24,6 @@
 #define BINARYTREE_DEFINED
 typedef struct _ptr_struct BinaryTree;
 #endif
-#ifndef BINARYTREE_DFS_ITER_DEFINED
-#define BINARYTREE_DFS_ITER_DEFINED
-typedef struct _ptr_iter BinaryTreeDFSIter;
-#endif
-
-#ifndef BINARYTREE_BFS_ITER_DEFINED
-#define BINARYTREE_BFS_ITER_DEFINED
-typedef struct _ptr_iter BinaryTreeBFSIter;
-#endif
 /**
  * @fn int8_t construct_BinaryTree()
  * @param tree pointer to the tree to construc
@@ -115,6 +106,8 @@ int8_t delete_BinaryTree(BinaryTree * tree, void *obj, size_t objsize);
  */
 void *find_BinaryTree(BinaryTree * tree, void *obj, size_t objsize);
 
+BinaryTree* duplicate_BinaryTree(BinaryTree *src);
+
 /**
  * @fn void* max_BinaryTree()
  * @param tree the tree to search for the max value of
@@ -160,6 +153,7 @@ int8_t assign_BinaryTreeDFSIter(BinaryTreeDFSIter* iter, BinaryTree* obj);
 int8_t assign_BinaryTreeBFSIter(BinaryTreeBFSIter* iter, BinaryTree* obj);
 BinaryTreeBFSIter* create_BinaryTreeBFSIter(BinaryTree* obj);
 BinaryTreeDFSIter* create_BinaryTreeDFSIter(BinaryTree* obj);
+
 
 create_iter_prototypes(BinaryTree)
 

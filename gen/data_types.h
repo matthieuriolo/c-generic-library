@@ -93,10 +93,6 @@ struct _dfs_iter {
 	struct _ptr_struct *parent;
 };
 
-struct _binary_tree_iter {
-	struct _Node *ptr;
-	struct _ptr_struct *parent;
-};
 
 struct _array_struct {
 
@@ -235,7 +231,7 @@ typedef struct _ptr_struct BinaryTree;
 #endif
 #ifndef BINARYTREE_ITER_DEFINED
 #define BINARYTREE_ITER_DEFINED
-typedef struct _binary_tree_iter BinaryTreeIter;
+typedef struct _ptr_iter BinaryTreeIter;
 #endif
 #ifndef BINARYTREE_DFS_ITER_DEFINED
 #define BINARYTREE_DFS_ITER_DEFINED
