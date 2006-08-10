@@ -42,6 +42,7 @@ void *find_OHTable(OHTable *table, void *element, size_t elesize);
 int8_t set_hash_OHTable(OHTable *table, uint32_t (*hash)(void *,size_t));
 int8_t clear_OHTable(OHTable* table);
 void print_hash_OHTable(OHTable *table);
+OHTable* duplicate_OHTable(OHTable *src);
 
 prototype(set_compare,OHTable);
 prototype(set_rcompare,OHTable);
@@ -88,6 +89,7 @@ int8_t set_hash_CHTable(CHTable *table, int32_t (*hash)(void *,size_t));
 int8_t set_probe_CHTable(CHTable *table, uint32_t (*prob)(uint32_t));
 int8_t clear_CHTable(CHTable* table);
 int8_t print_hash_CHTable(CHTable *table);
+CHTable *duplicate_CHTable(CHTable *table);
 
 prototype(set_compare,CHTable);
 prototype(set_rcompare,CHTable);

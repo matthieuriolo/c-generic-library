@@ -2,20 +2,20 @@
 #include <stdlib.h>
 #include <string.h>
 #include "binary_tree.h"
-#define RUNS 100/*0000*/
-#define BOUND 100/*00*/
+#define RUNS 1000000
+#define BOUND 10000
 #define BASE 0
 #define NUMCASES 10
 
-int32_t intcmp(const void *, const void *);
-int32_t intrcmp(const void *, const void *);
+int32_t intcmp(const void *, const void *,size_t);
+int32_t intrcmp(const void *, const void *,size_t);
 void  print(const void *);
 void  ckfree(void *);
 void *ckalloc(size_t);
 
 int
 main(void) {
-  BinaryTree  object;
+  BinaryTree  object,*dupe;
   BinaryTreeIter *ptr;
   BinaryTreeDFSIter *dfsptr;
   BinaryTreeBFSIter *bfsptr;
@@ -79,11 +79,38 @@ main(void) {
   head(BinaryTreeIter, ptr);
   do {
     value = *(unsigned int*)retrieve(BinaryTreeIter, ptr);
-	printf("%d ",value);
+/*	printf("%d ",value);*/
   }
   while (!next(BinaryTreeIter, ptr));
-  printf("\n");
+  /*printf("\n");*/
   assign(BinaryTreeIter, ptr, &object);
+  tail(BinaryTreeIter, ptr);
+  do {
+    value = *(unsigned int*) retrieve(BinaryTreeIter, ptr);
+  } while (!prev(BinaryTreeIter, ptr));
+  for(x = 0; x < RUNS; x++) {
+	  switch(rand() % 2) {
+		  case 1:
+			  prev(BinaryTreeIter,ptr);
+			  break;
+		  case 0:
+			  next(BinaryTreeIter,ptr);
+			  break;
+		  default:
+			  break;
+	  }
+  }
+  destroy(BinaryTreeIter, ptr);
+  dupe = duplicate(BinaryTree,&object);
+  ptr = create(BinaryTreeIter,  dupe);
+  head(BinaryTreeIter, ptr);
+  do {
+    value = *(unsigned int*)retrieve(BinaryTreeIter, ptr);
+	/*printf("%d ",value);*/
+  }
+  while (!next(BinaryTreeIter, ptr));
+  /*printf("\n");*/
+  assign(BinaryTreeIter, ptr, dupe);
   tail(BinaryTreeIter, ptr);
   do {
     value = *(unsigned int*) retrieve(BinaryTreeIter, ptr);
@@ -105,29 +132,31 @@ main(void) {
   bfsptr = create(BinaryTreeBFSIter,&object);
   do {
 	  value = *(unsigned int *)retrieve(BinaryTreeBFSIter, bfsptr);
-	  fprintf(stderr,"%d ",value);
+	  /*fprintf(stderr,"%d ",value);*/
   }while(!next(BinaryTreeBFSIter,bfsptr));
-  printf("\n");
+  /*printf("\n");*/
   dfsptr = create(BinaryTreeDFSIter,&object);
   do {
 	  value = *(unsigned int *)retrieve(BinaryTreeDFSIter, dfsptr);
-	  fprintf(stderr,"%d ",value);
+	  /*fprintf(stderr,"%d ",value);*/
   }while(!next(BinaryTreeDFSIter,dfsptr));
-  printf("\n");
+  /*printf("\n");*/
   destroy(BinaryTreeDFSIter,dfsptr);
   destroy(BinaryTreeBFSIter,bfsptr);
   destruct(BinaryTree,  &object);
+  destruct(BinaryTree,dupe);
+  free(dupe);
   return EXIT_SUCCESS;
 }
 
 int32_t
-intcmp(const void *a, const void *b)
+intcmp(const void *a, const void *b,size_t size)
 {
 	return (*(const int *)a > *(const int *)b) - (*(const int *)a < *(const int *)b);
 }
 
 int32_t
-intrcmp(const void *a, const void *b)
+intrcmp(const void *a, const void *b,size_t size)
 {
   if ((*(const int *) a) > (*(const int *) b)) {
     return -1;

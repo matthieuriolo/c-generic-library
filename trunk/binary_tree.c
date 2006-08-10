@@ -297,6 +297,40 @@ find_BinaryTree(BinaryTree * tree, void *obj, size_t objsize)
   }
 }
 
+BinaryTree* duplicate_BinaryTree(BinaryTree* src) {
+	BinaryTree *dst;
+	BinaryTreeDFSIter *dfsiter;
+	Node *tmp;
+	size_t x;
+	CHECK_VARN(src,NULL);
+	CHECK_VARA(dst = malloc(sizeof *dst),NULL);
+	dst->objfree = FREEOBJ;
+	dst->objsize = src->objsize;
+	dst->API.alloc = src->API.alloc;
+	dst->API.dealloc = src->API.dealloc;
+	dst->API.cmp = src->API.cmp;
+	dst->API.rcmp = src->API.rcmp;
+	dst->API.print = src->API.print;
+	dst->API.copy = src->API.copy;
+	dst->error = src->error;
+	dst->size = 0;
+	FL(dst) = H(dst) = T(dst) = NULL;
+	for(x = 0; x < (INITIAL_SIZE + src->size); x++) {
+		tmp = construct_Node(NUM_LINKS);
+		ADD_FREE_NODE(dst,tmp);
+	}
+	dfsiter = create(BinaryTreeDFSIter,src);
+	do {
+		insert_BinaryTree(dst,retrieve(BinaryTreeDFSIter,dfsiter),dst->objsize,STATIC);
+	}while(!next(BinaryTreeDFSIter,dfsiter));
+	destroy(BinaryTreeDFSIter,dfsiter);
+	return dst;
+allocobjfail:
+allocfail:
+	destruct_BinaryTree(dst);
+	return NULL;
+}
+
 void*
 max_BinaryTree(BinaryTree* tree) {
 	Node * ptr = NULL;
@@ -605,6 +639,6 @@ int8_t tail_BinaryTreeIter(BinaryTreeIter* iter) {
 	}
 	return SUCCESS;
 }
-
-
+generic_iter_func(Ptr_Based,copy,BinaryTree)
+generic_iter_func(Ptr_Based,swap,BinaryTree)
 
