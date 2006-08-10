@@ -29,9 +29,6 @@
 #ifdef PARENT
 #undef PARENT
 #endif
-#define DFS_LEFT 	0x01
-#define DFS_RIGHT 	0x02
-#define DFS_UP	 	0x03
 
 #define PARENT (NUM_LINKS-1)
 
@@ -358,9 +355,10 @@ void destroy_BinaryTreeIter(BinaryTreeIter* iter) {
 	if(iter) {
 		free(iter);
 	}
-}/*
+}
 void destroy_BinaryTreeDFSIter(BinaryTreeDFSIter* iter) {
 	if(iter) {
+		destruct(StackList,&iter->stack);
 		free(iter);
 	}	
 }
@@ -369,7 +367,6 @@ void destroy_BinaryTreeDFSIter(BinaryTreeDFSIter* iter) {
 void destroy_BinaryTreeBFSIter(BinaryTreeBFSIter* iter) {
 	if(iter) {
 		destruct(QueueList,&iter->queue);
-		destruct(StackList,&iter->stack);
 		free(iter);
 	}
 }
@@ -377,35 +374,36 @@ void destroy_BinaryTreeBFSIter(BinaryTreeBFSIter* iter) {
 int8_t assign_BinaryTreeBFSIter(BinaryTreeBFSIter* iter, BinaryTree* obj) {
 	CHECK_VARN(iter,EINVAL);
 	CHECK_VARN(obj,EINVAL);
+	CHECK_VARN(H(obj),EINVAL);
 	iter->parent = obj;
-	construct(StackList,&iter->stack);
-	construct(QueueList,&iter->queue);
-	set_object_size(StackList,&iter->stack,sizeof *H(obj));
-	set_free_objects(StackList,&iter->stack,NOFREE);
-	set_object_size(QueueList,&iter->queue,sizeof *H(obj));
-	set_free_objects(QueueList,&iter->queue,NOFREE);
-	push(QueueList,&iter->queue,iter->ptr,DYNAMIC);
-	return 0;
-}*/
+	iter->ptr = H(obj);
+	memset(&iter->queue,0,sizeof iter->queue);
+	construct(QueueList,&iter->queue,sizeof *H(obj),NOFREE);
+	push(QueueList,&iter->queue,iter->ptr->ptr[LEFT],DYNAMIC);
+	push(QueueList,&iter->queue,iter->ptr->ptr[RIGHT],DYNAMIC);
+	return SUCCESS;
+}
 
 int8_t assign_BinaryTreeIter(BinaryTreeIter* iter, BinaryTree* obj) {
 	CHECK_VARN(iter,EINVAL);
 	CHECK_VARN(obj,EINVAL);
+	CHECK_VARN(H(obj),EINVAL);
 	iter->parent = obj;
 	iter->ptr = H(obj);
 	while(L(iter->ptr)) {
 		iter->ptr = L(iter->ptr);
 	}
-	iter->dir_flag = DFS_UP;
-	return 0;
+	return SUCCESS;
 }
-/*
 int8_t assign_BinaryTreeDFSIter(BinaryTreeDFSIter* iter, BinaryTree* obj) {
 	CHECK_VARN(iter,EINVAL);
 	CHECK_VARN(obj,EINVAL);
-	iter->ptr = H(obj);
 	iter->parent = obj;
-	iter->dir_flag = DFS_LEFT;
+	iter->ptr =H(obj);
+	memset(&iter->stack,0,sizeof iter->stack);
+	construct(StackList,&iter->stack,sizeof *H(obj),NOFREE);
+	push(StackList,&iter->stack,iter->ptr->ptr[RIGHT],DYNAMIC);
+	push(StackList,&iter->stack,iter->ptr->ptr[LEFT],DYNAMIC);
 	return 0;
 }
 BinaryTreeDFSIter* create_BinaryTreeDFSIter(BinaryTree* obj) {
@@ -415,10 +413,12 @@ BinaryTreeDFSIter* create_BinaryTreeDFSIter(BinaryTree* obj) {
 	CHECK_VARA((iter = malloc(sizeof *iter)), NULL);
 	iter->ptr = H(obj);
 	iter->parent = obj;
-	iter->dir_flag = DFS_LEFT;
+	memset(&iter->stack,0,sizeof iter->stack);
+	construct(StackList,&iter->stack,sizeof *H(obj),NOFREE);
+	push(StackList,&iter->stack,iter->ptr->ptr[RIGHT],DYNAMIC);
+	push(StackList,&iter->stack,iter->ptr->ptr[LEFT],DYNAMIC);
 	return iter;
 }
-*/
 BinaryTreeIter* create_BinaryTreeIter(BinaryTree* obj) {
 	BinaryTreeIter* iter;
 	CHECK_VARN(obj,NULL);
@@ -429,58 +429,50 @@ BinaryTreeIter* create_BinaryTreeIter(BinaryTree* obj) {
 		iter->ptr = L(iter->ptr);
 	}
 	iter->parent = obj;
-	iter->dir_flag = DFS_UP;
 	return iter;
 }
-/*
 BinaryTreeBFSIter* create_BinaryTreeBFSIter(BinaryTree* obj) {
 	BinaryTreeBFSIter* iter;
 	CHECK_VARN(obj,NULL);
 	CHECK_VARE(S(obj),NULL);
 	CHECK_VARA((iter = malloc(sizeof *iter)),NULL);
 	iter->parent = obj;
+	iter->ptr = H(obj);
 	memset(&iter->queue,0,sizeof iter->queue);
-	memset(&iter->stack,0,sizeof iter->stack);
-	construct(StackList,&iter->stack);
-	construct(QueueList,&iter->queue);
-	set_object_size(StackList,&iter->stack,sizeof *H(obj));
-	set_free_objects(StackList,&iter->stack,NOFREE);
-	set_object_size(QueueList,&iter->queue,sizeof *H(obj));
-	set_free_objects(QueueList,&iter->queue,NOFREE);
-	push(QueueList,&iter->queue,iter->ptr,DYNAMIC);
-	return 0;
+	construct(QueueList,&iter->queue,sizeof *H(obj),NOFREE);
+	push(QueueList,&iter->queue,iter->ptr->ptr[LEFT],DYNAMIC);
+	push(QueueList,&iter->queue,iter->ptr->ptr[RIGHT],DYNAMIC);
+	return iter;
 }
 
 void* retrieve_BinaryTreeBFSIter(BinaryTreeBFSIter* iter) {
-	CHECK_VARN(iter,CHECK(E(iter->parent)));
-	CHECK_VARN(iter->ptr,CHECK(E(iter->parent)));
-	return front(QueueList,&iter->queue);
+	CHECK_VARN(iter,NULL);
+	CHECK_VARN(iter->ptr,NULL);
+	return iter->ptr->objptr;
 }
 
 void* retrieve_BinaryTreeDFSIter(BinaryTreeDFSIter* iter) {
-	CHECK_VARN(iter,CHECK(E(iter->parent)));
-	CHECK_VARN(iter->ptr,CHECK(E(iter->parent)));
+	CHECK_VARN(iter,NULL);
+	CHECK_VARN(iter->ptr,NULL);
 	return iter->ptr->objptr;
 }
-*/
 void* retrieve_BinaryTreeIter(BinaryTreeIter* iter) {
-	CHECK_VARN(iter,CHECK(E(iter->parent)));
-	CHECK_VARN(iter->ptr,CHECK(E(iter->parent)));
+	CHECK_VARN(iter,NULL);
+	CHECK_VARN(iter->ptr,NULL);
 	return iter->ptr->objptr;
 }
 /*
+ * How do we do prev operations for Queue-based BFS & Stack-based DFS?
 int8_t prev_BinaryTreeBFSIter(BinaryTreeBFSIter* iter) {
 	CHECK_VARN(iter,EINVAL);
 	CHECK_VARN(iter->parent,EINVAL);
 	return 0;
 }
-
 int8_t prev_BinaryTreeDFSIter(BinaryTreeDFSIter* iter) {
 	CHECK_VARN(iter,EINVAL);
 	CHECK_VARN(iter->parent,EINVAL);
 	return 0;
-}
-*/
+}*/
 int8_t prev_BinaryTreeIter(BinaryTreeIter *iter) {
 	CHECK_VARN(iter,EINVAL);
 	CHECK_VARN(iter->parent,EINVAL);
@@ -522,62 +514,69 @@ int8_t next_BinaryTreeIter(BinaryTreeIter* iter) {
 		}
 	} else {
 		if(iter->ptr == H(iter->parent)) {
-			return 0;
+			return SUCCESS;
 		} else if(!iter->ptr) {
 			iter->ptr = H(iter->parent);
-			return -1;
+			return EINVAL;
 		} else {
 			/*printf("Checking %p against %p h %p\n",iter->ptr,iter->ptr->ptr[PARENT]->ptr[RIGHT],H(iter->parent));*/
 			while(iter->ptr == iter->ptr->ptr[PARENT]->ptr[RIGHT]) {
 				iter->ptr = iter->ptr->ptr[PARENT];
 				if(iter->ptr == H(iter->parent)) {
-					return -1;
+					return EINVAL;
 				}
 			}
 			iter->ptr = iter->ptr->ptr[PARENT];
 		}
 	}
-	return 0;
+	return SUCCESS;
 }
-/*
 int8_t next_BinaryTreeBFSIter(BinaryTreeBFSIter* iter) {
 	CHECK_VARN(iter,EINVAL);
 	CHECK_VARN(iter->parent,EINVAL);
-	return 0;
+	iter->ptr = front(QueueList,&iter->queue);
+	if(!pop(QueueList,&iter->queue)) {
+		push(QueueList,&iter->queue,iter->ptr->ptr[LEFT],DYNAMIC);
+		push(QueueList,&iter->queue,iter->ptr->ptr[RIGHT],DYNAMIC);
+		return SUCCESS;
+	} else {
+		return EINVAL;
+	}
 }
+
 int8_t next_BinaryTreeDFSIter(BinaryTreeDFSIter *iter) {
 	CHECK_VARN(iter,EINVAL);
 	CHECK_VARN(iter->parent,EINVAL);
-	switch(iter->dir_flag) {
-		case DFS_LEFT:
-			break;
-		case DFS_RIGHT:
-			break;
-		case DFS_UP:
-			break;
-		default:
-			break;
+	iter->ptr = top(StackList,&iter->stack);
+	if(!pop(StackList,&iter->stack)) {
+		push(StackList,&iter->stack,iter->ptr->ptr[RIGHT],DYNAMIC);
+		push(StackList,&iter->stack,iter->ptr->ptr[LEFT],DYNAMIC);
+		return SUCCESS;
+	} else {
+		return EINVAL;
 	}
-	return 0;
-}*/
-/*
+}
 int8_t head_BinaryTreeBFSIter(BinaryTreeBFSIter* iter) {
 	CHECK_VARN(iter,EINVAL);
 	CHECK_VARN(iter->parent,EINVAL);
-	clear(StackList,&iter->stack);
+	CHECK_VARN(H(iter->parent),EINVAL);
 	clear(QueueList,&iter->queue);
-	CHECK_VARN(H(iter->parent),0);
-	push(QueueList,&iter->queue,H(iter->parent),DYNAMIC);
-	return 0;
+	iter->ptr = H(iter->parent);
+	push(QueueList,&iter->queue,iter->ptr->ptr[LEFT],DYNAMIC);
+	push(QueueList,&iter->queue,iter->ptr->ptr[RIGHT],DYNAMIC);
+	return SUCCESS;
 }
 
 int8_t head_BinaryTreeDFSIter(BinaryTreeDFSIter* iter) {
 	CHECK_VARN(iter,EINVAL);
 	CHECK_VARN(iter->parent,EINVAL);
+	CHECK_VARN(H(iter->parent),EINVAL);
+	clear(StackList,&iter->stack);
 	iter->ptr = H(iter->parent);
-	iter->dir_flag = DFS_LEFT;
-	return 0;
-}*/
+	push(StackList,&iter->stack,iter->ptr->ptr[RIGHT],DYNAMIC);
+	push(StackList,&iter->stack,iter->ptr->ptr[LEFT],DYNAMIC);
+	return SUCCESS;
+}
 
 int8_t head_BinaryTreeIter(BinaryTreeIter* iter) {
 	CHECK_VARN(iter,EINVAL);
@@ -586,26 +585,16 @@ int8_t head_BinaryTreeIter(BinaryTreeIter* iter) {
 	while(L(iter->ptr)) {
 		iter->ptr = L(iter->ptr);
 	}
-	iter->dir_flag = DFS_LEFT;
-	return 0;
-}
-
-/*int8_t tail_BinaryTreeDFSIter(BinaryTreeDFSIter* iter) {
-	CHECK_VARN(iter,EINVAL);
-	CHECK_VARN(iter->parent,EINVAL);
-	iter->ptr = T(iter->parent);
-	iter->dir_flag = DFS_RIGHT;
-	return 0;
+	return SUCCESS;
 }
 
 int8_t tail_BinaryTreeBFSIter(BinaryTreeBFSIter* iter) {
 	CHECK_VARN(iter,EINVAL);
 	CHECK_VARN(iter->parent,EINVAL);
-	clear(StackList,&iter->stack);
 	clear(QueueList,&iter->queue);
 	iter->ptr = T(iter->parent);
-	return 0;
-}*/
+	return SUCCESS;
+}
 
 int8_t tail_BinaryTreeIter(BinaryTreeIter* iter) {
 	CHECK_VARN(iter,EINVAL);
@@ -614,8 +603,7 @@ int8_t tail_BinaryTreeIter(BinaryTreeIter* iter) {
 	while(R(iter->ptr)) {
 		iter->ptr = R(iter->ptr);
 	}
-	iter->dir_flag = DFS_RIGHT;
-	return 0;
+	return SUCCESS;
 }
 
 

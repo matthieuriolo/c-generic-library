@@ -2,8 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include "binary_tree.h"
-#define RUNS 1000000
-#define BOUND 10000
+#define RUNS 100/*0000*/
+#define BOUND 100/*00*/
 #define BASE 0
 #define NUMCASES 10
 
@@ -17,6 +17,8 @@ int
 main(void) {
   BinaryTree  object;
   BinaryTreeIter *ptr;
+  BinaryTreeDFSIter *dfsptr;
+  BinaryTreeBFSIter *bfsptr;
   unsigned int x, y;
   unsigned int value;
   memset(&object, 0, sizeof (object));
@@ -77,8 +79,10 @@ main(void) {
   head(BinaryTreeIter, ptr);
   do {
     value = *(unsigned int*)retrieve(BinaryTreeIter, ptr);
+	printf("%d ",value);
   }
   while (!next(BinaryTreeIter, ptr));
+  printf("\n");
   assign(BinaryTreeIter, ptr, &object);
   tail(BinaryTreeIter, ptr);
   do {
@@ -97,6 +101,21 @@ main(void) {
 	  }
   }
   destroy(BinaryTreeIter, ptr);
+
+  bfsptr = create(BinaryTreeBFSIter,&object);
+  do {
+	  value = *(unsigned int *)retrieve(BinaryTreeBFSIter, bfsptr);
+	  fprintf(stderr,"%d ",value);
+  }while(!next(BinaryTreeBFSIter,bfsptr));
+  printf("\n");
+  dfsptr = create(BinaryTreeDFSIter,&object);
+  do {
+	  value = *(unsigned int *)retrieve(BinaryTreeDFSIter, dfsptr);
+	  fprintf(stderr,"%d ",value);
+  }while(!next(BinaryTreeDFSIter,dfsptr));
+  printf("\n");
+  destroy(BinaryTreeDFSIter,dfsptr);
+  destroy(BinaryTreeBFSIter,bfsptr);
   destruct(BinaryTree,  &object);
   return EXIT_SUCCESS;
 }
@@ -104,7 +123,7 @@ main(void) {
 int32_t
 intcmp(const void *a, const void *b)
 {
-	return (*(int *)a > *(int *)b) - (*(int *)a < *(int *)b);
+	return (*(const int *)a > *(const int *)b) - (*(const int *)a < *(const int *)b);
 }
 
 int32_t
