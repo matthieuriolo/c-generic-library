@@ -63,8 +63,8 @@ int8_t construct_BinaryTree(BinaryTree * tree,size_t objsize, int flag);
 int8_t construct_func_BinaryTree(BinaryTree * tree,size_t objsize, int flag,
                                   void *(*alloc) (size_t),
                                   void (*dealloc) (void *),
-                                  int (*cmp) (const void *, const void *),
-                                  int (*rcmp) (const void *, const void *),
+                                  int (*cmp) (const void *, const void *,size_t),
+                                  int (*rcmp) (const void *, const void *,size_t),
                                   void (*print) (const void *),
                                   void *(*copy) (void *, const void *,
                                                  size_t));

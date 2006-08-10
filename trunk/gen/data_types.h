@@ -136,6 +136,8 @@ struct _Hash_List_Node {
 	void *objptr;
 	/** Pointer to the next node in the list */
 	struct _Hash_List_Node *next;
+	/** Pointer to the prev node in the list */
+	struct _Hash_List_Node *prev;
 }; 
 struct _Hash_Node {
 	/** Flags on whether the object is created from static of dynamic data */
