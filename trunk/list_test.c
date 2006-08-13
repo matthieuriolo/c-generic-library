@@ -3,8 +3,8 @@
 #include <stdlib.h>
 #include "list.h"
 /*#include "vector.h"*/
-#define RUNS 10000
-#define BOUND 10000
+#define RUNS 1000000
+#define BOUND 1000000
 #define BASE 0
 #define NUMCASES 10
 
@@ -123,9 +123,7 @@ main(void)
   l_copy = duplicate(List,&object);
   ptr2 = create(ListIter,l_copy);
   do{
-	  printf("%d ",*(unsigned int *)retrieve(ListIter,ptr2));
   }while(!next(ListIter,ptr2));
-  printf("\n");
   destruct(List,l_copy);
   destroy(ListIter,ptr2);
   ptr2 = create(ListIter,&object);

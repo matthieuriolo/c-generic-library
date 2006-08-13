@@ -9,11 +9,11 @@ OPTIMIZE =  -DOPTIMIZE -std=c9x -DNOCHECKS
 BASE	= $(CC) $(CCFLAGS)
 TESTING = $(BASE) $(DEBUG) $(CDEBUG)
 ALL	= $(TESTING) $(OPTIMIZE) $(LINKING)
-OBJECTS	= list.o node.o queue.o deque.o vector.o conversions.o stack.o binary_tree.o hashtable.o
+OBJECTS	= list.o node.o queue.o deque.o vector.o conversions.o stack.o binary_tree.o hashtable.o heap.o priority_queue.o
 
 all: vec_tests list_tests tree_tests hash_tests
 list_tests: list_test.x queuelist_test.x dequelist_test.x stacklist_test.x
-vec_tests: vec_test.x queuevector_test.x dequevector_test.x stackvector_test.x basevector_test.x vector_test.x
+vec_tests: vec_test.x queuevector_test.x dequevector_test.x stackvector_test.x basevector_test.x vector_test.x heap_test.x prio_test.x
 tree_tests: binarytree_test.x
 hash_tests: openhash_test.x closedhash_test.x
 
@@ -46,6 +46,12 @@ dequevector_test.x: dequevector_test.c $(OBJECTS)
 
 vector_test.x: vector_test.c $(OBJECTS)
 	$(ALL) vector_test.c -o vector_test.x $(OBJECTS)
+
+heap_test.x: heap_test.c $(OBJECTS)
+	$(ALL) heap_test.c -o heap_test.x $(OBJECTS)
+
+prio_test.x: prio_test.c $(OBJECTS)
+	$(ALL) prio_test.c -o prio_test.x $(OBJECTS)
 
 basevector_test.x: basevector_test.c $(OBJECTS)
 	$(ALL) basevector_test.c -o basevector_test.x $(OBJECTS)

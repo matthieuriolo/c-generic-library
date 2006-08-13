@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "vector.h"
-#define RUNS 500
+#define RUNS 1000000
 #define BOUND RUNS
 #define BASE 0
 #define NUMCASES 10
@@ -74,13 +74,13 @@ main(void) {
 
   ptr = create(VectorIter,  &object);
   head(VectorIter, ptr);
-  printf("Head = %d\n",*(unsigned int *)retrieve(VectorIter,ptr));
+  /*printf("Head = %d\n",*(unsigned int *)retrieve(VectorIter,ptr));*/
   tail(VectorIter,ptr);
-  printf("Tail = %d\n",*(unsigned int *)retrieve(VectorIter,ptr));
+  /*printf("Tail = %d\n",*(unsigned int *)retrieve(VectorIter,ptr));*/
   head(VectorIter,ptr);
   do {
     value = *(unsigned int *) retrieve(VectorIter, ptr);
-	printf("%d ",value);
+	/*printf("%d ",value);*/
   }
   while (!next(VectorIter, ptr));
   assign(VectorIter, ptr, &object);
@@ -88,7 +88,7 @@ main(void) {
   do {
     value = *(unsigned int *) retrieve(VectorIter, ptr);
   } while (!prev(VectorIter, ptr));
-  printf("\n");
+  /*printf("\n");*/
   for(x = 0; x < RUNS; x++) {
 	  switch(rand() % 2) {
 		  case 1:
@@ -104,9 +104,9 @@ main(void) {
   ptr = create(VectorIter,v_copy);
   do{
 	  value = *(unsigned int *)retrieve(VectorIter,ptr);
-	  printf("%d ",value);
+	  /*printf("%d ",value);*/
   }while(!next(VectorIter,ptr));
-  printf("\n");
+  /*printf("\n");*/
   destroy(VectorIter,ptr);
   destruct(Vector,v_copy);
   destruct(Vector,&object);
