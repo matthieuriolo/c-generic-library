@@ -25,3 +25,5 @@ echo "Starting openhash_test"
 time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./openhash_test.x
 echo "Starting closedhash_test"
 time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./closedhash_test.x
+echo "Starting heap_test"
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./heap_test.x

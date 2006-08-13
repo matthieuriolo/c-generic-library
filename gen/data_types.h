@@ -183,14 +183,6 @@ typedef struct _ptr_iter ITER(DequeList);
 #endif
 
 /* Vector based data types */
-#ifndef VECTOR_ITER_DEFINED
-#define VECTOR_ITER_DEFINED
-typedef struct _array_iter ITER(Vector);
-#endif
-#ifndef VECTOR_DEFINED
-#define VECTOR_DEFINED
-typedef struct _array_struct Vector;
-#endif
 #ifndef STACKVECTOR_DEFINED
 #define STACKVECTOR_DEFINED
 typedef struct _array_struct StackVector;

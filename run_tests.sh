@@ -23,3 +23,5 @@ echo "Starting openhash_test"
 time ./openhash_test.x
 echo "Starting closedhash_test"
 time ./closedhash_test.x
+echo "Starting heap_test"
+time ./heap_test.x
