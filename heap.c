@@ -138,8 +138,6 @@ int8_t pop_Heap(Heap* obj) {
 	if(S(obj) == 0) {
 		return ENOVAL;
 	}
-	/*printf("%s\n",__func__);*/
-			/*print_all(Heap,obj);*/
 	S(obj)--;
 	if(S(obj) > 0) {
 		unsigned int i, child = 1;
@@ -148,12 +146,9 @@ int8_t pop_Heap(Heap* obj) {
 		lastptr = T(obj) - O(obj);
 		child = 1;
 		while(child < ((S(obj)-1))) {
-			/*fprintf(stderr,"H = %p, T = %p, E = %p, L = %p N = %p %d %d %d %d %d\n",H(obj),T(obj),obj->end,lastptr,H(obj) + ((child) * O(obj)),S(obj),C(obj),i,child, *(int *)lastptr);*/
 			if(child < (S(obj)) && obj->API.cmp(H(obj) + (child * O(obj)),H(obj) + ((child + 1) * O(obj)),O(obj)) > 0) {
 				child++;
 			}
-			/*fprintf(stderr,"H = %p, T = %p, E = %p, L = %p N = %p %d %d %d %d %d\n",H(obj),T(obj),obj->end,lastptr,H(obj) + ((child) * O(obj)),S(obj),C(obj),i,child, *(int *)lastptr);*/
-			/*print_all(Heap,obj);*/
 			if(obj->API.cmp(lastptr,H(obj) + ((child) * O(obj)),O(obj)) > 0) {
 				obj->API.copy(H(obj) + (i * O(obj)),H(obj) + ((child) * O(obj)),O(obj));
 			} else {

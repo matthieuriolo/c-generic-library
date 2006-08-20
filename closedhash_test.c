@@ -10,7 +10,7 @@
 
 int32_t inthash(void *,size_t);
 void print_hash(void *a);
-int main(int argc, char *argv[])
+int main(void)
 {
         CHTable hashtable, *dupe;
         CHTableIter *hiter;
@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
         for(y = 0; y < x; y++) {
                 srand((x * y) / (x - y) + (x + y / x));
                 switch(rand() % NUMCASES) {
+					default:
                 case 0:
                         item = rand() % CAPACITY;
                         /*printf("Inserting %d\n",item);*/
