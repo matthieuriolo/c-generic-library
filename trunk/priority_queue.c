@@ -72,6 +72,37 @@ F_DUMP(PrioQueue) {
 	return dump(Heap,obj->data);
 }
 
+F_SET_COMPARE(PrioQueue) {
+	CHECK_VARN(obj,EINVAL);
+	return set_compare(Heap,obj->data,cmp);
+}
+
+F_SET_PRINT(PrioQueue) {
+	CHECK_VARN(obj,EINVAL);
+	return set_print(Heap,obj->data,print);
+}
+
+F_SET_ALLOC(PrioQueue) {
+	CHECK_VARN(obj,EINVAL);
+	return set_alloc(Heap,obj->data,alloc);
+}
+
+F_SET_DEALLOC(PrioQueue) {
+	CHECK_VARN(obj,EINVAL);
+	return set_dealloc(Heap,obj->data,dealloc);
+}
+
+F_SET_COPY(PrioQueue) {
+	CHECK_VARN(obj,EINVAL);
+	return set_copy(Heap,obj->data,copy);
+}
+
+F_SIZE_OF(PrioQueue) {
+	CHECK_VARN(obj,0);
+	return size_of(Heap,obj->data);
+}
+
+
 int8_t insert_PrioQueue(PrioQueue *obj, int32_t priority, void *data, size_t datasize) {
 	PrioNode *ptr;
 	CHECK_VARN(obj,EINVAL);
