@@ -2,7 +2,6 @@
 #include <string.h>
 #include <stdlib.h>
 #include "list.h"
-/*#include "vector.h"*/
 #define RUNS 1000000
 #define BOUND 1000000
 #define BASE 0
@@ -19,7 +18,6 @@ main(void)
   List  object;
   List *l_copy;
   ListIter *ptr,*ptr2;
-/*  Vector *vec;*/
   unsigned int x, y;
   unsigned int *value;
 
@@ -105,10 +103,11 @@ main(void)
   } while (!prev(ListIter, ptr));
   for(x = 0; x < RUNS; x++) {
 	  switch(rand() % 2) {
-		  case 1:
+		  default:
+		  case 0:
 			  next(ListIter,ptr);
 			  break;
-		  case 2:
+		  case 1:
 			  prev(ListIter,ptr);
 			  break;
 	  }
@@ -163,7 +162,7 @@ main(void)
 int32_t
 intcmp(const void *a, const void *b)
 {
-	return (*(int *)a > *(int *)b) - (*(int *)a < *(int *)b);
+	return (*(const int *)a > *(const int *)b) - (*(const int *)a < *(const int *)b);
 }
 
 

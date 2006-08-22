@@ -10,7 +10,7 @@
 
 int32_t inthash(void *,size_t);
 void print_hash(void *a);
-int main()
+int main(void)
 {
         OHTable hashtable,*dupe;
         OHTableIter *hiter;

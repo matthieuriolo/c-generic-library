@@ -9,8 +9,6 @@ echo "Starting dequevector_test"
 time ./dequevector_test.x
 echo "Starting stackvector_test"
 time ./stackvector_test.x
-echo "Starting list_test"
-time ./list_test.x
 echo "Starting dequelist_test"
 time ./dequelist_test.x
 echo "Starting queuelist_test"
@@ -25,3 +23,5 @@ echo "Starting closedhash_test"
 time ./closedhash_test.x
 echo "Starting heap_test"
 time ./heap_test.x
+echo "Starting prio_test"
+time ./prio_test.x

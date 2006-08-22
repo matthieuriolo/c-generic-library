@@ -192,14 +192,14 @@ int8_t pop_front_Vector(Vector *vec) {
 }
 
 void *front_Vector(Vector *vec) {
-	CHECK_VARN(vec,CHECK(NULL));
-	CHECK_VARN(H(vec),CHECK(NULL));
+	CHECK_VARN(vec,NULL);
+	CHECK_VARN(H(vec),NULL);
 	return H(vec);
 }
 
 void *back_Vector(Vector *vec) {
-	CHECK_VARN(vec,CHECK(NULL));
-	CHECK_VARN(T(vec),CHECK(NULL));
+	CHECK_VARN(vec,NULL);
+	CHECK_VARN(T(vec),NULL);
 	return T(vec);
 }
 
@@ -207,9 +207,9 @@ void *
 return_at_Vector(Vector * vec, uint32_t loc)
 {
   register uint32_t offset = (loc * O(vec));
-  CHECK_VARN(vec, CHECK(NULL));
+  CHECK_VARN(vec, NULL);
   if(loc > C(vec)) {
-	  return CHECK(NULL);
+	  return NULL;
   }
   if(H(vec) < T(vec)) {
 	  /* No wrap around */

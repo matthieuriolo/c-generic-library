@@ -18,7 +18,6 @@ int main(void) {
 	unsigned int x, y;
 	unsigned int value;
 	int32_t priority;
-	void *ptr;
 	memset(&object,0,sizeof(object));
 	x = RUNS;
 	construct_func(PrioQueue,&object,sizeof(x),FREEOBJ,ckalloc,ckfree,intcmp,print,memcpy);
