@@ -54,7 +54,7 @@ F_CLEAR(Heap) {
 }
 
 F_PRINT(Heap) {
-	int base = 1, x = 0;
+	size_t base = 1, x = 0;
 	CHECK_VARN(obj,EINVAL);
 	if(T(obj) == H(obj)) {
 		return SUCCESS;
@@ -99,8 +99,6 @@ F_SIZE(Heap) {
 
 int8_t insert_Heap(Heap *obj, void *data, size_t datasize, int flag) {
 	unsigned int curind = 0;
-   	int32_t	n;
-	char buffer[datasize];
 	CHECK_VARN(obj,EINVAL);
 	CHECK_VARN(data,EINVAL);
 	CHECK_VARN(T(obj),EINVAL);
@@ -110,8 +108,8 @@ int8_t insert_Heap(Heap *obj, void *data, size_t datasize, int flag) {
 	}
 	curind = S(obj);
 	if(S(obj) > 0) {
-		while(obj->API.cmp(H(obj) + (((curind-1) >> 1)*O(obj)),data,datasize) > 0) {
-			obj->API.copy(H(obj) + ((curind) * O(obj)),H(obj) + ((((curind-1)>>1)) * O(obj)), datasize);
+		while(obj->API.cmp((char *)H(obj) + (((curind-1) >> 1)*O(obj)),data,datasize) > 0) {
+			obj->API.copy((char *)H(obj) + ((curind) * O(obj)),(char *)H(obj) + ((((curind-1)>>1)) * O(obj)), datasize);
 			curind = (curind - 1) >> 1;
 			if(curind == 0) {
 				break;
@@ -119,7 +117,7 @@ int8_t insert_Heap(Heap *obj, void *data, size_t datasize, int flag) {
 		}
 	}
 	S(obj)++;
-	obj->API.copy(H(obj) + ((curind) * O(obj)),data,datasize);
+	obj->API.copy((char *)H(obj) + ((curind) * O(obj)),data,datasize);
 	T(obj) = (char *)T(obj) + O(obj);
 	return SUCCESS;
 }
@@ -143,23 +141,23 @@ int8_t pop_Heap(Heap* obj) {
 		unsigned int i, child = 1;
 		i = 0;
 		minptr = H(obj);
-		lastptr = T(obj) - O(obj);
+		lastptr = (char *)T(obj) - O(obj);
 		child = 1;
 		while(child < ((S(obj)-1))) {
-			if(child < (S(obj)) && obj->API.cmp(H(obj) + (child * O(obj)),H(obj) + ((child + 1) * O(obj)),O(obj)) > 0) {
+			if(child < (S(obj)) && obj->API.cmp((char *)H(obj) + (child * O(obj)),(char *)H(obj) + ((child + 1) * O(obj)),O(obj)) > 0) {
 				child++;
 			}
-			if(obj->API.cmp(lastptr,H(obj) + ((child) * O(obj)),O(obj)) > 0) {
-				obj->API.copy(H(obj) + (i * O(obj)),H(obj) + ((child) * O(obj)),O(obj));
+			if(obj->API.cmp(lastptr,(char *)H(obj) + ((child) * O(obj)),O(obj)) > 0) {
+				obj->API.copy((char *)H(obj) + (i * O(obj)),(char *)H(obj) + ((child) * O(obj)),O(obj));
 			} else {
 				break;
 			}
 			i = child;	
 			child = (i << 1) + 1;
 		}
-		obj->API.copy(H(obj) + (i*O(obj)),lastptr,O(obj));
+		obj->API.copy((char *)H(obj) + (i*O(obj)),lastptr,O(obj));
 	}
-	T(obj) = T(obj) - O(obj);
+	T(obj) = (char *)T(obj) - O(obj);
 	return SUCCESS;
 }
 
@@ -172,6 +170,7 @@ int8_t resize_Heap(Heap *obj, size_t size) {
 	ARR_COPY_WRAP(Heap,ptr,obj,size);
 
 	ARR_SETUP_POINTERS(Heap,ptr,obj,size);
+
 	return SUCCESS;
 }
 
@@ -184,7 +183,8 @@ int8_t merge_Heap(Heap *obj, Heap *src) {
 	}
 	return SUCCESS;
 }
-function(duplicate_arr_struct,Heap);
+
+function(duplicate_arr_struct,Heap)
 function(size_of,Heap)
 function(set_compare,Heap)
 function(set_print,Heap)

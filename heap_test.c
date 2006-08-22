@@ -17,7 +17,6 @@ int main(void) {
 	Heap object;
 	unsigned int x, y;
 	unsigned int value;
-	void *ptr;
 	memset(&object,0,sizeof(object));
 	x = RUNS;
 	construct(Heap,&object,sizeof(x),FREEOBJ);
