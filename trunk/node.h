@@ -7,7 +7,7 @@
  */
 #ifndef NODE_H_
 #    define NODE_H_
-#    include <stdint.h>
+#include "gen/stdint.h"
 #    include <stdlib.h>
 #include "gen/data_types.h"
 #include "gen/function_signatures.h"

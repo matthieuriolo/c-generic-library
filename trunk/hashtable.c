@@ -4,7 +4,7 @@
  * @brief implementation of three generic hash tables
  * and some basic hashing functions
  */
-#include <stdint.h>
+#include "gen/stdint.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>

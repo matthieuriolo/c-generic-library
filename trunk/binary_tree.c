@@ -315,6 +315,7 @@ F_DUMP(BinaryTree) {
 	fprintf(stderr,"obj = %p, objfree = %u, objsize = %u, size = %u\n",obj,obj->objfree,O(obj),S(obj));
 	fprintf(stderr,"head = %p, tail = %p, FL = %p\n",H(obj),T(obj),FL(obj));
 	dump(Node,H(obj));
+	return EXIT_SUCCESS;
 }
 
 F_DUMP(Node) {
@@ -330,6 +331,7 @@ F_DUMP(Node) {
 	for(x = 0; x < NUM_LINKS-1; x++) {
 		dump(Node,obj->ptr[x]);
 	}
+	return EXIT_SUCCESS;
 }
 
 
