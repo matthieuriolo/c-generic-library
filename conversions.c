@@ -40,7 +40,7 @@
 		return dst;\
 	}
 
-convert_function(List,QueueList)
+/*convert_function(List,QueueList)
 convert_function(List,DequeList)
 convert_function(List,Vector)
 
@@ -54,4 +54,4 @@ convert_function(DequeList,Vector)
 
 convert_function(Vector,List)
 convert_function(Vector,QueueList)
-convert_function(Vector,DequeList)
+convert_function(Vector,DequeList)*/

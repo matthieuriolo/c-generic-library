@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "hashtable.h"
+#include "gen/error_macros.h"
 
 #define RUNS 1000000
 #define BOUND 10000
@@ -9,7 +10,7 @@
 #define CAPACITY 1000000
 
 int32_t inthash(void *,size_t);
-void print_hash(void *a);
+void print_hash(const void *a);
 int main(void)
 {
         OHTable hashtable,*dupe;
@@ -76,7 +77,7 @@ int main(void)
         destruct(OHTable,&hashtable);
         destruct(OHTable,dupe);
         free(dupe);
-
+	return EXIT_SUCCESS;
 }
 
 int32_t inthash(void *a, size_t len)
@@ -92,7 +93,7 @@ int32_t inthash(void *a, size_t len)
         return h_index;
 }
 
-void print_hash(void *a)
+void print_hash(const void *a)
 {
         printf("%d ",*(int32_t *)a);
 }

@@ -72,7 +72,7 @@ COMMON_FUNCTION_PROTOTYPES(CHTable)
 int8_t insert_CHTable(CHTable *table, void *element, size_t elesize,int8_t flag);
 int8_t delete_CHTable(CHTable *table, void *element, size_t elesize);
 void *find_CHTable(CHTable *table, void *element, size_t elesize);
-int8_t set_hash_CHTable(CHTable *table, int32_t (*hash)(void *,size_t));
+int8_t set_hash_CHTable(CHTable *table, uint32_t (*hash)(void *,size_t));
 int8_t set_probe_CHTable(CHTable *table, uint32_t (*prob)(uint32_t));
 
 /* Closed Hash Iterator */

@@ -19,7 +19,7 @@ typedef struct _functor_api {
   /** Deallocation function pointer */
   void  (*dealloc) (void *);
   /** Comparison function pointer to compare objects */
-  int   (*cmp) (const void *, const void *,size_t);
+  int32_t   (*cmp) (const void *, const void *,size_t);
 
   /** Print function pointer */
   void  (*print) (const void *);

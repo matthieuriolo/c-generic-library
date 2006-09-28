@@ -220,7 +220,7 @@ PrioNode* find_data_PrioQueue(PrioQueue* obj, void* data, size_t datasize) {
 	return NULL;
 }
 
-int priocmp(const void *a, const void *b,size_t size) {
+int priocmp(const void *a, const void *b,size_t UNUSED size) {
 	return (*(const uint32_t *)a) - (*(const uint32_t *)b);
 }
 /*function(size_of, PrioQueue)

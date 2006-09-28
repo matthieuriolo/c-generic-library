@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "gen/error_macros.h"
 #define RUNS 1000000
 
 
@@ -9,9 +10,7 @@ int
 main(void)
 {
   Vector *test;
-  VectorIter *iter;
   uint32_t input, x;
-  const uint32_t *ptr;
 
   test = malloc(sizeof *test);
   memset(test,0,sizeof( *test));

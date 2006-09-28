@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "binary_tree.h"
+#include "gen/error_macros.h"
 #define RUNS 1000000
 #define BOUND 10000
 #define BASE 0
@@ -148,7 +149,7 @@ main(void) {
 }
 
 int32_t
-intcmp(const void *a, const void *b,size_t size)
+intcmp(const void *a, const void *b,size_t x UNUSED)
 {
 	return (*(const int *)a > *(const int *)b) - (*(const int *)a < *(const int *)b);
 }
