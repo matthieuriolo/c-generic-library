@@ -221,9 +221,10 @@ F_PRINT(OHTable) {
 		printf("\n");
 	}
 	printf("\n");*/
-	printf("Open Hash obj: %p Capacity: %d Size: %d\n",obj,obj->capacity,obj->cur_size);
-	printf("Flags: %d Hash_Function: %p Element: %d\n",obj->objfree,obj->hash,obj->num_elem);
+	printf("Open Hash obj: %p Capacity: %d Size: %d\n",(void *)obj,obj->capacity,obj->cur_size);
+	printf("Flags: %d Element: %d\n",obj->objfree,obj->num_elem);
 	printf("Current nodes:\n");
+	return SUCCESS;
 }
 
 int8_t set_hash_OHTable(OHTable *table, uint32_t (*hash)(void *,size_t)) {
@@ -428,7 +429,9 @@ F_DESTRUCT(CHTable) {
 		obj->prob = NULL;
 		free(obj->data);
 		obj->data = NULL;
+		return SUCCESS;
 	}
+	return EINVAL;
 }
 
 F_CLEAR(CHTable) {
@@ -528,7 +531,6 @@ void *find_CHTable(CHTable *table, void* element, size_t elesize) {
 F_DUPLICATE(CHTable) {
 	CHTable* dst;
 	CHTableIter *ohiter;
-	size_t x;
 	CHECK_VARN(obj,NULL);
 	CHECK_VARN(dst = malloc(sizeof *dst),NULL);
 	memset(dst,0,sizeof *dst);
@@ -551,7 +553,7 @@ F_DUPLICATE(CHTable) {
 	return dst;
 }
 
-int8_t set_hash_CHTable(CHTable *table, int32_t (*hash)(void *,size_t)) {
+int8_t set_hash_CHTable(CHTable *table, uint32_t (*hash)(void *,size_t)) {
 	CHECK_VARN(table,EINVAL);
 	CHECK_VARN(hash,EINVAL);
 	table->hash = hash;
@@ -566,21 +568,9 @@ int8_t set_probe_CHTable(CHTable *table, uint32_t (*prob)(uint32_t)) {
 }
 
 F_PRINT(CHTable) {
-	size_t x;
 	CHECK_VARN(obj,EINVAL);
-	/*for(x = 0; x < obj->capacity; x++) {
-		printf("%d) ",x);
-		if((obj->data[x].objptr) && (obj->API.print)) {
-			obj->API.print(obj->data[x].objptr);
-		}
-		if(!((x+1) % 5)) {
-			printf("\n");
-		} else {
-			printf("  ");
-		}
-	}*/
-	printf("Open Hash obj: %p Capacity: %d Size: %d\n",obj,obj->capacity,obj->cur_size);
-	printf("Flags: %d Hash_Function: %p Prob_Function: %p\n",obj->objfree,obj->hash,obj->prob);
+	printf("Open Hash obj: %p Capacity: %d Size: %d\n",(void *)obj,obj->capacity,obj->cur_size);
+	printf("Flags: %d \n",obj->objfree);
 	return SUCCESS;
 }
 
@@ -691,7 +681,7 @@ function(set_dealloc,CHTable)
 uint32_t char_hash(void *key, size_t len) {
 	uint32_t val = 0;
 	while(len-- > 0) {
-		val = (val << 5) + tolower(*(char *)(key++));
+		val = (val << 5) + tolower(*((char *)key++));
 	}
 	return val;
 }
@@ -699,7 +689,7 @@ uint32_t char_hash(void *key, size_t len) {
 uint32_t num_hash(void *key, size_t len) {
 	uint32_t val =0;
 	while(len-- > 0) {
-		val = (val << 5) + *(char *)(key++);
+		val = (val << 5) + *(char *)((char *)key++);
 	}
 	return val;
 }

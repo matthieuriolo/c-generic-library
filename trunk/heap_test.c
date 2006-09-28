@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "heap.h"
+#include "gen/error_macros.h"
 #define RUNS 1000000
 #define BOUND 1000000
 #define BASE 0
@@ -44,7 +45,7 @@ int main(void) {
 	return EXIT_SUCCESS;
 }
 
-int32_t intcmp(const void *a, const void *b,size_t size) {
+int32_t intcmp(const void *a, const void *b,size_t x UNUSED) {
 	return (*(const int *)a > *(const int *)b) - (*(const int *)a < *(const int *)b); 
 }
 void

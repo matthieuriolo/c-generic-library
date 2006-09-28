@@ -2,12 +2,13 @@
 #include <stdlib.h>
 #include <string.h>
 #include "deque.h"
+#include "gen/error_macros.h"
 #define RUNS 1000000
 #define BOUND 10000
 #define BASE 0
 #define NUMCASES 10
 
-int32_t intcmp(const void *, const void *);
+int32_t intcmp(const void *, const void *,size_t);
 void  print(const void *);
 void  ckfree(void *);
 void *ckalloc(size_t);
@@ -100,7 +101,7 @@ main(void) {
 }
 
 int32_t
-intcmp(const void *a, const void *b)
+intcmp(const void *a, const void *b,size_t x UNUSED)
 {
   if ((*(const int *) a) < (*(const int *) b)) {
     return -1;

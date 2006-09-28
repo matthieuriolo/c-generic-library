@@ -18,7 +18,7 @@
 	int8_t construct_func_##TYPE(TYPE* obj, size_t datasize, int flag,\
                              void *(*alloc) (size_t),\
                              void (*dealloc) (void *),\
-                             int (*cmp) (const void *, const void *,size_t),\
+                             int32_t (*cmp) (const void *, const void *,size_t),\
                              void (*print) (const void *),\
                              void *(*copy) (void *, const void *, size_t))
 #endif
@@ -66,7 +66,7 @@
 
 #ifndef F_SET_COMPARE
 #define F_SET_COMPARE(TYPE)\
-	int8_t set_compare_##TYPE(TYPE* obj, int (*cmp) (const void *, const void *, size_t))
+	int8_t set_compare_##TYPE(TYPE* obj, int32_t (*cmp) (const void *, const void *, size_t))
 #endif
 
 #ifndef F_SET_PRINT

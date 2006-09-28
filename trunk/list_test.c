@@ -2,12 +2,13 @@
 #include <string.h>
 #include <stdlib.h>
 #include "list.h"
+#include "gen/error_macros.h"
 #define RUNS 1000000
 #define BOUND 1000000
 #define BASE 0
 #define NUMCASES 10
 
-int32_t intcmp(const void *, const void *);
+int32_t intcmp(const void *, const void *,size_t);
 void  print(const void *);
 void  ckfree(void *);
 void *ckalloc(size_t);
@@ -135,7 +136,6 @@ main(void)
 	  do{ 
 		  value = (unsigned int *)retrieve(ListIter,ptr);
 		  if(value) {
-		//	  printf("%d ",*value);
 		  }
 	  }while(!next(ListIter,ptr));
 	  destroy(ListIter,ptr);
@@ -145,12 +145,10 @@ main(void)
 	  }
 	  value = (unsigned int *)retrieve(ListIter,ptr2);
 	  if(value) {
-		  //printf(" ptr2(%p) = %d\n",ptr2,*value);
 	  }
 	  ptr2 = extract(ListIter,ptr2);
 	  value = (unsigned int *)retrieve(ListIter,ptr2);
 	  if(value) {
-		  //printf(" ptr2(%p) = %d\n",ptr2,*value);
 	  }
   }
   destroy(ListIter,ptr2);
@@ -160,7 +158,7 @@ main(void)
 }
 
 int32_t
-intcmp(const void *a, const void *b)
+intcmp(const void *a, const void *b,size_t x UNUSED)
 {
 	return (*(const int *)a > *(const int *)b) - (*(const int *)a < *(const int *)b);
 }

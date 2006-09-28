@@ -7,7 +7,7 @@
  */
 #ifndef ERROR_MACROS_H_
 #    define ERROR_MACROS_H_
-
+# define UNUSED __attribute__((__unused__))
 #    define SUCCESS  0x00
 #define EINVAL	0x02
 #define ENOVAL	0x03

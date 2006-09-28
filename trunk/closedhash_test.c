@@ -2,14 +2,15 @@
 #include <stdlib.h>
 #include <string.h>
 #include "hashtable.h"
+#include "gen/error_macros.h"
 
 #define RUNS 1000000
 #define BOUND 10000
 #define NUMCASES 3
 #define CAPACITY 1000000
 
-int32_t inthash(void *,size_t);
-void print_hash(void *a);
+uint32_t inthash(void *,size_t);
+void print_hash(const void *a);
 int main(void)
 {
         CHTable hashtable, *dupe;
@@ -76,11 +77,12 @@ int main(void)
         destruct(CHTable,&hashtable);
         destruct(CHTable,dupe);
         free(dupe);
+	return EXIT_SUCCESS;
 }
 
-int32_t inthash(void *a, size_t len)
+uint32_t inthash(void *a, size_t len)
 {
-        int32_t h_index = 0;
+        uint32_t h_index = 0;
         char *ptr = (char *)a;
         while(len--) {
                 h_index += (ptr[len]  *  13);
@@ -90,7 +92,7 @@ int32_t inthash(void *a, size_t len)
         return h_index;
 }
 
-void print_hash(void *a)
+void print_hash(const void *a)
 {
         printf("%d ",*(int32_t *)a);
 }

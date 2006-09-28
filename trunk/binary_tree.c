@@ -312,26 +312,26 @@ min_BinaryTree(BinaryTree* tree) {
 }
 
 F_DUMP(BinaryTree) {
-	fprintf(stderr,"obj = %p, objfree = %u, objsize = %u, size = %u\n",obj,obj->objfree,O(obj),S(obj));
-	fprintf(stderr,"head = %p, tail = %p, FL = %p\n",H(obj),T(obj),FL(obj));
+	fprintf(stderr,"obj = %p, objfree = %u, objsize = %u, size = %u\n",(void *)obj,obj->objfree,O(obj),S(obj));
+	fprintf(stderr,"head = %p, tail = %p, FL = %p\n",(void *)H(obj),(void *)T(obj),(void *)FL(obj));
 	dump(Node,H(obj));
-	return EXIT_SUCCESS;
+	return SUCCESS;
 }
 
 F_DUMP(Node) {
 	int x = 0;
 	if(!obj) {
-		return;
+		return ENOVAL;
 	}
-	fprintf(stderr,"node = %p, parent = %p, flags = %p, objptr = %u children:\n",obj,obj->ptr[PARENT],obj->flags,*(int *)obj->objptr);
+	fprintf(stderr,"node = %p, parent = %p, flags = %u, objptr = %u children:\n",(void *)obj,(void *)obj->ptr[PARENT],obj->flags,*(int *)obj->objptr);
 	for(x = 0; x < NUM_LINKS-1; x++) {
-		fprintf(stderr,"%d) %p ",x,obj->ptr[x]);
+		fprintf(stderr,"%d) %p ",x,(void *)obj->ptr[x]);
 	}
 	fprintf(stderr,"\n");
 	for(x = 0; x < NUM_LINKS-1; x++) {
 		dump(Node,obj->ptr[x]);
 	}
-	return EXIT_SUCCESS;
+	return SUCCESS;
 }
 
 
