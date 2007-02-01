@@ -23,7 +23,7 @@ int main(void)
         set_hash_CHTable(&hashtable,num_hash);
         set_print(CHTable,&hashtable,print_hash);
         for(y = 0; y < x; y++) {
-                srand((x * y) / (x - y) + (x + y / x));
+                srand((unsigned int)((x * y) / (x - y) + (x + y / x)));
                 switch(rand() % NUMCASES) {
 					default:
                 case 0:
