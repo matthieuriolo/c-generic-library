@@ -2,8 +2,8 @@ CC 	= gcc
 LINKING = -lm -I.
 DEBUG=-g -Wall -W -pedantic 
 CDEBUG= 
-#DEBUG	= -g -fvar-tracking -Wall -W -pedantic -Wformat=2 -Winit-self -Wmissing-include-dirs -Wswitch-default -Wswitch-enum -Wextra -Wunused-variable -fstrict-aliasing -Wstrict-aliasing=2 -Wfloat-equal -Wundef -Wshadow -Wlarger-than-8192 -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wconversion -Waggregate-return -Wmissing-field-initializers -Wmissing-noreturn -Wredundant-decls -Wunreachable-code -Winline -Winvalid-pch -Wlong-long -DUSE_IO #-DDEBUG
-#CDEBUG  = -Wbad-function-cast -Wdeclaration-after-statement  -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes -Wmissing-declarations 
+DEBUG	= -g -fvar-tracking -Wall -W -pedantic -Wformat=2 -Winit-self -Wmissing-include-dirs -Wswitch-default -Wswitch-enum -Wextra -Wunused-variable -fstrict-aliasing -Wstrict-aliasing=2 -Wfloat-equal -Wundef -Wshadow -Wlarger-than-8192 -Wpointer-arith -Wcast-qual -Wcast-align -Wwrite-strings -Wconversion -Waggregate-return -Wmissing-field-initializers -Wmissing-noreturn -Wredundant-decls -Wunreachable-code -Winline -Winvalid-pch -Wlong-long -DUSE_IO #-DDEBUG
+CDEBUG  = -Wbad-function-cast -Wdeclaration-after-statement  -Wstrict-prototypes -Wold-style-definition -Wmissing-prototypes -Wmissing-declarations 
 PROFILE = -pg -Q -ftime-report -fmem-report -fprofile-arcs -ftree-based-profiling -fbranch-probabilities -ftest-coverage 
 ERROR 	= -Werror
 CCFLAGS	=  
