@@ -1,5 +1,5 @@
+#summary explanation how you have to compile c-generic-library
 #labels Phase-Deploy
-#explanation how you have to compile c-generic-library
 
 = How to Compile =
 
