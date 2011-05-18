@@ -1,0 +1,11 @@
+ACLOCAL_AMFLAGS=-I m4
+
+lib_LTLIBRARIES=libcgeneric_0.4.2.la
+
+libcgeneric_0_4_2_la_SOURCES=src/binary_tree.c src/conversions.c src/deque.c src/hashtable.c src/heap.c src/list.c src/node.c src/priority_queue.c src/queue.c src/stack.c src/vector.c
+
+
+libcgeneric_0_4_2_la_libincludedir=$(includedir)
+libcgeneric_0_4_2_la_libinclude_HEADERS = config.h
+
+libcgeneric_0_4_2_la_CFLAGS=$(INTI_CFLAGS)
