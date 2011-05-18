@@ -10,6 +10,10 @@ Like the most linux tools you can compile the library by using following shell c
 make
 }}}
 
+
+The compiled libraries should be found in the hidden directory ./lib. By default there should be a static and a dynamic library.
+
+
 = Trouble? =
 
 If you have problem by using the commands above you can recreate the configure script. You must install the [http://en.wikipedia.org/wiki/GNU_build_system autotools]. To create the configuration script run the commands:
