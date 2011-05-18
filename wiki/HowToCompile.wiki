@@ -18,5 +18,5 @@ If you have problem by using the commands above you can recreate the configure s
 
 {{{
 autoreconf -i
-automake
+automake --add-missing
 }}}
