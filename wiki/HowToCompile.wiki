@@ -1,0 +1,22 @@
+#labels Phase-Deploy
+#explanation how you have to compile c-generic-library
+
+= How to Compile =
+
+Like the most linux tools you can compile the library by using following shell commands;
+
+{{{
+./configure
+make
+}}}
+
+= Trouble? =
+
+If you have problem by using the commands above you can recreate the configure script. You must install the [http://en.wikipedia.org/wiki/GNU_build_system autotools]. To create the configuration script run the commands:
+
+
+
+{{{
+autoreconf -i
+automake
+}}}
