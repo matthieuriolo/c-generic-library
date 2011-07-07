@@ -312,7 +312,7 @@ min_BinaryTree(BinaryTree* tree) {
 }
 
 F_DUMP(BinaryTree) {
-	fprintf(stderr,"obj = %p, objfree = %u, objsize = %u, size = %u\n",(void *)obj,obj->objfree,O(obj),S(obj));
+	fprintf(stderr,"obj = %p, objfree = %u, objsize = %u, size = %u\n",(void *)obj,obj->objfree,(unsigned int)O(obj),(unsigned int)S(obj));
 	fprintf(stderr,"head = %p, tail = %p, FL = %p\n",(void *)H(obj),(void *)T(obj),(void *)FL(obj));
 	dump(Node,H(obj));
 	return SUCCESS;
