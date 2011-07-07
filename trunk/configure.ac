@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.68])
+AC_PREREQ([2.67])
 
 AC_INIT(libcgeneric, 0.4.2, villmow@gmail.com)
 AM_INIT_AUTOMAKE(libcgeneric, 0.4.2)

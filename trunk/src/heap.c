@@ -76,7 +76,7 @@ F_PRINT(Heap) {
 
 F_DUMP(Heap) {
 	CHECK_VARN(obj,EINVAL);
-	printf("Size: %d Capacity: %d Objsize: %d Objfree: %d\n",S(obj),C(obj),obj->objsize,obj->objfree);
+	printf("Size: %u Capacity: %u Objsize: %u Objfree: %d\n",(unsigned int)S(obj),(unsigned int)C(obj),(unsigned int)obj->objsize,obj->objfree);
 	printf("Mem: %p Head: %p Tail: %p End: %p\n",M(obj),H(obj),T(obj),obj->end);
 	return SUCCESS;
 }

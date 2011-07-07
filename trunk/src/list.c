@@ -329,7 +329,7 @@ sort_List(List * list, size_t objsize)
   FOR_EACH_NODE(iter, list) {
     list->API.copy(&array[x++ * objsize], iter->objptr, objsize);
   }
-  qsort(array, S(list), objsize, list->API.cmp);
+  qsort(array, S(list), objsize, (__compar_fn_t)list->API.cmp);
   x = 0;
   FOR_EACH_NODE(iter, list) {
     list->API.copy(iter->objptr, &array[x++ * objsize], objsize);

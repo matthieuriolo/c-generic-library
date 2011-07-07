@@ -221,8 +221,8 @@ F_PRINT(OHTable) {
 		printf("\n");
 	}
 	printf("\n");*/
-	printf("Open Hash obj: %p Capacity: %d Size: %d\n",(void *)obj,obj->capacity,obj->cur_size);
-	printf("Flags: %d Element: %d\n",obj->objfree,obj->num_elem);
+	printf("Open Hash obj: %p Capacity: %u Size: %u\n",(void *)obj,(unsigned int)obj->capacity,(unsigned int)obj->cur_size);
+	printf("Flags: %d Element: %u\n",obj->objfree,(unsigned int)obj->num_elem);
 	printf("Current nodes:\n");
 	return SUCCESS;
 }
@@ -569,7 +569,7 @@ int8_t set_probe_CHTable(CHTable *table, uint32_t (*prob)(uint32_t)) {
 
 F_PRINT(CHTable) {
 	CHECK_VARN(obj,EINVAL);
-	printf("Open Hash obj: %p Capacity: %d Size: %d\n",(void *)obj,obj->capacity,obj->cur_size);
+	printf("Open Hash obj: %p Capacity: %u Size: %u\n",(void *)obj, (unsigned int)obj->capacity,(unsigned int)obj->cur_size);
 	printf("Flags: %d \n",obj->objfree);
 	return SUCCESS;
 }
