@@ -1,31 +1,31 @@
 #!/bin/bash
 echo "Starting vec_test"
-time ./vec_test.x
-./profiler.sh vec_test.x
+time ./tests/vec_test
+./profiler.sh vec_test
 echo "Starting basevector_test"
-time ./basevector_test.x
-./profiler.sh basevector_test.x
+time ./tests/basevector_test
+./profiler.sh basevector_test
 echo "Starting queuevector_test"
-time ./queuevector_test.x
-./profiler.sh queuevector_test.x
+time ./tests/queuevector_test
+./profiler.sh queuevector_test
 echo "Starting dequevector_test"
-time ./dequevector_test.x
-./profiler.sh dequevector_test.x
+time ./tests/dequevector_test
+./profiler.sh dequevector_test
 echo "Starting stackvector_test"
-time ./stackvector_test.x
-./profiler.sh stackvector_test.x
+time ./tests/stackvector_test
+./profiler.sh stackvector_test
 echo "Starting list_test"
-time ./list_test.x
-./profiler.sh list_test.x
+time ./tests/list_test
+./profiler.sh list_test
 echo "Starting dequelist_test"
-time ./dequelist_test.x
-./profiler.sh dequelist_test.x
+time ./tests/dequelist_test
+./profiler.sh dequelist_test
 echo "Starting queuelist_test"
-time ./queuelist_test.x
-./profiler.sh queuelist_test.x
+time ./tests/queuelist_test
+./profiler.sh queuelist_test
 echo "Starting stacklist_test"
-time ./stacklist_test.x
-./profiler.sh stacklist_test.x
+time ./tests/stacklist_test
+./profiler.sh stacklist_test
 echo "Starting binarytree_test"
-time ./binarytree_test.x
-./profiler.sh binarytree_test.x
+time ./tests/binarytree_test
+./profiler.sh binarytree_test
