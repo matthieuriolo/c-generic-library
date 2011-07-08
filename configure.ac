@@ -15,9 +15,10 @@ AC_CONFIG_HEADERS([config.h])
 # Checks for programs.
 AC_PROG_CC
 AM_PROG_CC_C_O
+AC_PROG_INSTALL
 
 AC_PROG_LIBTOOL
-
+AC_PROG_RANLIB
 # Checks for libraries.
 
 # Checks for header files.
@@ -39,5 +40,11 @@ AC_CHECK_TYPES([ptrdiff_t])
 AC_FUNC_MALLOC
 AC_CHECK_FUNCS([memset])
 
-AC_CONFIG_FILES([makefile])
+AC_CONFIG_FILES([Makefile
+	doc/Makefile
+	m4/Makefile
+	lib/Makefile
+	src/Makefile
+	tests/Makefile])
 AC_OUTPUT
+
