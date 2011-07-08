@@ -1,27 +1,27 @@
 #!/bin/bash
 echo "Starting vec_test"
-time ./vec_test.x
+time ./tests/vec_test
 echo "Starting basevector_test"
-time ./basevector_test.x
+time ./tests/basevector_test
 echo "Starting queuevector_test"
-time ./queuevector_test.x
+time ./tests/queuevector_test
 echo "Starting dequevector_test"
-time ./dequevector_test.x
+time ./tests/dequevector_test
 echo "Starting stackvector_test"
-time ./stackvector_test.x
+time ./tests/stackvector_test
 echo "Starting dequelist_test"
-time ./dequelist_test.x
+time ./tests/dequelist_test
 echo "Starting queuelist_test"
-time ./queuelist_test.x
+time ./tests/queuelist_test
 echo "Starting stacklist_test"
-time ./stacklist_test.x
+time ./tests/stacklist_test
 echo "Starting binarytree_test"
-time ./binarytree_test.x
+time ./tests/binarytree_test
 echo "Starting openhash_test"
-time ./openhash_test.x
+time ./tests/openhash_test
 echo "Starting closedhash_test"
-time ./closedhash_test.x
+time ./tests/closedhash_test
 echo "Starting heap_test"
-time ./heap_test.x
+time ./tests/heap_test
 echo "Starting prio_test"
-time ./prio_test.x
+time ./tests/prio_test
