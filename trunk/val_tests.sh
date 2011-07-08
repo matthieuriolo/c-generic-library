@@ -1,31 +1,31 @@
 #!/bin/bash
 echo "Starting vec_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./vec_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/vec_test
 echo "Starting vector_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./vector_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/vector_test
 echo "Starting basevector_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./basevector_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/basevector_test
 echo "Starting queuevector_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./queuevector_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/queuevector_test
 echo "Starting dequevector_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./dequevector_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/dequevector_test
 echo "Starting stackvector_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./stackvector_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/stackvector_test
 echo "Starting list_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./list_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/list_test
 echo "Starting dequelist_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./dequelist_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/dequelist_test
 echo "Starting queuelist_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./queuelist_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/queuelist_test
 echo "Starting stacklist_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./stacklist_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/stacklist_test
 echo "Starting binarytree_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./binarytree_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/binarytree_test
 echo "Starting openhash_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./openhash_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/openhash_test
 echo "Starting closedhash_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./closedhash_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/closedhash_test
 echo "Starting heap_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./heap_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/heap_test
 echo "Starting prio_test"
-time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./prio_test.x
+time valgrind --tool=memcheck --show-reachable=yes --leak-check=yes ./tests/prio_test
