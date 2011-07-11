@@ -3,7 +3,7 @@
 #include <string.h>
 #include "stack.h"
 #include "gen/error_macros.h"
-#define RUNS 1000000
+#define RUNS 10000
 #define BOUND 10000
 #define BASE 0
 #define NUMCASES 10
