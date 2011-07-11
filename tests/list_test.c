@@ -127,7 +127,7 @@ main(void)
   destruct(List,l_copy);
   destroy(ListIter,ptr2);
   ptr2 = create(ListIter,&object);
-  while(empty(List,&object)) {
+  while(!empty(List,&object)) {
 	  head(ListIter,ptr2);
 	  ptr = create(ListIter,&object);
 	  if(!ptr) {

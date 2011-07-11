@@ -57,7 +57,7 @@ F_PRINT(PrioQueue) {
 }
 
 F_EMPTY(PrioQueue) {
-	CHECK_VARN(obj,EINVAL);
+	CHECK_VARN(obj, EEMPTY);
 	return empty(Heap,obj->data);
 }
 
@@ -131,7 +131,7 @@ F_DUPLICATE(PrioQueue) {
 
 void *top_data_PrioQueue(PrioQueue *obj) {
 	CHECK_VARN(obj,NULL);
-	if(!empty(Heap,(obj->data))) {
+	if(empty(Heap,(obj->data))) {
 		return NULL;
 	}
 	return ((PrioNode *)top(Heap,(obj->data)))->data;
@@ -139,7 +139,7 @@ void *top_data_PrioQueue(PrioQueue *obj) {
 
 int32_t top_prio_PrioQueue(PrioQueue* obj) {
 	CHECK_VARN(obj,INT_MIN);
-	if(!empty(Heap,(obj->data))) {
+	if(empty(Heap,(obj->data))) {
 		return INT_MIN;
 	}
 	return ((PrioNode *)top(Heap,(obj->data)))->priority;
@@ -155,7 +155,7 @@ int8_t inc_prio_PrioQueue(PrioQueue *obj, int32_t amt, void *data, size_t datasi
 	CHECK_VARN(obj,EINVAL);
 	CHECK_VARN(data,EINVAL);
 	CHECK_OBJSIZE((obj->data),datasize,EINVAL);
-	if(!empty(Heap,(obj->data))) {
+	if(empty(Heap,(obj->data))) {
 		return EINVAL;
 	}
 	if(!(ptr = find_data_PrioQueue(obj,data,datasize))) {
@@ -170,7 +170,7 @@ int8_t dec_prio_PrioQueue(PrioQueue *obj, int32_t amt, void *data, size_t datasi
 	CHECK_VARN(obj,EINVAL);
 	CHECK_VARN(data,EINVAL);
 	CHECK_OBJSIZE((obj->data),datasize,EINVAL);
-	if(!empty(Heap,(obj->data))) {
+	if(empty(Heap,(obj->data))) {
 		return EEMPTY;
 	}
 	if(!(ptr = find_data_PrioQueue(obj,data,datasize))) {
@@ -185,7 +185,7 @@ int32_t find_prio_PrioQueue(PrioQueue *obj, void *data, size_t datasize) {
 	CHECK_VARN(obj,INT_MIN);
 	CHECK_VARN(data,INT_MIN);
 	CHECK_OBJSIZE((obj->data),datasize,INT_MIN);
-	if(!empty(Heap,(obj->data))) {
+	if(empty(Heap,(obj->data))) {
 		return EEMPTY;
 	}
 	if(!(ptr = find_data_PrioQueue(obj,data,datasize))) {
@@ -207,7 +207,7 @@ PrioNode* find_data_PrioQueue(PrioQueue* obj, void* data, size_t datasize) {
 	CHECK_VARN(data,NULL);
 	CHECK_VARN(obj->data,NULL);
 	CHECK_OBJSIZE((obj->data),datasize,NULL);
-	if(!empty(Heap,obj->data)) {
+	if(empty(Heap,obj->data)) {
 		return NULL;
 	}
 	for(ptr = (PrioNode *)heap->mem;
