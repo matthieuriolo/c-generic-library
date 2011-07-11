@@ -3,7 +3,7 @@
 #include <string.h>
 #include "binary_tree.h"
 #include "gen/error_macros.h"
-#define RUNS 1000000
+#define RUNS 10000
 #define BOUND 10000
 #define BASE 0
 #define NUMCASES 10
@@ -29,6 +29,7 @@ main(void) {
   set_compare(BinaryTree,  &object, intcmp);
   set_print(BinaryTree,  &object, print);
   for (y = 0; y < x; y++) {
+	  if (!(y % (RUNS/10))) fprintf(stderr, ".");
     srand((x * y) / (x - y) + (x + y / x));
     switch ((rand() % NUMCASES) + BASE) {
         case 0:
@@ -65,11 +66,13 @@ main(void) {
     };
     /*dump(BinaryTree,&object);*/
   }
+  printf("\n");
   destruct(BinaryTree,  &object);
   fprintf(stderr, "Now testing the iterators!\n");
   construct_func(BinaryTree,&object,sizeof(x),FREEOBJ, ckalloc, ckfree, intcmp,  print,
                  memcpy);
   for (x = 0; x < 15; x++) {
+	  if (!(x % (RUNS/10))) fprintf(stderr, ".");
 	  value = rand() % 30;
     convert(BinaryTree,  &object, &value, sizeof(value),STATIC);
   }
@@ -88,6 +91,7 @@ main(void) {
     value = *(unsigned int*) retrieve(BinaryTreeIter, ptr);
   } while (!prev(BinaryTreeIter, ptr));
   for(x = 0; x < RUNS; x++) {
+	  if (!(x % (RUNS/10))) fprintf(stderr, ".");
 	  switch(rand() % 2) {
 		  case 1:
 			  prev(BinaryTreeIter,ptr);
@@ -99,6 +103,7 @@ main(void) {
 			  break;
 	  }
   }
+  printf("\n");
   destroy(BinaryTreeIter, ptr);
   dupe = duplicate(BinaryTree,&object);
   ptr = create(BinaryTreeIter,  dupe);
@@ -115,6 +120,7 @@ main(void) {
     value = *(unsigned int*) retrieve(BinaryTreeIter, ptr);
   } while (!prev(BinaryTreeIter, ptr));
   for(x = 0; x < RUNS; x++) {
+	  if (!(x % (RUNS/10))) fprintf(stderr, ".");
 	  switch(rand() % 2) {
 		  case 1:
 			  prev(BinaryTreeIter,ptr);
@@ -126,6 +132,7 @@ main(void) {
 			  break;
 	  }
   }
+  printf("\n");
   destroy(BinaryTreeIter, ptr);
 
   bfsptr = create(BinaryTreeBFSIter,&object);
@@ -145,6 +152,7 @@ main(void) {
   destruct(BinaryTree,  &object);
   destruct(BinaryTree,dupe);
   free(dupe);
+  printf("\n");
   return EXIT_SUCCESS;
 }
 

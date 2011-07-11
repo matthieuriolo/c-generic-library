@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "gen/error_macros.h"
-#define RUNS 1000000
+#define RUNS 10000
 
 
 int
