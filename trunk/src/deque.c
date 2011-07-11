@@ -160,9 +160,9 @@ F_CLEAR(DequeList) {
 }
 
 F_EMPTY(DequeList) {
-	CHECK_VARN(obj,SUCCESS);
-	CHECK_VARN(H(obj),SUCCESS);
-	return 1;
+	CHECK_VARN(obj, EEMPTY);
+	CHECK_VARN(H(obj), EEMPTY);
+	return !S(obj);
 }
 
 F_SIZE(DequeList) {

@@ -82,13 +82,9 @@ F_DUMP(Heap) {
 }
 
 F_EMPTY(Heap) {
-	CHECK_VARN(obj,EINVAL);
-	CHECK_VARN(obj->mem,EINVAL);
-	if(H(obj) != T(obj)) {
-		return SUCCESS;
-	} else {
-		return EINVAL;
-	}
+	CHECK_VARN(obj, EINVAL);
+	CHECK_VARN(obj->mem, EINVAL);
+	return H(obj) != T(obj);
 }
 
 F_SIZE(Heap) {
