@@ -22,12 +22,16 @@
 
 F_CONSTRUCT(Vector) {
   CHECK_VARN(obj, EINVAL);
+  CHECK_VARE(datasize, EINVAL);
+  CHECK_VARE(flag, EINVAL);
   ARR_CONSTRUCT(Vector,obj,datasize,flag);
   return SUCCESS;
 }
 
 F_CONSTRUCT_FUNC(Vector) {
   CHECK_VARN(obj,EINVAL);
+  CHECK_VARE(datasize, EINVAL);
+  CHECK_VARE(flag, EINVAL);
   ARR_STRUCT_SETUP(obj,datasize,flag);
   obj->API.alloc = alloc;
   obj->API.dealloc = dealloc;
