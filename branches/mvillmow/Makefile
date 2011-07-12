@@ -112,6 +112,8 @@ AWK = mawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
+CHECK_CFLAGS =  
+CHECK_LIBS = -lcheck  
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
@@ -155,6 +157,9 @@ PACKAGE_TARNAME = libcgeneric
 PACKAGE_URL = 
 PACKAGE_VERSION = 0.4.2
 PATH_SEPARATOR = :
+PKG_CONFIG = /usr/bin/pkg-config
+PKG_CONFIG_LIBDIR = 
+PKG_CONFIG_PATH = 
 RANLIB = ranlib
 SED = /bin/sed
 SET_MAKE = 
@@ -215,7 +220,7 @@ top_builddir = .
 top_srcdir = .
 ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = reconf
-SUBDIRS = m4 doc lib src tests
+SUBDIRS = m4 doc lib src tests units
 INCLUDES = -I$(top_srcdir)/src
 LDADD = -lcgeneric
 all: config.h
