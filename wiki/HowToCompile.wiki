@@ -13,6 +13,8 @@ make
 
 The compiled libraries should be found in the hidden directory ./lib. By default there should be a static and a dynamic library.
 
+As of revision 41, make check requires that check unit test infrastructure exists. It can be installed from here:
+http://check.sourceforge.net/
 
 = Trouble? =
 
