@@ -212,7 +212,7 @@ return_at_Vector(Vector * vec, uint32_t loc)
 {
   register uint32_t offset = (loc * O(vec));
   CHECK_VARN(vec, NULL);
-  if(loc > C(vec)) {
+  if(loc > S(vec)) {
 	  return NULL;
   }
   if(H(vec) < T(vec)) {

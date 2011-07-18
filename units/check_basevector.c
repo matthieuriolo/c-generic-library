@@ -74,6 +74,24 @@ START_TEST(test_basevector_create_func)
 }
 END_TEST
 
+START_TEST(test_basevector_api_test)
+{
+  Vector object;
+  memset(&object, 0, sizeof(object));
+  unsigned int x = rand();
+  unsigned int y = rand();
+  fail_unless(construct(Vector, &object, sizeof(x), FREEOBJ) == SUCCESS, NULL);
+  fail_unless(set_compare(Vector, &object, intcmp) == SUCCESS, NULL);
+  fail_unless(push_back(Vector, &object, &x, STATIC) == SUCCESS, NULL);
+  fail_unless(insert_at_Vector(&object, &y, 0) == SUCCESS, NULL);
+  fail_unless(size_of_Vector(&object) == 1, NULL);
+  fail_unless(*(int*)return_at_Vector(&object, 0) == y, NULL);
+  fail_unless(clear_Vector(&object) == SUCCESS, NULL);
+  fail_unless(!return_at_Vector(&object, 0), NULL);
+  fail_unless(destruct(Vector, &object) == SUCCESS, NULL);
+
+}
+END_TEST
 
 Suite *
 basevector_suite(void)
@@ -85,6 +103,7 @@ basevector_suite(void)
   tcase_add_test(tc_core, test_basevector_destruct);
   tcase_add_test(tc_core, test_basevector_create_destruct_loop);
   tcase_add_test(tc_core, test_basevector_create_func);
+  tcase_add_test(tc_core, test_basevector_api_test);
   suite_add_tcase(s, tc_core);
   return s;
 }
