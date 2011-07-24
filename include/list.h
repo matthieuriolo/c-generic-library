@@ -149,4 +149,14 @@ void *to_array_List(List * list, size_t objsize);
 ITER(List) * extract_ListIter(ITER(List) * iter);
 
 create_iter_prototypes(List)
+
+
+/**
+  @brief on non-linux systems (BSD, Mac or Linux) the type for the comparison function does not exist
+  */
+
+#ifndef __linux__
+typedef int (*__compar_fn_t) (__const void *, __const void *);
+#endif
+
 #endif
