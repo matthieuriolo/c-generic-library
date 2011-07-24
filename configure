@@ -868,6 +868,10 @@ OTOOL
 OTOOL64
 CPP
 LIBOBJS
+enable_tests_TRUE
+enable_tests_FALSE
+enable_units_TRUE
+enable_units_FALSE
 LTLIBOBJS'
 ac_subst_files=''
       ac_precious_vars='build_alias
@@ -1466,11 +1470,7 @@ Optional Features:
                           optimize for fast installation [default=yes]
   --disable-libtool-lock  avoid locking (might break parallel builds)
   --enable-tests          Configure to build the test executables
-
   --enable-units          Configure to build the testunits
-
-  --enable-perfomances    Configure to build the perfomances executables
-
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -12472,12 +12472,12 @@ if test "${enable_tests+set}" = set; then
   enableval=$enable_tests;
 fi
 
-
-if test "x$enable_test" = "xyes"; then
-
-  ac_config_files="$ac_config_files tests/Makefile"
-
-
+ if test "x$enable_tests" = "xyes"; then
+  enable_tests_TRUE=
+  enable_tests_FALSE='#'
+else
+  enable_tests_TRUE='#'
+  enable_tests_FALSE=
 fi
 
 
@@ -12487,35 +12487,20 @@ if test "${enable_units+set}" = set; then
   enableval=$enable_units;
 fi
 
-
-if test "x$enable_units" = "xyes"; then
-
-  ac_config_files="$ac_config_files units/Makefile"
-
-
+ if test "x$enable_units" = "xyes"; then
+  enable_units_TRUE=
+  enable_units_FALSE='#'
+else
+  enable_units_TRUE='#'
+  enable_units_FALSE=
 fi
 
 
 
-#add perfomances files
-# Check whether --enable-perfomances was given.
-if test "${enable_perfomances+set}" = set; then
-  enableval=$enable_perfomances;
-fi
+ac_config_files="$ac_config_files Makefile doc/Makefile m4/Makefile lib/Makefile src/Makefile tests/Makefile units/Makefile"
 
 
-if test "x$enable_perfomances" = "xyes"; then
-
-  ac_config_files="$ac_config_files perfomances/Makefile"
-
-
-fi
-
-
-
-
-ac_config_files="$ac_config_files Makefile doc/Makefile m4/Makefile lib/Makefile src/Makefile"
-
+#perfomances/Makefile
 
 cat >confcache <<\_ACEOF
 # This file is a shell script that caches the results of configure
@@ -12624,6 +12609,20 @@ if test -z "${am__fastdepCC_TRUE}" && test -z "${am__fastdepCC_FALSE}"; then
   { { echo "$as_me:$LINENO: error: conditional \"am__fastdepCC\" was never defined.
 Usually this means the macro was only invoked conditionally." >&5
 echo "$as_me: error: conditional \"am__fastdepCC\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test -z "${enable_tests_TRUE}" && test -z "${enable_tests_FALSE}"; then
+  { { echo "$as_me:$LINENO: error: conditional \"enable_tests\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+echo "$as_me: error: conditional \"enable_tests\" was never defined.
+Usually this means the macro was only invoked conditionally." >&2;}
+   { (exit 1); exit 1; }; }
+fi
+if test -z "${enable_units_TRUE}" && test -z "${enable_units_FALSE}"; then
+  { { echo "$as_me:$LINENO: error: conditional \"enable_units\" was never defined.
+Usually this means the macro was only invoked conditionally." >&5
+echo "$as_me: error: conditional \"enable_units\" was never defined.
 Usually this means the macro was only invoked conditionally." >&2;}
    { (exit 1); exit 1; }; }
 fi
@@ -13350,14 +13349,13 @@ do
     "config.h") CONFIG_HEADERS="$CONFIG_HEADERS config.h" ;;
     "depfiles") CONFIG_COMMANDS="$CONFIG_COMMANDS depfiles" ;;
     "libtool") CONFIG_COMMANDS="$CONFIG_COMMANDS libtool" ;;
-    "tests/Makefile") CONFIG_FILES="$CONFIG_FILES tests/Makefile" ;;
-    "units/Makefile") CONFIG_FILES="$CONFIG_FILES units/Makefile" ;;
-    "perfomances/Makefile") CONFIG_FILES="$CONFIG_FILES perfomances/Makefile" ;;
     "Makefile") CONFIG_FILES="$CONFIG_FILES Makefile" ;;
     "doc/Makefile") CONFIG_FILES="$CONFIG_FILES doc/Makefile" ;;
     "m4/Makefile") CONFIG_FILES="$CONFIG_FILES m4/Makefile" ;;
     "lib/Makefile") CONFIG_FILES="$CONFIG_FILES lib/Makefile" ;;
     "src/Makefile") CONFIG_FILES="$CONFIG_FILES src/Makefile" ;;
+    "tests/Makefile") CONFIG_FILES="$CONFIG_FILES tests/Makefile" ;;
+    "units/Makefile") CONFIG_FILES="$CONFIG_FILES units/Makefile" ;;
 
   *) { { echo "$as_me:$LINENO: error: invalid argument: $ac_config_target" >&5
 echo "$as_me: error: invalid argument: $ac_config_target" >&2;}
@@ -13564,10 +13562,14 @@ OTOOL!$OTOOL$ac_delim
 OTOOL64!$OTOOL64$ac_delim
 CPP!$CPP$ac_delim
 LIBOBJS!$LIBOBJS$ac_delim
+enable_tests_TRUE!$enable_tests_TRUE$ac_delim
+enable_tests_FALSE!$enable_tests_FALSE$ac_delim
+enable_units_TRUE!$enable_units_TRUE$ac_delim
+enable_units_FALSE!$enable_units_FALSE$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 7; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 11; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5
