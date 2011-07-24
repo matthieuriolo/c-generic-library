@@ -45,33 +45,12 @@ AC_FUNC_MALLOC
 AC_CHECK_FUNCS([memset])
 
 #add tests files
-AC_ARG_ENABLE([tests],
-	AS_HELP_STRING([--enable-tests], [Configure to build the test executables])
-)
-
-AS_IF([test "x$enable_test" = "xyes"], [
-  AC_CONFIG_FILES([tests/Makefile])
-])
+AC_ARG_ENABLE([tests], AS_HELP_STRING([--enable-tests], [Configure to build the test executables]))
+AM_CONDITIONAL([enable_tests], [test "x$enable_tests" = "xyes"])
 
 #add units files
-AC_ARG_ENABLE([units],
-	AS_HELP_STRING([--enable-units], [Configure to build the testunits])
-)
-
-AS_IF([test "x$enable_units" = "xyes"], [
-  AC_CONFIG_FILES([units/Makefile])
-])
-
-
-#add perfomances files
-AC_ARG_ENABLE([perfomances],
-	AS_HELP_STRING([--enable-perfomances], [Configure to build the perfomances executables])
-)
-
-AS_IF([test "x$enable_perfomances" = "xyes"], [
-  AC_CONFIG_FILES([perfomances/Makefile])
-])
-
+AC_ARG_ENABLE([units],AS_HELP_STRING([--enable-units], [Configure to build the testunits]))
+AM_CONDITIONAL([enable_units], [test "x$enable_units" = "xyes"])
 
 
 AC_CONFIG_FILES([
@@ -80,7 +59,11 @@ AC_CONFIG_FILES([
 	m4/Makefile
 	lib/Makefile
 	src/Makefile
+	tests/Makefile
+	units/Makefile
 ])
+
+#perfomances/Makefile
 
 AC_OUTPUT
   
