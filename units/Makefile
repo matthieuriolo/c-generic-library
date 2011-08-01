@@ -33,8 +33,8 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = x86_64-unknown-linux-gnu
 host_triplet = x86_64-unknown-linux-gnu
-TESTS = check_basevector$(EXEEXT)
-check_PROGRAMS = check_basevector$(EXEEXT)
+TESTS = check_basevector$(EXEEXT) check_baselist$(EXEEXT)
+check_PROGRAMS = check_basevector$(EXEEXT) check_baselist$(EXEEXT)
 subdir = units
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
@@ -45,6 +45,13 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = $(top_builddir)/config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
+am_check_baselist_OBJECTS = check_baselist-check_baselist.$(OBJEXT)
+check_baselist_OBJECTS = $(am_check_baselist_OBJECTS)
+check_baselist_LDADD = $(LDADD)
+check_baselist_DEPENDENCIES =
+check_baselist_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
+	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(check_baselist_CFLAGS) \
+	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 am_check_basevector_OBJECTS =  \
 	check_basevector-check_basevector.$(OBJEXT)
 check_basevector_OBJECTS = $(am_check_basevector_OBJECTS)
@@ -66,8 +73,8 @@ CCLD = $(CC)
 LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
 	--mode=link $(CCLD) $(AM_CFLAGS) $(CFLAGS) $(AM_LDFLAGS) \
 	$(LDFLAGS) -o $@
-SOURCES = $(check_basevector_SOURCES)
-DIST_SOURCES = $(check_basevector_SOURCES)
+SOURCES = $(check_baselist_SOURCES) $(check_basevector_SOURCES)
+DIST_SOURCES = $(check_baselist_SOURCES) $(check_basevector_SOURCES)
 ETAGS = etags
 CTAGS = ctags
 am__tty_colors = \
@@ -194,6 +201,8 @@ LDADD = -lcgen -lcheck
 INCLUDES = -I../include -I.
 check_basevector_SOURCES = check_basevector.c $(top_builddir)/src/basevector.h
 check_basevector_CFLAGS =  
+check_baselist_SOURCES = check_baselist.c $(top_builddir)/src/baselist.h
+check_baselist_CFLAGS =  
 all: all-am
 
 .SUFFIXES:
@@ -237,6 +246,9 @@ clean-checkPROGRAMS:
 	list=`for p in $$list; do echo "$$p"; done | sed 's/$(EXEEXT)$$//'`; \
 	echo " rm -f" $$list; \
 	rm -f $$list
+check_baselist$(EXEEXT): $(check_baselist_OBJECTS) $(check_baselist_DEPENDENCIES) 
+	@rm -f check_baselist$(EXEEXT)
+	$(check_baselist_LINK) $(check_baselist_OBJECTS) $(check_baselist_LDADD) $(LIBS)
 check_basevector$(EXEEXT): $(check_basevector_OBJECTS) $(check_basevector_DEPENDENCIES) 
 	@rm -f check_basevector$(EXEEXT)
 	$(check_basevector_LINK) $(check_basevector_OBJECTS) $(check_basevector_LDADD) $(LIBS)
@@ -247,6 +259,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+include ./$(DEPDIR)/check_baselist-check_baselist.Po
 include ./$(DEPDIR)/check_basevector-check_basevector.Po
 
 .c.o:
@@ -269,6 +282,20 @@ include ./$(DEPDIR)/check_basevector-check_basevector.Po
 #	source='$<' object='$@' libtool=yes \
 #	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
 #	$(LTCOMPILE) -c -o $@ $<
+
+check_baselist-check_baselist.o: check_baselist.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_baselist_CFLAGS) $(CFLAGS) -MT check_baselist-check_baselist.o -MD -MP -MF $(DEPDIR)/check_baselist-check_baselist.Tpo -c -o check_baselist-check_baselist.o `test -f 'check_baselist.c' || echo '$(srcdir)/'`check_baselist.c
+	$(am__mv) $(DEPDIR)/check_baselist-check_baselist.Tpo $(DEPDIR)/check_baselist-check_baselist.Po
+#	source='check_baselist.c' object='check_baselist-check_baselist.o' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_baselist_CFLAGS) $(CFLAGS) -c -o check_baselist-check_baselist.o `test -f 'check_baselist.c' || echo '$(srcdir)/'`check_baselist.c
+
+check_baselist-check_baselist.obj: check_baselist.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_baselist_CFLAGS) $(CFLAGS) -MT check_baselist-check_baselist.obj -MD -MP -MF $(DEPDIR)/check_baselist-check_baselist.Tpo -c -o check_baselist-check_baselist.obj `if test -f 'check_baselist.c'; then $(CYGPATH_W) 'check_baselist.c'; else $(CYGPATH_W) '$(srcdir)/check_baselist.c'; fi`
+	$(am__mv) $(DEPDIR)/check_baselist-check_baselist.Tpo $(DEPDIR)/check_baselist-check_baselist.Po
+#	source='check_baselist.c' object='check_baselist-check_baselist.obj' libtool=no \
+#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
+#	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_baselist_CFLAGS) $(CFLAGS) -c -o check_baselist-check_baselist.obj `if test -f 'check_baselist.c'; then $(CYGPATH_W) 'check_baselist.c'; else $(CYGPATH_W) '$(srcdir)/check_baselist.c'; fi`
 
 check_basevector-check_basevector.o: check_basevector.c
 	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_basevector_CFLAGS) $(CFLAGS) -MT check_basevector-check_basevector.o -MD -MP -MF $(DEPDIR)/check_basevector-check_basevector.Tpo -c -o check_basevector-check_basevector.o `test -f 'check_basevector.c' || echo '$(srcdir)/'`check_basevector.c
