@@ -3,6 +3,7 @@ lib_LTLIBRARIES=libcgeneric_0.4.2.la
 lib_LIBRARIES=libcgen.a
 
 srcDIR = ../src
+manDIR=../doc/man/man3/
 INCLUDES = -I../libcgeneric
 
 
