@@ -86,7 +86,10 @@ am__nobase_list = $(am__nobase_strip_setup); \
 am__base_list = \
   sed '$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;$$!N;s/\n/ /g' | \
   sed '$$!N;$$!N;$$!N;$$!N;s/\n/ /g'
-am__installdirs = "$(DESTDIR)$(libincludedir)"
+man3dir = $(mandir)/man3
+am__installdirs = "$(DESTDIR)$(man3dir)" "$(DESTDIR)$(libincludedir)"
+NROFF = nroff
+MANS = $(man_MANS)
 HEADERS = $(nobase_libinclude_HEADERS)
 RECURSIVE_CLEAN_TARGETS = mostlyclean-recursive clean-recursive	\
   distclean-recursive maintainer-clean-recursive
@@ -132,12 +135,12 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/missing --run aclocal-1.11
-AMTAR = ${SHELL} /Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/missing --run tar
+ACLOCAL = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run aclocal-1.11
+AMTAR = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run tar
 AR = ar
-AUTOCONF = ${SHELL} /Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/missing --run autoconf
-AUTOHEADER = ${SHELL} /Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/missing --run autoheader
-AUTOMAKE = ${SHELL} /Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/missing --run automake-1.11
+AUTOCONF = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run autoconf
+AUTOHEADER = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run autoheader
+AUTOMAKE = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run automake-1.11
 AWK = awk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -170,7 +173,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = lipo
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/missing --run makeinfo
+MAKEINFO = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = ./install-sh -c -d
 NM = /usr/bin/nm
@@ -193,10 +196,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = strip
 VERSION = 0.4.2
-abs_builddir = /Users/matthieuriolo/Sourcecode/libgenc/branches/riolo
-abs_srcdir = /Users/matthieuriolo/Sourcecode/libgenc/branches/riolo
-abs_top_builddir = /Users/matthieuriolo/Sourcecode/libgenc/branches/riolo
-abs_top_srcdir = /Users/matthieuriolo/Sourcecode/libgenc/branches/riolo
+abs_builddir = /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo
+abs_srcdir = /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo
+abs_top_builddir = /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo
+abs_top_srcdir = /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -225,7 +228,7 @@ host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/install-sh
+install_sh = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -255,6 +258,28 @@ incDIR = ./libcgeneric
 srcHEADERS = $(incDIR)/libcgeneric.h $(incDIR)/binary_tree.h $(incDIR)/deque.h $(incDIR)/heap.h $(incDIR)/node.h $(incDIR)/queue.h $(incDIR)/vector.h $(incDIR)/comparisons.h $(incDIR)/hashtable.h $(incDIR)/list.h $(incDIR)/priority_queue.h $(incDIR)/stack.h $(incDIR)/gen/access_macros.h $(incDIR)/gen/control_macros.h $(incDIR)/gen/error_macros.h $(incDIR)/gen/function_signatures.h $(incDIR)/gen/stdint.h $(incDIR)/gen/control_arr_macros.h $(incDIR)/gen/data_types.h $(incDIR)/gen/function_macros.h $(incDIR)/gen/gen_macros.h
 libincludedir = $(includedir)
 nobase_libinclude_HEADERS = $(srcHEADERS)
+manDIR = ./doc/man/man3/
+man_MANS = $(manDIR)BinaryTree.3 $(manDIR)/_array_iter.3 \
+	$(manDIR)/_prio_queue.3 $(manDIR)/data_types.h.3 \
+	$(manDIR)/list.h.3 $(manDIR)/DequeList.3 \
+	$(manDIR)/_array_struct.3 $(manDIR)/_prio_queue_node.3 \
+	$(manDIR)/deque.h.3 $(manDIR)/node.h.3 $(manDIR)/List.3 \
+	$(manDIR)/_bfs_iter.3 $(manDIR)/_ptr_iter.3 \
+	$(manDIR)/error_macros.h.3 $(manDIR)/priority_queue.h.3 \
+	$(manDIR)/ListIter.3 $(manDIR)/_closed_hash_iterator.3 \
+	$(manDIR)/_ptr_struct.3 $(manDIR)/function_macros.h.3 \
+	$(manDIR)/queue.h.3 $(manDIR)/QueueList.3 \
+	$(manDIR)/_closed_hash_table.3 $(manDIR)/access_macros.h.3 \
+	$(manDIR)/function_signatures.h.3 $(manDIR)/stack.h.3 \
+	$(manDIR)/StackList.3 $(manDIR)/_dfs_iter.3 \
+	$(manDIR)/binary_tree.h.3 $(manDIR)/gen_macros.h.3 \
+	$(manDIR)/stdint.h.3 $(manDIR)/_Hash_List_Node.3 \
+	$(manDIR)/_functor_api.3 $(manDIR)/comparisons.h.3 \
+	$(manDIR)/hashtable.h.3 $(manDIR)/vector.h.3 \
+	$(manDIR)/_Hash_Node.3 $(manDIR)/_open_hash_iterator.3 \
+	$(manDIR)/control_arr_macros.h.3 $(manDIR)/heap.h.3 \
+	$(manDIR)/_Node.3 $(manDIR)/_open_hash_table.3 \
+	$(manDIR)/control_macros.h.3 $(manDIR)/libcgeneric.h.3
 SUBDIRS = m4 doc src lib $(am__append_1) $(am__append_2)
 INCLUDES = -I$(top_srcdir)/src
 LDADD = -lcgeneric
@@ -322,6 +347,44 @@ clean-libtool:
 
 distclean-libtool:
 	-rm -f libtool config.lt
+install-man3: $(man_MANS)
+	@$(NORMAL_INSTALL)
+	test -z "$(man3dir)" || $(MKDIR_P) "$(DESTDIR)$(man3dir)"
+	@list=''; test -n "$(man3dir)" || exit 0; \
+	{ for i in $$list; do echo "$$i"; done; \
+	l2='$(man_MANS)'; for i in $$l2; do echo "$$i"; done | \
+	  sed -n '/\.3[a-z]*$$/p'; \
+	} | while read p; do \
+	  if test -f $$p; then d=; else d="$(srcdir)/"; fi; \
+	  echo "$$d$$p"; echo "$$p"; \
+	done | \
+	sed -e 'n;s,.*/,,;p;h;s,.*\.,,;s,^[^3][0-9a-z]*$$,3,;x' \
+	      -e 's,\.[0-9a-z]*$$,,;$(transform);G;s,\n,.,' | \
+	sed 'N;N;s,\n, ,g' | { \
+	list=; while read file base inst; do \
+	  if test "$$base" = "$$inst"; then list="$$list $$file"; else \
+	    echo " $(INSTALL_DATA) '$$file' '$(DESTDIR)$(man3dir)/$$inst'"; \
+	    $(INSTALL_DATA) "$$file" "$(DESTDIR)$(man3dir)/$$inst" || exit $$?; \
+	  fi; \
+	done; \
+	for i in $$list; do echo "$$i"; done | $(am__base_list) | \
+	while read files; do \
+	  test -z "$$files" || { \
+	    echo " $(INSTALL_DATA) $$files '$(DESTDIR)$(man3dir)'"; \
+	    $(INSTALL_DATA) $$files "$(DESTDIR)$(man3dir)" || exit $$?; }; \
+	done; }
+
+uninstall-man3:
+	@$(NORMAL_UNINSTALL)
+	@list=''; test -n "$(man3dir)" || exit 0; \
+	files=`{ for i in $$list; do echo "$$i"; done; \
+	l2='$(man_MANS)'; for i in $$l2; do echo "$$i"; done | \
+	  sed -n '/\.3[a-z]*$$/p'; \
+	} | sed -e 's,.*/,,;h;s,.*\.,,;s,^[^3][0-9a-z]*$$,3,;x' \
+	      -e 's,\.[0-9a-z]*$$,,;$(transform);G;s,\n,.,'`; \
+	test -z "$$files" || { \
+	  echo " ( cd '$(DESTDIR)$(man3dir)' && rm -f" $$files ")"; \
+	  cd "$(DESTDIR)$(man3dir)" && rm -f $$files; }
 install-nobase_libincludeHEADERS: $(nobase_libinclude_HEADERS)
 	@$(NORMAL_INSTALL)
 	test -z "$(libincludedir)" || $(MKDIR_P) "$(DESTDIR)$(libincludedir)"
@@ -482,6 +545,19 @@ distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
 distdir: $(DISTFILES)
+	@list='$(MANS)'; if test -n "$$list"; then \
+	  list=`for p in $$list; do \
+	    if test -f $$p; then d=; else d="$(srcdir)/"; fi; \
+	    if test -f "$$d$$p"; then echo "$$d$$p"; else :; fi; done`; \
+	  if test -n "$$list" && \
+	    grep 'ab help2man is required to generate this page' $$list >/dev/null; then \
+	    echo "error: found man pages containing the \`missing help2man' replacement text:" >&2; \
+	    grep -l 'ab help2man is required to generate this page' $$list | sed 's/^/         /' >&2; \
+	    echo "       to fix them, install help2man, remove and regenerate the man pages;" >&2; \
+	    echo "       typically \`make maintainer-clean' will remove them" >&2; \
+	    exit 1; \
+	  else :; fi; \
+	else :; fi
 	$(am__remove_distdir)
 	test -d "$(distdir)" || mkdir "$(distdir)"
 	@srcdirstrip=`echo "$(srcdir)" | sed 's/[].[^$$\\*]/\\\\&/g'`; \
@@ -658,10 +734,10 @@ distcleancheck: distclean
 	       exit 1; } >&2
 check-am: all-am
 check: check-recursive
-all-am: Makefile $(HEADERS) config.h
+all-am: Makefile $(MANS) $(HEADERS) config.h
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(libincludedir)"; do \
+	for dir in "$(DESTDIR)$(man3dir)" "$(DESTDIR)$(libincludedir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-recursive
@@ -711,7 +787,7 @@ info: info-recursive
 
 info-am:
 
-install-data-am: install-nobase_libincludeHEADERS
+install-data-am: install-man install-nobase_libincludeHEADERS
 
 install-dvi: install-dvi-recursive
 
@@ -727,7 +803,7 @@ install-info: install-info-recursive
 
 install-info-am:
 
-install-man:
+install-man: install-man3
 
 install-pdf: install-pdf-recursive
 
@@ -757,7 +833,9 @@ ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-nobase_libincludeHEADERS
+uninstall-am: uninstall-man uninstall-nobase_libincludeHEADERS
+
+uninstall-man: uninstall-man3
 
 .MAKE: $(RECURSIVE_CLEAN_TARGETS) $(RECURSIVE_TARGETS) all \
 	ctags-recursive install-am install-strip tags-recursive
@@ -772,12 +850,13 @@ uninstall-am: uninstall-nobase_libincludeHEADERS
 	install install-am install-data install-data-am install-dvi \
 	install-dvi-am install-exec install-exec-am install-html \
 	install-html-am install-info install-info-am install-man \
-	install-nobase_libincludeHEADERS install-pdf install-pdf-am \
-	install-ps install-ps-am install-strip installcheck \
-	installcheck-am installdirs installdirs-am maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-generic \
-	mostlyclean-libtool pdf pdf-am ps ps-am tags tags-recursive \
-	uninstall uninstall-am uninstall-nobase_libincludeHEADERS
+	install-man3 install-nobase_libincludeHEADERS install-pdf \
+	install-pdf-am install-ps install-ps-am install-strip \
+	installcheck installcheck-am installdirs installdirs-am \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
+	tags tags-recursive uninstall uninstall-am uninstall-man \
+	uninstall-man3 uninstall-nobase_libincludeHEADERS
 
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.

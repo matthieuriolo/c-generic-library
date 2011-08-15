@@ -1,6 +1,6 @@
 /**
  * Copyright 2006, All Rights Reserved, Micah Villmow
- * @file genc.h
+ * @file libcgeneric.h
  * @brief Includes the whole libgenc
  *
  */
