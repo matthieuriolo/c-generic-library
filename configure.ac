@@ -1,8 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-#the free Xcode v3 has autoconf v2.61
-AC_PREREQ([2.61])
+AC_PREREQ([2.68])
 
 AC_INIT(libcgeneric, 0.4.2, villmow@gmail.com)
 AM_INIT_AUTOMAKE(libcgeneric, 0.4.2)
@@ -52,6 +51,10 @@ AM_CONDITIONAL([enable_tests], [test "x$enable_tests" = "xyes"])
 AC_ARG_ENABLE([units],AS_HELP_STRING([--enable-units], [Configure to build the testunits]))
 AM_CONDITIONAL([enable_units], [test "x$enable_units" = "xyes"])
 
+#for a some strange reason this always broke
+#AS_IF([test "x$enable_units" = "xyes"], [
+#	PKG_CHECK_MODULES([CHECK], [check >= 0.9.4])
+#])
 
 AC_CONFIG_FILES([
 	Makefile
