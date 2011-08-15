@@ -1,0 +1,86 @@
+.TH "/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/tests/heap_test.c" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/tests/heap_test.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio.h>\fP
+.br
+\fC#include <stdlib.h>\fP
+.br
+\fC#include <string.h>\fP
+.br
+\fC#include 'heap.h'\fP
+.br
+\fC#include 'gen/error_macros.h'\fP
+.br
+
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBRUNS\fP   10000"
+.br
+.ti -1c
+.RI "#define \fBBOUND\fP   1000000"
+.br
+.ti -1c
+.RI "#define \fBBASE\fP   0"
+.br
+.ti -1c
+.RI "#define \fBNUMCASES\fP   2"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int32_t \fBintcmp\fP (const void *, const void *, size_t)"
+.br
+.ti -1c
+.RI "void \fBprint\fP (const void *)"
+.br
+.ti -1c
+.RI "void \fBckfree\fP (void *)"
+.br
+.ti -1c
+.RI "void * \fBckalloc\fP (size_t)"
+.br
+.ti -1c
+.RI "int \fBmain\fP (void)"
+.br
+.ti -1c
+.RI "int32_t \fBintcmp\fP (const void *a, const void *b, size_t x UNUSED)"
+.br
+.in -1c
+.SH "Define Documentation"
+.PP 
+.SS "#define BASE   0"
+.PP
+Definition at line 8 of file heap_test.c.
+.SS "#define BOUND   1000000"
+.PP
+Definition at line 7 of file heap_test.c.
+.SS "#define NUMCASES   2"
+.PP
+Definition at line 9 of file heap_test.c.
+.SS "#define RUNS   10000"
+.PP
+Definition at line 6 of file heap_test.c.
+.SH "Function Documentation"
+.PP 
+.SS "void* ckalloc (size_tsize)"
+.SS "void ckfree (void *ptr)"
+.SS "int32_t intcmp (const void *a, const void *b, size_t xUNUSED)"
+.PP
+Definition at line 48 of file heap_test.c.
+.SS "int32_t intcmp (const void *, const void *, size_t)"
+.SS "int main (void)"
+.PP
+Definition at line 17 of file heap_test.c.
+.SS "void print (const void *a)"
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.

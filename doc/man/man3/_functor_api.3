@@ -1,0 +1,53 @@
+.TH "_functor_api" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+_functor_api \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <data_types.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "void *(* \fBalloc\fP )(size_t)"
+.br
+.ti -1c
+.RI "void(* \fBdealloc\fP )(void *)"
+.br
+.ti -1c
+.RI "int32_t(* \fBcmp\fP )(const void *, const void *, size_t)"
+.br
+.ti -1c
+.RI "void(* \fBprint\fP )(const void *)"
+.br
+.ti -1c
+.RI "void *(* \fBcopy\fP )(void *, const void *, size_t)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 14 of file data_types.h.
+.SH "Field Documentation"
+.PP 
+.SS "void *(* \fBalloc\fP)(size_t)"Allocation function pointer 
+.PP
+Definition at line 17 of file data_types.h.
+.SS "int32_t(* \fBcmp\fP)(const void *, const void *, size_t)"Comparison function pointer to compare objects 
+.PP
+Definition at line 22 of file data_types.h.
+.SS "void *(* \fBcopy\fP)(void *, const void *, size_t)"Copy function pointer 
+.PP
+Definition at line 27 of file data_types.h.
+.SS "void(* \fBdealloc\fP)(void *)"Deallocation function pointer 
+.PP
+Definition at line 20 of file data_types.h.
+.SS "void(* \fBprint\fP)(const void *)"Print function pointer 
+.PP
+Definition at line 25 of file data_types.h.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.

@@ -1,0 +1,180 @@
+.TH "/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/src/heap.c" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/src/heap.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <string.h>\fP
+.br
+\fC#include <stddef.h>\fP
+.br
+\fC#include <stdio.h>\fP
+.br
+\fC#include 'heap.h'\fP
+.br
+\fC#include 'gen/gen_macros.h'\fP
+.br
+\fC#include 'gen/data_types.h'\fP
+.br
+\fC#include 'gen/error_macros.h'\fP
+.br
+\fC#include 'gen/function_macros.h'\fP
+.br
+\fC#include 'gen/control_arr_macros.h'\fP
+.br
+\fC#include 'gen/function_signatures.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBF_CONSTRUCT\fP (\fBHeap\fP)"
+.br
+.ti -1c
+.RI "\fBF_CONSTRUCT_FUNC\fP (\fBHeap\fP)"
+.br
+.ti -1c
+.RI "\fBF_DESTRUCT\fP (\fBHeap\fP)"
+.br
+.ti -1c
+.RI "\fBF_CLEAR\fP (\fBHeap\fP)"
+.br
+.ti -1c
+.RI "\fBF_PRINT\fP (\fBHeap\fP)"
+.br
+.ti -1c
+.RI "\fBF_DUMP\fP (\fBHeap\fP)"
+.br
+.ti -1c
+.RI "\fBF_EMPTY\fP (\fBHeap\fP)"
+.br
+.ti -1c
+.RI "\fBF_SIZE\fP (\fBHeap\fP)"
+.br
+.ti -1c
+.RI "int8_t \fBinsert_Heap\fP (\fBHeap\fP *obj, void *data, size_t datasize, int flag)"
+.br
+.RI "\fIinsert data into the heap in sorted order \fP"
+.ti -1c
+.RI "void * \fBtop_Heap\fP (\fBHeap\fP *obj)"
+.br
+.RI "\fIreturns the first value to be removed from the delete function \fP"
+.ti -1c
+.RI "int8_t \fBpop_Heap\fP (\fBHeap\fP *obj)"
+.br
+.RI "\fIRemoves the top value of the heap. \fP"
+.ti -1c
+.RI "int8_t \fBresize_Heap\fP (\fBHeap\fP *obj, size_t size)"
+.br
+.ti -1c
+.RI "int8_t \fBmerge_Heap\fP (\fBHeap\fP *obj, \fBHeap\fP *src)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "F_CLEAR (\fBHeap\fP)"
+.PP
+Definition at line 47 of file heap.c.
+.SS "F_CONSTRUCT (\fBHeap\fP)"
+.PP
+Definition at line 20 of file heap.c.
+.SS "F_CONSTRUCT_FUNC (\fBHeap\fP)"
+.PP
+Definition at line 28 of file heap.c.
+.SS "F_DESTRUCT (\fBHeap\fP)"
+.PP
+Definition at line 39 of file heap.c.
+.SS "F_DUMP (\fBHeap\fP)"
+.PP
+Definition at line 77 of file heap.c.
+.SS "F_EMPTY (\fBHeap\fP)"
+.PP
+Definition at line 84 of file heap.c.
+.SS "F_PRINT (\fBHeap\fP)"
+.PP
+Definition at line 56 of file heap.c.
+.SS "F_SIZE (\fBHeap\fP)"
+.PP
+Definition at line 90 of file heap.c.
+.SS "int8_t insert_Heap (\fBHeap\fP *obj, void *data, size_tdatasize, intflag)"
+.PP
+insert data into the heap in sorted order \fBParameters:\fP
+.RS 4
+\fIobj\fP the heap object to insert data into 
+.br
+\fIdata\fP the data to insert into the heap object 
+.br
+\fIdatasize\fP the size of data to insert 
+.br
+\fIflag\fP flag whether data is dynamic or static 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error 
+.RE
+.PP
+
+.PP
+Definition at line 96 of file heap.c.
+.SS "int8_t merge_Heap (\fBHeap\fP *obj, \fBHeap\fP *src)"\fBParameters:\fP
+.RS 4
+\fIobj\fP the destination heap 
+.br
+\fIsrc\fP the source heap 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error 
+.RE
+.PP
+
+.PP
+Definition at line 173 of file heap.c.
+.SS "int8_t pop_Heap (\fBHeap\fP *obj)"
+.PP
+Removes the top value of the heap. \fBParameters:\fP
+.RS 4
+\fIobj\fP the heap object to remove the max/min value from  on success, non-zero on error Based on the comparison function, pop_Heap removes either the max or the min value from the tree. 
+.RE
+.PP
+
+.PP
+Definition at line 129 of file heap.c.
+.SS "int8_t resize_Heap (\fBHeap\fP *obj, size_tsize)"\fBParameters:\fP
+.RS 4
+\fIobj\fP the object to resize 
+.br
+\fIsize\fP the size to resize to 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error 
+.RE
+.PP
+
+.PP
+Definition at line 160 of file heap.c.
+.SS "void* top_Heap (\fBHeap\fP *obj)"
+.PP
+returns the first value to be removed from the delete function \fBParameters:\fP
+.RS 4
+\fIobj\fP the heap object to get the max/min value from 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+Pointer to first value or NULL on error/empty Front is used to get either the max or the min value based on the comparision function. It returns the value stored at the first node and is also the value to be removed from the heap on the proceeding delete call 
+.RE
+.PP
+
+.PP
+Definition at line 121 of file heap.c.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.

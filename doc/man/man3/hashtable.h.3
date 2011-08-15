@@ -1,0 +1,162 @@
+.TH "/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/include/hashtable.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/include/hashtable.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'gen/data_types.h'\fP
+.br
+\fC#include 'gen/gen_macros.h'\fP
+.br
+\fC#include 'gen/function_signatures.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fB_open_hash_table\fP"
+.br
+.ti -1c
+.RI "struct \fB_open_hash_iterator\fP"
+.br
+.ti -1c
+.RI "struct \fB_closed_hash_table\fP"
+.br
+.ti -1c
+.RI "struct \fB_closed_hash_iterator\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fB_Hash_List_Node\fP \fBHashListNode\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_open_hash_table\fP \fBOHTable\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_open_hash_iterator\fP \fBOHTableIter\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_closed_hash_table\fP \fBCHTable\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_closed_hash_iterator\fP \fBCHTableIter\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int8_t \fBinsert_OHTable\fP (\fBOHTable\fP *table, void *element, size_t elesize, int8_t flag)"
+.br
+.ti -1c
+.RI "int8_t \fBdelete_OHTable\fP (\fBOHTable\fP *table, void *element, size_t elesize)"
+.br
+.ti -1c
+.RI "void * \fBfind_OHTable\fP (\fBOHTable\fP *table, void *element, size_t elesize)"
+.br
+.ti -1c
+.RI "int8_t \fBset_hash_OHTable\fP (\fBOHTable\fP *table, uint32_t(*hash)(void *, size_t))"
+.br
+.ti -1c
+.RI "\fBcreate_iter_prototypes\fP (\fBOHTable\fP) typedef struct \fB_Hash_Node\fP HashNode"
+.br
+.ti -1c
+.RI "int8_t \fBinsert_CHTable\fP (\fBCHTable\fP *table, void *element, size_t elesize, int8_t flag)"
+.br
+.ti -1c
+.RI "int8_t \fBdelete_CHTable\fP (\fBCHTable\fP *table, void *element, size_t elesize)"
+.br
+.ti -1c
+.RI "void * \fBfind_CHTable\fP (\fBCHTable\fP *table, void *element, size_t elesize)"
+.br
+.ti -1c
+.RI "int8_t \fBset_hash_CHTable\fP (\fBCHTable\fP *table, uint32_t(*hash)(void *, size_t))"
+.br
+.ti -1c
+.RI "int8_t \fBset_probe_CHTable\fP (\fBCHTable\fP *table, uint32_t(*prob)(uint32_t))"
+.br
+.ti -1c
+.RI "\fBcreate_iter_prototypes\fP (\fBCHTable\fP) uint32_t char_hash(void *key"
+.br
+.ti -1c
+.RI "uint32_t \fBnum_hash\fP (void *key, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "uint32_t \fBlinear_probing\fP (uint32_t num)"
+.br
+.ti -1c
+.RI "uint32_t \fBquadratic_probing\fP (uint32_t num)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "size_t \fBlen\fP"
+.br
+.in -1c
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fB_closed_hash_table\fP \fBCHTable\fP"
+.PP
+Definition at line 60 of file hashtable.h.
+.SS "typedef struct \fB_closed_hash_iterator\fP  \fBCHTableIter\fP"
+.SS "typedef struct \fB_Hash_List_Node\fP \fBHashListNode\fP"
+.PP
+Definition at line 13 of file hashtable.h.
+.SS "typedef struct \fB_open_hash_table\fP  \fBOHTable\fP"
+.SS "typedef struct \fB_open_hash_iterator\fP  \fBOHTableIter\fP"
+.SH "Function Documentation"
+.PP 
+.SS "create_iter_prototypes (\fBOHTable\fP)"
+.SS "create_iter_prototypes (\fBCHTable\fP)"
+.SS "int8_t delete_CHTable (\fBCHTable\fP *table, void *element, size_telesize)"
+.PP
+Definition at line 484 of file hashtable.c.
+.SS "int8_t delete_OHTable (\fBOHTable\fP *table, void *element, size_telesize)"
+.PP
+Definition at line 127 of file hashtable.c.
+.SS "void* find_CHTable (\fBCHTable\fP *table, void *element, size_telesize)"
+.PP
+Definition at line 511 of file hashtable.c.
+.SS "void* find_OHTable (\fBOHTable\fP *table, void *element, size_telesize)"
+.PP
+Definition at line 187 of file hashtable.c.
+.SS "int8_t insert_CHTable (\fBCHTable\fP *table, void *element, size_telesize, int8_tflag)"
+.PP
+Definition at line 451 of file hashtable.c.
+.SS "int8_t insert_OHTable (\fBOHTable\fP *table, void *element, size_telesize, int8_tflag)"
+.PP
+Definition at line 82 of file hashtable.c.
+.SS "uint32_t linear_probing (uint32_tnum)"
+.PP
+Definition at line 697 of file hashtable.c.
+.SS "uint32_t num_hash (void *key, size_tlen)"
+.PP
+Definition at line 689 of file hashtable.c.
+.SS "uint32_t quadratic_probing (uint32_tnum)"
+.PP
+Definition at line 701 of file hashtable.c.
+.SS "int8_t set_hash_CHTable (\fBCHTable\fP *table, uint32_t(*)(void *, size_t)hash)"
+.PP
+Definition at line 556 of file hashtable.c.
+.SS "int8_t set_hash_OHTable (\fBOHTable\fP *table, uint32_t(*)(void *, size_t)hash)"
+.PP
+Definition at line 230 of file hashtable.c.
+.SS "int8_t set_probe_CHTable (\fBCHTable\fP *table, uint32_t(*)(uint32_t)prob)"
+.PP
+Definition at line 563 of file hashtable.c.
+.SH "Variable Documentation"
+.PP 
+.SS "size_t \fBlen\fP"
+.PP
+Definition at line 121 of file hashtable.h.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.

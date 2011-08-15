@@ -1,0 +1,94 @@
+.TH "/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/include/comparisons.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/include/comparisons.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBCMPFUNC_PROTO\fP(TYPE)   int TYPE##cmp(void *, void *, size_t)"
+.br
+.RI "\fImacro to expand to the comparison function prototype \fP"
+.ti -1c
+.RI "#define \fBCMPFUNC_IMPL\fP(TYPE)"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int \fBcharcmp\fP (void *, void *, size_t)"
+.br
+.ti -1c
+.RI "int \fBfloatcmp\fP (void *, void *, size_t)"
+.br
+.ti -1c
+.RI "int \fBdoublecmp\fP (void *, void *, size_t)"
+.br
+.ti -1c
+.RI "int \fBint8_tcmp\fP (void *, void *, size_t)"
+.br
+.ti -1c
+.RI "int \fBint16_tcmp\fP (void *, void *, size_t)"
+.br
+.ti -1c
+.RI "int \fBint32_tcmp\fP (void *, void *, size_t)"
+.br
+.ti -1c
+.RI "int \fBint64_tcmp\fP (void *, void *, size_t)"
+.br
+.ti -1c
+.RI "int \fBuint8_tcmp\fP (void *, void *, size_t)"
+.br
+.ti -1c
+.RI "int \fBuint16_tcmp\fP (void *, void *, size_t)"
+.br
+.ti -1c
+.RI "int \fBuint32_tcmp\fP (void *, void *, size_t)"
+.br
+.ti -1c
+.RI "int \fBuint64_tcmp\fP (void *, void *, size_t)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "int TYPE return TYPE first TYPE \fBsecond\fP"
+.br
+.in -1c
+.SH "Define Documentation"
+.PP 
+.SS "#define CMPFUNC_IMPL(TYPE)"
+.PP
+Definition at line 13 of file comparisons.h.
+.SS "#define CMPFUNC_PROTO(TYPE)   int TYPE##cmp(void *, void *, size_t)"
+.PP
+macro to expand to the comparison function prototype 
+.PP
+Definition at line 12 of file comparisons.h.
+.SH "Function Documentation"
+.PP 
+.SS "int charcmp (void *, void *, size_t)"
+.SS "int doublecmp (void *, void *, size_t)"
+.SS "int floatcmp (void *, void *, size_t)"
+.SS "int int16_tcmp (void *, void *, size_t)"
+.SS "int int32_tcmp (void *, void *, size_t)"
+.SS "int int64_tcmp (void *, void *, size_t)"
+.SS "int int8_tcmp (void *, void *, size_t)"
+.SS "int uint16_tcmp (void *, void *, size_t)"
+.SS "int uint32_tcmp (void *, void *, size_t)"
+.SS "int uint64_tcmp (void *, void *, size_t)"
+.SS "int uint8_tcmp (void *, void *, size_t)"
+.SH "Variable Documentation"
+.PP 
+.SS "int TYPE return TYPE first TYPE \fBsecond\fP"
+.PP
+Definition at line 15 of file comparisons.h.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.
