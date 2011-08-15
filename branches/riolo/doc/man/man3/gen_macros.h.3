@@ -1,0 +1,645 @@
+.TH "/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/gen/gen_macros.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/gen/gen_macros.h \- 
+.PP
+macro functions that apply to all data structures  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stddef.h>\fP
+.br
+\fC#include 'function_signatures.h'\fP
+.br
+
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBfunction\fP(FUNC, TYPE)   func_##FUNC(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBAPI_DEFAULT_SETUP\fP(X)"
+.br
+.ti -1c
+.RI "#define \fBfunc_duplicate_ptr_struct\fP(X)"
+.br
+.ti -1c
+.RI "#define \fBfunc_duplicate_arr_struct\fP(X)"
+.br
+.ti -1c
+.RI "#define \fBfunc_set_compare\fP(X)"
+.br
+.ti -1c
+.RI "#define \fBfunc_set_print\fP(X)"
+.br
+.ti -1c
+.RI "#define \fBfunc_set_copy\fP(X)"
+.br
+.ti -1c
+.RI "#define \fBfunc_set_alloc\fP(X)"
+.br
+.ti -1c
+.RI "#define \fBfunc_set_dealloc\fP(X)"
+.br
+.ti -1c
+.RI "#define \fBfunc_size_of\fP(X)"
+.br
+.ti -1c
+.RI "#define \fBfunc_set_object_size\fP(X)"
+.br
+.ti -1c
+.RI "#define \fBfunc_set_arr_object_size\fP(X)"
+.br
+.ti -1c
+.RI "#define \fBfunc_set_free_objects\fP(X)"
+.br
+.ti -1c
+.RI "#define \fBcreate_iter_prototypes\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBiter_proto\fP(FUNC, TYPE)   proto_##FUNC(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBproto_prev\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBproto_next\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBproto_head\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBproto_tail\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBproto_assign\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBproto_retrieve\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBproto_destroy\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBproto_create\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBproto_copy\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBproto_swap\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBcreate_iter_func\fP(PTR, TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgeneric_iter_func\fP(PTR, FUNC, TYPE)   gen_##PTR##_iter_##FUNC(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Ptr_Based_iter_create\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Arr_Based_iter_create\fP(TYPE)   gen_Ptr_Based_iter_create(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Ptr_Based_iter_copy\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Arr_Based_iter_copy\fP(TYPE)   gen_Ptr_Based_iter_copy(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Ptr_Based_iter_swap\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Arr_Based_iter_swap\fP(TYPE)   gen_Ptr_Based_iter_swap(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Ptr_Based_iter_assign\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Arr_Based_iter_assign\fP(TYPE)   gen_Ptr_Based_iter_assign(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Ptr_Based_iter_destroy\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Arr_Based_iter_destroy\fP(TYPE)   gen_Ptr_Based_iter_destroy(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Ptr_Based_iter_next\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Arr_Based_iter_next\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Ptr_Based_iter_prev\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Arr_Based_iter_prev\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Ptr_Based_iter_head\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Arr_Based_iter_head\fP(TYPE)   gen_Ptr_Based_iter_head(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Ptr_Based_iter_tail\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Arr_Based_iter_tail\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Ptr_Based_iter_retrieve\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBgen_Arr_Based_iter_retrieve\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBCOMMON_FUNCTION_PROTOTYPES\fP(STRUCT)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+macro functions that apply to all data structures 
+
+Copyright 2006, Micah Villmow, All Rights Reserved
+.PP
+\fBAuthor:\fP
+.RS 4
+Micah Villmow Some functions are very repetetive and are simple, so they can easily be macro'd and generalized. All functions that have this ability will be put in this file and be used throughout the code 
+.RE
+.PP
+
+.PP
+Definition in file \fBgen_macros.h\fP.
+.SH "Define Documentation"
+.PP 
+.SS "#define API_DEFAULT_SETUP(X)"\fBValue:\fP
+.PP
+.nf
+do {\
+                (X)->API.alloc = malloc;\
+                (X)->API.dealloc = free;\
+                (X)->API.cmp = memcmp;\
+                (X)->API.copy = memcpy;\
+                (X)->API.print = NULL;\
+        }while(0)
+.fi
+.PP
+Definition at line 21 of file gen_macros.h.
+.SS "#define COMMON_FUNCTION_PROTOTYPES(STRUCT)"
+.PP
+Definition at line 404 of file gen_macros.h.
+.SS "#define create_iter_func(PTR, TYPE)"\fBValue:\fP
+.PP
+.nf
+generic_iter_func(PTR,prev,TYPE)\
+        generic_iter_func(PTR,next,TYPE)\
+        generic_iter_func(PTR,head,TYPE)\
+        generic_iter_func(PTR,tail,TYPE)\
+        generic_iter_func(PTR,assign,TYPE)\
+        generic_iter_func(PTR,create,TYPE)\
+        generic_iter_func(PTR,destroy,TYPE)\
+        generic_iter_func(PTR,retrieve,TYPE)\
+        generic_iter_func(PTR,copy,TYPE)\
+        generic_iter_func(PTR,swap,TYPE)
+.fi
+.PP
+Definition at line 227 of file gen_macros.h.
+.SS "#define create_iter_prototypes(TYPE)"\fBValue:\fP
+.PP
+.nf
+iter_proto(prev,TYPE);\
+        iter_proto(next,TYPE);\
+        iter_proto(assign,TYPE);\
+        iter_proto(destroy,TYPE);\
+        iter_proto(head,TYPE);\
+        iter_proto(tail,TYPE);\
+        iter_proto(create,TYPE);\
+        iter_proto(retrieve,TYPE);\
+        iter_proto(copy,TYPE);\
+        iter_proto(swap,TYPE);
+.fi
+.PP
+Definition at line 172 of file gen_macros.h.
+.SS "#define func_duplicate_arr_struct(X)"
+.PP
+Definition at line 68 of file gen_macros.h.
+.SS "#define func_duplicate_ptr_struct(X)"Beginning of macro definitions for function implementations 
+.PP
+Definition at line 31 of file gen_macros.h.
+.SS "#define func_set_alloc(X)"\fBValue:\fP
+.PP
+.nf
+F_SET_ALLOC(X) {\
+                CHECK_VARN(obj,EINVAL);\
+                CHECK_VARN(alloc,EINVAL);\
+                obj->API.alloc = alloc;\
+                return SUCCESS;\
+        }
+.fi
+.PP
+Definition at line 130 of file gen_macros.h.
+.SS "#define func_set_arr_object_size(X)"\fBValue:\fP
+.PP
+.nf
+void set_object_size_##X(X *obj,size_t objsize) {\
+                O(obj) = objsize;\
+        }
+.fi
+.PP
+Definition at line 159 of file gen_macros.h.
+.SS "#define func_set_compare(X)"\fBValue:\fP
+.PP
+.nf
+F_SET_COMPARE(X) {\
+                CHECK_VARN(obj,EINVAL);\
+                CHECK_VARN(cmp,EINVAL);\
+                obj->API.cmp = cmp;\
+                return 0;\
+        }
+.fi
+.PP
+Definition at line 106 of file gen_macros.h.
+.SS "#define func_set_copy(X)"\fBValue:\fP
+.PP
+.nf
+F_SET_COPY(X) {\
+                CHECK_VARN(obj,EINVAL);\
+                CHECK_VARN(copy,EINVAL);\
+                obj->API.copy = copy;\
+                return SUCCESS;\
+        }
+.fi
+.PP
+Definition at line 122 of file gen_macros.h.
+.SS "#define func_set_dealloc(X)"\fBValue:\fP
+.PP
+.nf
+F_SET_DEALLOC(X) {\
+                CHECK_VARN(obj,EINVAL);\
+                CHECK_VARN(dealloc,EINVAL);\
+                obj->API.dealloc = dealloc;\
+                return SUCCESS;\
+        }
+.fi
+.PP
+Definition at line 138 of file gen_macros.h.
+.SS "#define func_set_free_objects(X)"\fBValue:\fP
+.PP
+.nf
+void set_free_objects_##X( X* obj, int flag) {\
+                obj->objfree = flag;\
+        }
+.fi
+.PP
+Definition at line 164 of file gen_macros.h.
+.SS "#define func_set_object_size(X)"\fBValue:\fP
+.PP
+.nf
+void set_object_size_##X( X *obj, size_t objsize) {\
+                char *ptr;\
+                O(obj) = objsize;\
+        }
+.fi
+.PP
+Definition at line 153 of file gen_macros.h.
+.SS "#define func_set_print(X)"\fBValue:\fP
+.PP
+.nf
+F_SET_PRINT(X) {\
+                CHECK_VARN(obj,EINVAL);\
+                CHECK_VARN(print,EINVAL);\
+                obj->API.print = print;\
+                return SUCCESS;\
+        }
+.fi
+.PP
+Definition at line 114 of file gen_macros.h.
+.SS "#define func_size_of(X)"\fBValue:\fP
+.PP
+.nf
+F_SIZE_OF(X) {\
+                CHECK_VARN(obj,0);\
+                return S(obj);\
+        }
+.fi
+.PP
+Definition at line 147 of file gen_macros.h.
+.SS "#define function(FUNC, TYPE)   func_##FUNC(TYPE)"
+.PP
+Definition at line 18 of file gen_macros.h.
+.SS "#define gen_Arr_Based_iter_assign(TYPE)   gen_Ptr_Based_iter_assign(TYPE)"
+.PP
+Definition at line 295 of file gen_macros.h.
+.SS "#define gen_Arr_Based_iter_copy(TYPE)   gen_Ptr_Based_iter_copy(TYPE)"
+.PP
+Definition at line 268 of file gen_macros.h.
+.SS "#define gen_Arr_Based_iter_create(TYPE)   gen_Ptr_Based_iter_create(TYPE)"
+.PP
+Definition at line 257 of file gen_macros.h.
+.SS "#define gen_Arr_Based_iter_destroy(TYPE)   gen_Ptr_Based_iter_destroy(TYPE)"
+.PP
+Definition at line 304 of file gen_macros.h.
+.SS "#define gen_Arr_Based_iter_head(TYPE)   gen_Ptr_Based_iter_head(TYPE)"
+.PP
+Definition at line 369 of file gen_macros.h.
+.SS "#define gen_Arr_Based_iter_next(TYPE)"\fBValue:\fP
+.PP
+.nf
+int8_t next_##TYPE##Iter(ITER(TYPE) *iter) {\
+                        CHECK_VARN(iter,EINVAL);\
+                        CHECK_VARN(iter->ptr,EINVAL);\
+                        if(iter->ptr == ((char *)T(iter->parent)) - O(iter->parent)) {\
+                                return EINVAL;\
+                        }\
+                        if((char *)H(iter->parent) < (char *)T(iter->parent)) {\
+                                /* no wraparound */ \
+                                ITERARRAY_NEXT(iter);\
+                        } else if((char *)iter->ptr == ((char *)iter->parent->end - O(iter->parent))) {\
+                                iter->ptr = M(iter->parent);\
+                        } else {\
+                                ITERARRAY_NEXT(iter);\
+                        }\
+                        return 0;\
+                }
+.fi
+.PP
+Definition at line 315 of file gen_macros.h.
+.SS "#define gen_Arr_Based_iter_prev(TYPE)"\fBValue:\fP
+.PP
+.nf
+int8_t prev_##TYPE##Iter(ITER(TYPE) *iter) {\
+                        CHECK_VARN(iter,EINVAL);\
+                        CHECK_VARN(iter->ptr,EINVAL);\
+                        if(iter->ptr == H(iter->parent)) {\
+                                return EINVAL;\
+                        }\
+                        if(H(iter->parent) > T(iter->parent)) {\
+                                /* no wraparound */ \
+                                ITERARRAY_PREV(iter);\
+                        } else if(iter->ptr == M(iter->parent)) {\
+                                iter->ptr = iter->parent->end;\
+                        } else {\
+                                ITERARRAY_PREV(iter);\
+                        }\
+                        return 0;\
+                }
+.fi
+.PP
+Definition at line 343 of file gen_macros.h.
+.SS "#define gen_Arr_Based_iter_retrieve(TYPE)"\fBValue:\fP
+.PP
+.nf
+void* retrieve_##TYPE## Iter(ITER(TYPE) *iter) {\
+                        CHECK_VARN(iter,NULL);\
+                        CHECK_VARN(iter->ptr,NULL);\
+                        return ITERARRAY_OBJ(iter);\
+                }
+.fi
+.PP
+Definition at line 395 of file gen_macros.h.
+.SS "#define gen_Arr_Based_iter_swap(TYPE)   gen_Ptr_Based_iter_swap(TYPE)"
+.PP
+Definition at line 284 of file gen_macros.h.
+.SS "#define gen_Arr_Based_iter_tail(TYPE)"\fBValue:\fP
+.PP
+.nf
+int8_t tail_##TYPE## Iter(ITER(TYPE) *iter) { \
+                        CHECK_VARN(iter,EINVAL);\
+                        CHECK_VARN(iter->parent,EINVAL);\
+                        iter->ptr = ((char *)iter->parent->tail) - O(iter->parent);\
+                        return 0;\
+                }
+.fi
+.PP
+Definition at line 379 of file gen_macros.h.
+.SS "#define gen_Ptr_Based_iter_assign(TYPE)"\fBValue:\fP
+.PP
+.nf
+int8_t assign_##TYPE## Iter(ITER(TYPE)* iter,TYPE *obj) {\
+                        CHECK_VARN(iter,-1);\
+                        CHECK_VARN(obj,-1);\
+                        iter->ptr = H(obj);\
+                        iter->parent = obj;\
+                        return 0;\
+                }
+.fi
+.PP
+Definition at line 286 of file gen_macros.h.
+.SS "#define gen_Ptr_Based_iter_copy(TYPE)"\fBValue:\fP
+.PP
+.nf
+int8_t copy_##TYPE##Iter(TYPE##Iter *dst, TYPE##Iter *src) {\
+                                CHECK_VARN(src,EINVAL);\
+                                CHECK_VARN(dst,EINVAL);\
+                                dst->ptr = src->ptr;\
+                                dst->parent = src->parent;\
+                                return SUCCESS;\
+                        }
+.fi
+.PP
+Definition at line 259 of file gen_macros.h.
+.SS "#define gen_Ptr_Based_iter_create(TYPE)"\fBValue:\fP
+.PP
+.nf
+TYPE##Iter* create_##TYPE##Iter(TYPE *obj) {\
+                        ITER(TYPE) *iter;\
+                        if(!obj) {\
+                                return NULL;\
+                        }\
+                        if(!S(obj)) {\
+                                return NULL;\
+                        }\
+                        CHECK_VARA((iter = malloc(sizeof *iter)),NULL);\
+                        iter->ptr = H(obj);\
+                        iter->parent = obj;\
+                        return iter;\
+                }
+.fi
+.PP
+Definition at line 242 of file gen_macros.h.
+.SS "#define gen_Ptr_Based_iter_destroy(TYPE)"\fBValue:\fP
+.PP
+.nf
+void destroy_##TYPE## Iter(ITER(TYPE)*iter) {\
+                        if(iter) {\
+                                free(iter);\
+                        }\
+                }
+.fi
+.PP
+Definition at line 298 of file gen_macros.h.
+.SS "#define gen_Ptr_Based_iter_head(TYPE)"\fBValue:\fP
+.PP
+.nf
+int8_t head_##TYPE## Iter(ITER(TYPE) *iter) {\
+                        CHECK_VARN(iter,-1);\
+                        CHECK_VARN(iter->parent,-1);\
+                        ITER_HEAD(iter);\
+                        return 0;\
+                }
+.fi
+.PP
+Definition at line 361 of file gen_macros.h.
+.SS "#define gen_Ptr_Based_iter_next(TYPE)"\fBValue:\fP
+.PP
+.nf
+int8_t next_##TYPE##Iter(TYPE##Iter *iter) {\
+                        CHECK_VARN(iter,-1);\
+                        CHECK_VARN(iter->ptr,-1);\
+                        CHECK_VARN(N(iter->ptr),-1);\
+                        ITERLIST_NEXT(iter);\
+                        return 0;\
+                }
+.fi
+.PP
+Definition at line 306 of file gen_macros.h.
+.SS "#define gen_Ptr_Based_iter_prev(TYPE)"\fBValue:\fP
+.PP
+.nf
+int8_t prev_##TYPE##Iter(ITER(TYPE)* iter) {\
+                        CHECK_VARN(iter,-1);\
+                        CHECK_VARN(iter->ptr,-1);\
+                        CHECK_VARN(P(iter->ptr),-1);\
+                        ITERLIST_PREV(iter);\
+                        return 0;\
+                }
+.fi
+.PP
+Definition at line 334 of file gen_macros.h.
+.SS "#define gen_Ptr_Based_iter_retrieve(TYPE)"\fBValue:\fP
+.PP
+.nf
+void* retrieve_##TYPE## Iter(ITER(TYPE) *iter) {\
+                        CHECK_VARN(iter,NULL);\
+                        CHECK_VARN(iter->ptr,NULL);\
+                        CHECK_VARN(iter->ptr->objptr,NULL);\
+                        return ITERLIST_OBJ(iter);\
+                }
+.fi
+.PP
+Definition at line 387 of file gen_macros.h.
+.SS "#define gen_Ptr_Based_iter_swap(TYPE)"\fBValue:\fP
+.PP
+.nf
+int8_t swap_##TYPE##Iter(TYPE##Iter *iter1,TYPE##Iter *iter2) {\
+                                TYPE##Iter tmp;\
+                                CHECK_VARN(iter1,EINVAL);\
+                                CHECK_VARN(iter2,EINVAL);\
+                                if(iter1->parent != iter2->parent) {\
+                                        return EINVAL;\
+                                }\
+                                tmp.ptr = iter1->ptr;\
+                                iter1->ptr = iter2->ptr;\
+                                iter2->ptr = tmp.ptr;\
+                                return 0;\
+                        }
+.fi
+.PP
+Definition at line 270 of file gen_macros.h.
+.SS "#define gen_Ptr_Based_iter_tail(TYPE)"\fBValue:\fP
+.PP
+.nf
+int8_t tail_##TYPE## Iter(ITER(TYPE) *iter) {\
+                        CHECK_VARN(iter,-1);\
+                        CHECK_VARN(iter->parent,-1);\
+                        ITER_TAIL(iter);\
+                        return 0;\
+                }
+.fi
+.PP
+Definition at line 371 of file gen_macros.h.
+.SS "#define generic_iter_func(PTR, FUNC, TYPE)   gen_##PTR##_iter_##FUNC(TYPE)"
+.PP
+Definition at line 240 of file gen_macros.h.
+.SS "#define iter_proto(FUNC, TYPE)   proto_##FUNC(TYPE)"
+.PP
+Definition at line 184 of file gen_macros.h.
+.SS "#define proto_assign(TYPE)"\fBValue:\fP
+.PP
+.nf
+\
+        int8_t assign_##TYPE##Iter(TYPE##Iter* iter, TYPE* obj)
+.fi
+.PP
+Definition at line 202 of file gen_macros.h.
+.SS "#define proto_copy(TYPE)"\fBValue:\fP
+.PP
+.nf
+\
+                int8_t copy_##TYPE##Iter(TYPE##Iter *src, TYPE##Iter *dst)
+.fi
+.PP
+Definition at line 219 of file gen_macros.h.
+.SS "#define proto_create(TYPE)"\fBValue:\fP
+.PP
+.nf
+\
+        TYPE##Iter *create_##TYPE##Iter(TYPE *obj)
+.fi
+.PP
+Definition at line 215 of file gen_macros.h.
+.SS "#define proto_destroy(TYPE)"\fBValue:\fP
+.PP
+.nf
+\
+        void destroy_##TYPE##Iter(TYPE##Iter* iter)
+.fi
+.PP
+Definition at line 211 of file gen_macros.h.
+.SS "#define proto_head(TYPE)"\fBValue:\fP
+.PP
+.nf
+\
+        int8_t head_##TYPE##Iter(TYPE##Iter* iter)
+.fi
+.PP
+Definition at line 194 of file gen_macros.h.
+.SS "#define proto_next(TYPE)"\fBValue:\fP
+.PP
+.nf
+\
+        int8_t next_##TYPE##Iter(TYPE##Iter* iter)
+.fi
+.PP
+Definition at line 190 of file gen_macros.h.
+.SS "#define proto_prev(TYPE)"\fBValue:\fP
+.PP
+.nf
+\
+        int8_t prev_##TYPE##Iter(TYPE##Iter* iter)
+.fi
+.PP
+Definition at line 186 of file gen_macros.h.
+.SS "#define proto_retrieve(TYPE)"\fBValue:\fP
+.PP
+.nf
+\
+        void* retrieve_##TYPE##Iter(TYPE##Iter* iter)
+.fi
+.PP
+Definition at line 207 of file gen_macros.h.
+.SS "#define proto_swap(TYPE)"\fBValue:\fP
+.PP
+.nf
+\
+                int8_t swap_##TYPE##Iter(TYPE##Iter *iter1,TYPE##Iter *iter2)
+.fi
+.PP
+Definition at line 223 of file gen_macros.h.
+.SS "#define proto_tail(TYPE)"\fBValue:\fP
+.PP
+.nf
+\
+        int8_t tail_##TYPE##Iter(TYPE##Iter* iter)
+.fi
+.PP
+Definition at line 198 of file gen_macros.h.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.

@@ -1,0 +1,318 @@
+.TH "/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/gen/data_types.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/gen/data_types.h \- 
+.PP
+file where data types are stored  
+
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'stdint.h'\fP
+.br
+\fC#include <stdlib.h>\fP
+.br
+\fC#include 'function_macros.h'\fP
+.br
+
+.SS "Data Structures"
+
+.in +1c
+.ti -1c
+.RI "struct \fB_functor_api\fP"
+.br
+.ti -1c
+.RI "struct \fB_Node\fP"
+.br
+.ti -1c
+.RI "struct \fB_ptr_struct\fP"
+.br
+.ti -1c
+.RI "struct \fB_ptr_iter\fP"
+.br
+.ti -1c
+.RI "struct \fB_bfs_iter\fP"
+.br
+.ti -1c
+.RI "struct \fB_dfs_iter\fP"
+.br
+.ti -1c
+.RI "struct \fB_array_struct\fP"
+.br
+.ti -1c
+.RI "struct \fB_array_iter\fP"
+.br
+.ti -1c
+.RI "struct \fB_Hash_List_Node\fP"
+.br
+.ti -1c
+.RI "struct \fB_Hash_Node\fP"
+.br
+.in -1c
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBLIST_ITER_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBLIST_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBSTACKLIST_ITER_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBSTACKLIST_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBQUEUELIST_ITER_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBQUEUELIST_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBDEQUELIST_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBDEQUELIST_ITER_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBSTACKVECTOR_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBSTACKVECTOR_ITER_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBQUEUEVECTOR_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBQUEUEVECTOR_ITER_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBDEQUEVECTOR_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBDEQUEVECTOR_ITER_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBHEAP_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBHEAP_ITER_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBBINARYTREE_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBBINARYTREE_ITER_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBBINARYTREE_DFS_ITER_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBBINARYTREE_BFS_ITER_DEFINED\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fB_functor_api\fP \fBFunctor_API\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_ptr_iter\fP \fBListIter\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_ptr_struct\fP \fBList\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_ptr_iter\fP \fBStackListIter\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_ptr_struct\fP \fBStackList\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_ptr_iter\fP \fBQueueListIter\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_ptr_struct\fP \fBQueueList\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_ptr_struct\fP \fBDequeList\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_ptr_iter\fP \fBDequeListIter\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_array_struct\fP \fBStackVector\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_array_iter\fP \fBStackVectorIter\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_array_struct\fP \fBQueueVector\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_array_iter\fP \fBQueueVectorIter\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_array_struct\fP \fBDequeVector\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_array_iter\fP \fBDequeVectorIter\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_array_struct\fP \fBHeap\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_array_iter\fP \fBHeapIter\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_ptr_struct\fP \fBBinaryTree\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_ptr_iter\fP \fBBinaryTreeIter\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_dfs_iter\fP \fBBinaryTreeDFSIter\fP"
+.br
+.ti -1c
+.RI "typedef struct \fB_bfs_iter\fP \fBBinaryTreeBFSIter\fP"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+file where data types are stored 
+
+Copyright 2006, All Rights Reserved, Micah Villmow 
+.PP
+Definition in file \fBdata_types.h\fP.
+.SH "Define Documentation"
+.PP 
+.SS "#define BINARYTREE_BFS_ITER_DEFINED"
+.PP
+Definition at line 234 of file data_types.h.
+.SS "#define BINARYTREE_DEFINED"
+.PP
+Definition at line 222 of file data_types.h.
+.SS "#define BINARYTREE_DFS_ITER_DEFINED"
+.PP
+Definition at line 230 of file data_types.h.
+.SS "#define BINARYTREE_ITER_DEFINED"
+.PP
+Definition at line 226 of file data_types.h.
+.SS "#define DEQUELIST_DEFINED"
+.PP
+Definition at line 177 of file data_types.h.
+.SS "#define DEQUELIST_ITER_DEFINED"
+.PP
+Definition at line 181 of file data_types.h.
+.SS "#define DEQUEVECTOR_DEFINED"
+.PP
+Definition at line 203 of file data_types.h.
+.SS "#define DEQUEVECTOR_ITER_DEFINED"
+.PP
+Definition at line 207 of file data_types.h.
+.SS "#define HEAP_DEFINED"
+.PP
+Definition at line 211 of file data_types.h.
+.SS "#define HEAP_ITER_DEFINED"
+.PP
+Definition at line 215 of file data_types.h.
+.SS "#define LIST_DEFINED"
+.PP
+Definition at line 157 of file data_types.h.
+.SS "#define LIST_ITER_DEFINED"
+.PP
+Definition at line 153 of file data_types.h.
+.SS "#define QUEUELIST_DEFINED"
+.PP
+Definition at line 173 of file data_types.h.
+.SS "#define QUEUELIST_ITER_DEFINED"
+.PP
+Definition at line 169 of file data_types.h.
+.SS "#define QUEUEVECTOR_DEFINED"
+.PP
+Definition at line 195 of file data_types.h.
+.SS "#define QUEUEVECTOR_ITER_DEFINED"
+.PP
+Definition at line 199 of file data_types.h.
+.SS "#define STACKLIST_DEFINED"
+.PP
+Definition at line 165 of file data_types.h.
+.SS "#define STACKLIST_ITER_DEFINED"
+.PP
+Definition at line 161 of file data_types.h.
+.SS "#define STACKVECTOR_DEFINED"
+.PP
+Definition at line 187 of file data_types.h.
+.SS "#define STACKVECTOR_ITER_DEFINED"
+.PP
+Definition at line 191 of file data_types.h.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fB_ptr_struct\fP \fBBinaryTree\fP"
+.PP
+Definition at line 223 of file data_types.h.
+.SS "typedef struct \fB_bfs_iter\fP \fBBinaryTreeBFSIter\fP"
+.PP
+Definition at line 235 of file data_types.h.
+.SS "typedef struct \fB_dfs_iter\fP \fBBinaryTreeDFSIter\fP"
+.PP
+Definition at line 231 of file data_types.h.
+.SS "typedef struct \fB_ptr_iter\fP \fBBinaryTreeIter\fP"
+.PP
+Definition at line 227 of file data_types.h.
+.SS "typedef struct \fB_ptr_struct\fP \fBDequeList\fP"
+.PP
+Definition at line 178 of file data_types.h.
+.SS "typedef struct \fB_ptr_iter\fP \fBDequeListIter\fP"
+.PP
+Definition at line 182 of file data_types.h.
+.SS "typedef struct \fB_array_struct\fP \fBDequeVector\fP"
+.PP
+Definition at line 204 of file data_types.h.
+.SS "typedef struct \fB_array_iter\fP \fBDequeVectorIter\fP"
+.PP
+Definition at line 208 of file data_types.h.
+.SS "typedef struct \fB_functor_api\fP  \fBFunctor_API\fP"
+.SS "typedef struct \fB_array_struct\fP \fBHeap\fP"
+.PP
+Definition at line 212 of file data_types.h.
+.SS "typedef struct \fB_array_iter\fP \fBHeapIter\fP"
+.PP
+Definition at line 216 of file data_types.h.
+.SS "typedef struct \fB_ptr_struct\fP \fBList\fP"
+.PP
+Definition at line 158 of file data_types.h.
+.SS "typedef struct \fB_ptr_iter\fP \fBListIter\fP"
+.PP
+Definition at line 154 of file data_types.h.
+.SS "typedef struct \fB_ptr_struct\fP \fBQueueList\fP"
+.PP
+Definition at line 174 of file data_types.h.
+.SS "typedef struct \fB_ptr_iter\fP \fBQueueListIter\fP"
+.PP
+Definition at line 170 of file data_types.h.
+.SS "typedef struct \fB_array_struct\fP \fBQueueVector\fP"
+.PP
+Definition at line 196 of file data_types.h.
+.SS "typedef struct \fB_array_iter\fP \fBQueueVectorIter\fP"
+.PP
+Definition at line 200 of file data_types.h.
+.SS "typedef struct \fB_ptr_struct\fP \fBStackList\fP"
+.PP
+Definition at line 166 of file data_types.h.
+.SS "typedef struct \fB_ptr_iter\fP \fBStackListIter\fP"
+.PP
+Definition at line 162 of file data_types.h.
+.SS "typedef struct \fB_array_struct\fP \fBStackVector\fP"
+.PP
+Definition at line 188 of file data_types.h.
+.SS "typedef struct \fB_array_iter\fP \fBStackVectorIter\fP"
+.PP
+Definition at line 192 of file data_types.h.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.

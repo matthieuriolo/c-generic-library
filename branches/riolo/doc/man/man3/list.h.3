@@ -1,0 +1,743 @@
+.TH "/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/list.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/list.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'gen/data_types.h'\fP
+.br
+\fC#include 'gen/gen_macros.h'\fP
+.br
+\fC#include 'gen/function_macros.h'\fP
+.br
+\fC#include 'gen/function_signatures.h'\fP
+.br
+
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBconvert_List\fP(A, B, C, D)   push_back_List((A),(B),(C),(D))"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef int(* \fB__compar_fn_t\fP )(__const void *, __const void *)"
+.br
+.RI "\fIon non-linux systems (BSD, Mac or Linux) the type for the comparison function does not exist \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int8_t \fBconstruct_List\fP (\fBList\fP *obj, size_t datasize, int flag)"
+.br
+.ti -1c
+.RI "int8_t \fBconstruct_func_List\fP (\fBList\fP *obj, size_t datasize, int flag, void *(*alloc)(size_t), void(*dealloc)(void *), int32_t(*cmp)(const void *, const void *, size_t), void(*print)(const void *), void *(*copy)(void *, const void *, size_t))"
+.br
+.RI "\fIassigns all the * function pointers in one function call \fP"
+.ti -1c
+.RI "int8_t \fBdestruct_List\fP (\fBList\fP *obj)"
+.br
+.RI "\fIRemoves all the allocated memory for * the object. \fP"
+.ti -1c
+.RI "int8_t \fBclear_List\fP (\fBList\fP *obj)"
+.br
+.RI "\fIremoves all the data from the object \fP"
+.ti -1c
+.RI "\fBList\fP * \fBduplicate_List\fP (\fBList\fP *obj)"
+.br
+.RI "\fIduplicates the object * * Duplicates all the data that the object holds * and returns it in its own object. The new object * has copies of the data and does not use copy * on write semantics. Therefor the new object will * handle the deallocation of data memory * when destroyed. \fP"
+.ti -1c
+.RI "int8_t \fBprint_List\fP (\fBList\fP *obj)"
+.br
+.RI "\fIprints out the data inside the object \fP"
+.ti -1c
+.RI "int8_t \fBempty_List\fP (\fBList\fP *obj)"
+.br
+.ti -1c
+.RI "size_t \fBsize_List\fP (\fBList\fP *obj)"
+.br
+.ti -1c
+.RI "int8_t \fBdump_List\fP (\fBList\fP *obj)"
+.br
+.RI "\fIdumps out the internal structure of the object \fP"
+.ti -1c
+.RI "size_t \fBsize_of_List\fP (\fBList\fP *obj)"
+.br
+.ti -1c
+.RI "int8_t \fBset_compare_List\fP (\fBList\fP *obj, int32_t(*cmp)(const void *, const void *, size_t))"
+.br
+.ti -1c
+.RI "int8_t \fBset_print_List\fP (\fBList\fP *obj, void(*print)(const void *))"
+.br
+.ti -1c
+.RI "int8_t \fBset_alloc_List\fP (\fBList\fP *obj, void *(*alloc)(size_t))"
+.br
+.ti -1c
+.RI "int8_t \fBset_dealloc_List\fP (\fBList\fP *obj, void(*dealloc)(void *))"
+.br
+.ti -1c
+.RI "int8_t \fBset_copy_List\fP (\fBList\fP *obj, void *(*copy)(void *, const void *, size_t))"
+.br
+.ti -1c
+.RI "int8_t \fBpush_front_List\fP (\fBList\fP *list, void *obj, size_t objsize, int flag)"
+.br
+.ti -1c
+.RI "int8_t \fBpush_back_List\fP (\fBList\fP *list, void *obj, size_t objsize, int flag)"
+.br
+.ti -1c
+.RI "int8_t \fBpop_front_List\fP (\fBList\fP *list)"
+.br
+.ti -1c
+.RI "int8_t \fBpop_back_List\fP (\fBList\fP *list)"
+.br
+.ti -1c
+.RI "void * \fBfront_List\fP (\fBList\fP *list)"
+.br
+.ti -1c
+.RI "void * \fBback_List\fP (\fBList\fP *list)"
+.br
+.ti -1c
+.RI "void * \fBinsert_List\fP (\fBList\fP *list, void *obj, size_t objsize, int flag)"
+.br
+.ti -1c
+.RI "int8_t \fBdelete_List\fP (\fBList\fP *list, void *obj, size_t objsize)"
+.br
+.ti -1c
+.RI "int8_t \fBsort_List\fP (\fBList\fP *list, size_t objsize)"
+.br
+.ti -1c
+.RI "int8_t \fBrsort_List\fP (\fBList\fP *list, size_t objsize)"
+.br
+.ti -1c
+.RI "void * \fBfind_List\fP (\fBList\fP *list, void *obj, size_t objsize)"
+.br
+.ti -1c
+.RI "void * \fBto_array_List\fP (\fBList\fP *list, size_t objsize)"
+.br
+.ti -1c
+.RI "\fBListIter\fP * \fBextract_ListIter\fP (\fBListIter\fP *iter)"
+.br
+.ti -1c
+.RI "int8_t \fBprev_ListIter\fP (\fBListIter\fP *iter)"
+.br
+.RI "\fImoves the iterator to the prev element in the * obj \fP"
+.ti -1c
+.RI "int8_t \fBnext_ListIter\fP (\fBListIter\fP *iter)"
+.br
+.RI "\fImoves the iterator to the next element in the * obj \fP"
+.ti -1c
+.RI "int8_t \fBassign_ListIter\fP (\fBListIter\fP *iter, \fBList\fP *obj)"
+.br
+.RI "\fIassign statically created iterator to the obj \fP"
+.ti -1c
+.RI "void \fBdestroy_ListIter\fP (\fBListIter\fP *iter)"
+.br
+.ti -1c
+.RI "int8_t \fBhead_ListIter\fP (\fBListIter\fP *iter)"
+.br
+.RI "\fImoves the iterator to the head of the obj * it has been assigned to \fP"
+.ti -1c
+.RI "int8_t \fBtail_ListIter\fP (\fBListIter\fP *iter)"
+.br
+.RI "\fImoves the iterator to the tail of the * obj it has been assigned to \fP"
+.ti -1c
+.RI "\fBListIter\fP * \fBcreate_ListIter\fP (\fBList\fP *obj)"
+.br
+.RI "\fIcreates and iterator and assigns it to the obj \fP"
+.ti -1c
+.RI "void * \fBretrieve_ListIter\fP (\fBListIter\fP *iter)"
+.br
+.RI "\fIreturns a void poitner to the object that * the iterator points to \fP"
+.ti -1c
+.RI "int8_t \fBcopy_ListIter\fP (\fBListIter\fP *src, \fBListIter\fP *dst)"
+.br
+.ti -1c
+.RI "int8_t \fBswap_ListIter\fP (\fBListIter\fP *iter1, \fBListIter\fP *iter2)"
+.br
+.RI "\fIswaps the position of iter1 and iter2 * \fP"
+.in -1c
+.SH "Define Documentation"
+.PP 
+.SS "#define convert_List(A, B, C, D)   push_back_List((A),(B),(C),(D))"
+.PP
+Definition at line 55 of file list.h.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef int(* \fB__compar_fn_t\fP)(__const void *, __const void *)"
+.PP
+on non-linux systems (BSD, Mac or Linux) the type for the comparison function does not exist 
+.PP
+Definition at line 159 of file list.h.
+.SH "Function Documentation"
+.PP 
+.SS "int8_t assign_ListIter (\fBListIter\fP *iter, \fBList\fP *obj)"
+.PP
+assign statically created iterator to the obj * 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIiter\fP the iterator to assign to the obj * 
+.br
+\fIobj\fP the obj to point the iterator to * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error * 
+.RE
+.PP
+
+.SS "void * back_List (\fBList\fP *list)"\fBParameters:\fP
+.RS 4
+\fIlist\fP the list to get the back object from 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+pointer to obj on success, NULL otherwise 
+.RE
+.PP
+
+.SS "int8_t clear_List (\fBList\fP *obj)"
+.PP
+removes all the data from the object * 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the object to clear * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on failure * 
+.RE
+.PP
+
+.SS "int8_t construct_func_List (\fBList\fP *obj, size_tdatasize, intflag, void *(*)(size_t)alloc, void(*)(void *)dealloc, int32_t(*)(const void *, const void *, size_t)cmp, void(*)(const void *)print, void *(*)(void *, const void *, size_t)copy)"
+.PP
+assigns all the * function pointers in one function call * 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the object to initialize * 
+.br
+\fIdatasize\fP the size of the data to store * 
+.br
+\fIflag\fP the flag for how to handle memory * 
+.br
+\fIalloc\fP the allocation functor * 
+.br
+\fIdealloc\fP the deallocation functor * 
+.br
+\fIcmp\fP the comparison functor * 
+.br
+\fIprint\fP the print functor * 
+.br
+\fIcopy\fP the copy functor * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on failure * * 
+.RE
+.PP
+
+.SS "int8_t construct_List (\fBList\fP *obj, size_tdatasize, intflag)"* 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the object to initialize * 
+.br
+\fIdatasize\fP the size of the data to store * 
+.br
+\fIflag\fP the flag for how to handle memory * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on failure * * 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+if you are using a local variable * clear out the memory before calling this * function using memset or bzero 
+.RE
+.PP
+
+.SS "int8_t copy_ListIter (\fBListIter\fP *src, \fBListIter\fP *dst)"* 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIsrc\fP the source iterator * 
+.br
+\fIdst\fP the destination iterator * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+zero on success, non-zero on error 
+.RE
+.PP
+
+.SS "\fBListIter\fP* create_ListIter (\fBList\fP *obj)"
+.PP
+creates and iterator and assigns it to the obj * 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the obj to create iterator for * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+returns an iterator to the obj on success * or NULL on error * 
+.RE
+.PP
+
+.SS "int8_t delete_List (\fBList\fP *list, void *obj, size_tobjsize)"\fBParameters:\fP
+.RS 4
+\fIlist\fP the list to delete the object from 
+.br
+\fIobj\fP a pointer to the object to be deleted 
+.br
+\fIobjsize\fP the size of the object being deleted 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on sucess, non-zero on error 
+.RE
+.PP
+
+.SS "void destroy_ListIter (\fBListIter\fP *iter)"* 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIiter\fP the iterator to destroy * 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+only use this in conjunction with create 
+.RE
+.PP
+
+.SS "int8_t destruct_List (\fBList\fP *obj)"
+.PP
+Removes all the allocated memory for * the object. * 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the object to deinitialize * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on succss, non-zero on failure * 
+.RE
+.PP
+
+.SS "int8_t dump_List (\fBList\fP *obj)"
+.PP
+dumps out the internal structure of the object * 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the object to dump the internal structure of * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success,non-zero on error * 
+.RE
+.PP
+
+.SS "\fBList\fP* duplicate_List (\fBList\fP *obj)"
+.PP
+duplicates the object * * Duplicates all the data that the object holds * and returns it in its own object. The new object * has copies of the data and does not use copy * on write semantics. Therefor the new object will * handle the deallocation of data memory * when destroyed. * 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the object to duplicate * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+copy of the object or NULL on error * 
+.RE
+.PP
+
+.SS "int8_t empty_List (\fBList\fP *obj)"* 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the object to check for emptiness * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on empty, non-zero otherwise 
+.RE
+.PP
+
+.SS "\fBListIter\fP* extract_ListIter (\fBListIter\fP *iter)"
+.SS "void * find_List (\fBList\fP *list, void *obj, size_tobjsize)"\fBParameters:\fP
+.RS 4
+\fIlist\fP the list to search the object for 
+.br
+\fIobj\fP the object to find in the list 
+.br
+\fIobjsize\fP the size of the object to find 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+pointer to object on success, NULL on error 
+.RE
+.PP
+
+.SS "void * front_List (\fBList\fP *list)"\fBParameters:\fP
+.RS 4
+\fIlist\fP the list to get the front object from 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+pointer to obj on success, NULL otherwise 
+.RE
+.PP
+
+.SS "int8_t head_ListIter (\fBListIter\fP *iter)"
+.PP
+moves the iterator to the head of the obj * it has been assigned to * 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIiter\fP the iterator to move to the head * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error * 
+.RE
+.PP
+
+.SS "void insert_List (\fBList\fP *list, void *obj, size_tobjsize, intflag)"\fBParameters:\fP
+.RS 4
+\fIlist\fP the list to insert the object into 
+.br
+\fIobj\fP a pointer to the object to insert 
+.br
+\fIobjsize\fP the size of the object being inserted 
+.br
+\fIflag\fP dynamic or static flag 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+ptr to object, NULL on error 
+.RE
+.PP
+
+.SS "int8_t next_ListIter (\fBListIter\fP *iter)"
+.PP
+moves the iterator to the next element in the * obj * 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIiter\fP the iter to move to the next element * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error * 
+.RE
+.PP
+
+.SS "int32_t pop_back_List (\fBList\fP *list)"\fBParameters:\fP
+.RS 4
+\fIlist\fP the list to pop the back object off of 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on failure 
+.RE
+.PP
+
+.SS "int8_t pop_front_List (\fBList\fP *list)"\fBParameters:\fP
+.RS 4
+\fIlist\fP the list to pop the front object off of 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on failure 
+.RE
+.PP
+
+.SS "int8_t prev_ListIter (\fBListIter\fP *iter)"
+.PP
+moves the iterator to the prev element in the * obj * 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIiter\fP the iter to move to the prev element * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error * 
+.RE
+.PP
+
+.SS "int8_t print_List (\fBList\fP *obj)"
+.PP
+prints out the data inside the object * 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the object to print * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error * 
+.RE
+.PP
+
+.SS "int8_t push_back_List (\fBList\fP *list, void *obj, size_tobjsize, intflag)"\fBParameters:\fP
+.RS 4
+\fIlist\fP the list to push the object onto 
+.br
+\fIobj\fP the object to push to the back of the list 
+.br
+\fIobjsize\fP the size of the object 
+.br
+\fIflag\fP dynamic or static flag 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on failure 
+.RE
+.PP
+
+.SS "int8_t push_front_List (\fBList\fP *list, void *obj, size_tobjsize, intflag)"\fBParameters:\fP
+.RS 4
+\fIlist\fP the list to push the object onto 
+.br
+\fIobj\fP the object to push to the front of the list 
+.br
+\fIobjsize\fP the size of the object 
+.br
+\fIflag\fP dynamic or static flag 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on failure 
+.RE
+.PP
+
+.SS "void* retrieve_ListIter (\fBListIter\fP *iter)"
+.PP
+returns a void poitner to the object that * the iterator points to * 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIiter\fP the iterator to retrieve the object from * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+object on success, NULL on error * 
+.RE
+.PP
+
+.SS "int8_t rsort_List (\fBList\fP *list, size_tobjsize)"\fBParameters:\fP
+.RS 4
+\fIlist\fP the list to reverse sort the objects in 
+.br
+\fIobjsize\fP the size of the objects being sorted 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error 
+.RE
+.PP
+
+.SS "int8_t set_alloc_List (\fBList\fP *obj, void *(*)(size_t)alloc)"* 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the obj to set the alloc funtion for * 
+.br
+\fIalloc\fP the function pointer to the alloc function * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error 
+.RE
+.PP
+
+.SS "int8_t set_compare_List (\fBList\fP *obj, int32_t(*)(const void *, const void *, size_t)cmp)"* 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the obj to set the compare function of * 
+.br
+\fIcmp\fP the function pointer to the comparison function * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error 
+.RE
+.PP
+
+.SS "int8_t set_copy_List (\fBList\fP *obj, void *(*)(void *, const void *, size_t)copy)"* 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the object to set the copy function for * 
+.br
+\fIcopy\fP the function pointer to the copy function * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error 
+.RE
+.PP
+
+.SS "int8_t set_dealloc_List (\fBList\fP *obj, void(*)(void *)dealloc)"* 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIptr\fP the obj to set the dealloc function for * 
+.br
+\fIdealloc\fP the function pointer to the dealloc function * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error 
+.RE
+.PP
+
+.SS "int8_t set_print_List (\fBList\fP *obj, void(*)(const void *)print)"* 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the obj to set the print function of * 
+.br
+\fIprint\fP the function pointer to the print function * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error 
+.RE
+.PP
+
+.SS "size_t size_List (\fBList\fP *obj)"* 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the object to get the size of * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+size of object or zero on failure 
+.RE
+.PP
+
+.SS "size_t size_of_List (\fBList\fP *obj)"* 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIobj\fP the obj to get the size of * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+size of the object or 0 on error/empty 
+.RE
+.PP
+
+.SS "int8_t sort_List (\fBList\fP *list, size_tobjsize)"\fBParameters:\fP
+.RS 4
+\fIlist\fP the list to sort the objects in 
+.br
+\fIobjsize\fP the size of the objects being sorted 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error 
+.RE
+.PP
+
+.SS "int8_t swap_ListIter (\fBListIter\fP *iter1, \fBListIter\fP *iter2)"
+.PP
+swaps the position of iter1 and iter2 * * 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIiter1\fP the first iterator * 
+.br
+\fIiter2\fP the second iterator * 
+.RE
+.PP
+\fBWarning:\fP
+.RS 4
+iterators must be pointing to same parent * object or the swap will fail * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error 
+.RE
+.PP
+
+.SS "int8_t tail_ListIter (\fBListIter\fP *iter)"
+.PP
+moves the iterator to the tail of the * obj it has been assigned to * 
+.PP
+\fBParameters:\fP
+.RS 4
+\fIiter\fP the iterator to move to the tail * 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error * 
+.RE
+.PP
+
+.SS "void * to_array_List (\fBList\fP *list, size_tobjsize)"\fBParameters:\fP
+.RS 4
+\fIlist\fP the list to turn into an array 
+.br
+\fIobjsize\fP the size of the objects in the list 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+pointer to array or null on error 
+.RE
+.PP
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.
