@@ -1,0 +1,177 @@
+.TH "/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/include/vector.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/include/vector.h \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'gen/gen_macros.h'\fP
+.br
+\fC#include 'gen/data_types.h'\fP
+.br
+\fC#include 'gen/function_macros.h'\fP
+.br
+\fC#include 'gen/function_signatures.h'\fP
+.br
+
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBVECTOR_ITER_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBVECTOR_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBFUNC\fP(X, Y)   ((X)->API.Y(X));"
+.br
+.ti -1c
+.RI "#define \fBconvert_Vector\fP(A, B, C, D)   push_back_Vector((A),(B),(C),(D))"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fB_array_struct\fP \fBVector\fP"
+.br
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "struct \fB_array_iter\fP \fBITER\fP (\fBVector\fP)"
+.br
+.ti -1c
+.RI "int8_t \fBinsert_at_Vector\fP (\fBVector\fP *vec, void *obj, uint32_t loc)"
+.br
+.RI "\fIinserts into the array at a specific index the object This is the equivalent of the vec[index] = obj operation \fP"
+.ti -1c
+.RI "int8_t \fBinsert_Vector\fP (\fBVector\fP *vec, void *obj, size_t objsize, int flag)"
+.br
+.ti -1c
+.RI "int8_t \fBpush_back_Vector\fP (\fBVector\fP *vec, void *obj, size_t objsize, int flag)"
+.br
+.ti -1c
+.RI "int8_t \fBpush_front_Vector\fP (\fBVector\fP *vec, void *obj, size_t objsize, int flag)"
+.br
+.ti -1c
+.RI "int8_t \fBpop_back_Vector\fP (\fBVector\fP *vec)"
+.br
+.ti -1c
+.RI "int8_t \fBpop_front_Vector\fP (\fBVector\fP *vec)"
+.br
+.ti -1c
+.RI "void * \fBfront_Vector\fP (\fBVector\fP *vec)"
+.br
+.ti -1c
+.RI "void * \fBback_Vector\fP (\fBVector\fP *vec)"
+.br
+.ti -1c
+.RI "void * \fBreturn_at_Vector\fP (\fBVector\fP *vec, uint32_t loc)"
+.br
+.RI "\fIreturns the object from the vector at the given point \fP"
+.ti -1c
+.RI "int8_t \fBresize_Vector\fP (\fBVector\fP *vec, size_t size)"
+.br
+.RI "\fIresizes the array that is inside of the vector and copies the first n objects over to the new array \fP"
+.in -1c
+.SH "Define Documentation"
+.PP 
+.SS "#define convert_Vector(A, B, C, D)   push_back_Vector((A),(B),(C),(D))"
+.PP
+Definition at line 32 of file vector.h.
+.SS "#define FUNC(X, Y)   ((X)->API.Y(X));"
+.PP
+Definition at line 28 of file vector.h.
+.SS "#define VECTOR_DEFINED"
+.PP
+Definition at line 24 of file vector.h.
+.SS "#define VECTOR_ITER_DEFINED"
+.PP
+Definition at line 18 of file vector.h.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fB_array_struct\fP \fBVector\fP"
+.PP
+Definition at line 25 of file vector.h.
+.SH "Function Documentation"
+.PP 
+.SS "void* back_Vector (\fBVector\fP *vec)"
+.PP
+Definition at line 204 of file vector.c.
+.SS "void* front_Vector (\fBVector\fP *vec)"
+.PP
+Definition at line 198 of file vector.c.
+.SS "int8_t insert_at_Vector (\fBVector\fP *vec, void *obj, uint32_tloc)"
+.PP
+inserts into the array at a specific index the object This is the equivalent of the vec[index] = obj operation \fBParameters:\fP
+.RS 4
+\fIvec\fP the vector to insert the object into 
+.br
+\fIobj\fP the object to insert into the array 
+.br
+\fIloc\fP the location in the array to put the item 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error 
+.RE
+.PP
+
+.PP
+Definition at line 106 of file vector.c.
+.SS "int8_t insert_Vector (\fBVector\fP *vec, void *obj, size_tobjsize, intflag)"
+.SS "struct \fB_array_iter\fP ITER (\fBVector\fP)\fC [read]\fP"
+.SS "int8_t pop_back_Vector (\fBVector\fP *vec)"
+.PP
+Definition at line 175 of file vector.c.
+.SS "int8_t pop_front_Vector (\fBVector\fP *vec)"
+.PP
+Definition at line 186 of file vector.c.
+.SS "int8_t push_back_Vector (\fBVector\fP *vec, void *obj, size_tobjsize, intflag)"
+.PP
+Definition at line 151 of file vector.c.
+.SS "int8_t push_front_Vector (\fBVector\fP *vec, void *obj, size_tobjsize, intflag)"
+.PP
+Definition at line 162 of file vector.c.
+.SS "int8_t resize_Vector (\fBVector\fP *vec, size_tsize)"
+.PP
+resizes the array that is inside of the vector and copies the first n objects over to the new array \fBParameters:\fP
+.RS 4
+\fIvec\fP the vector to resize 
+.br
+\fIsize\fP the size to resize the vector to 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero otherwise 
+.RE
+.PP
+
+.PP
+Definition at line 234 of file vector.c.
+.SS "void* return_at_Vector (\fBVector\fP *vec, uint32_tloc)"
+.PP
+returns the object from the vector at the given point \fBParameters:\fP
+.RS 4
+\fIvec\fP the vector to return the object into 
+.br
+\fIloc\fP the loc in the array to return the object from 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+pointer to the object on success, NULL on error 
+.RE
+.PP
+
+.PP
+Definition at line 211 of file vector.c.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.

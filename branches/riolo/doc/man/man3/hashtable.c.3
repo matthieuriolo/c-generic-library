@@ -1,0 +1,300 @@
+.TH "/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/src/hashtable.c" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/src/hashtable.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include 'gen/stdint.h'\fP
+.br
+\fC#include <stdlib.h>\fP
+.br
+\fC#include <string.h>\fP
+.br
+\fC#include <stdio.h>\fP
+.br
+\fC#include <ctype.h>\fP
+.br
+\fC#include 'hashtable.h'\fP
+.br
+\fC#include 'gen/data_types.h'\fP
+.br
+\fC#include 'gen/error_macros.h'\fP
+.br
+\fC#include 'gen/control_macros.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBF_CONSTRUCT\fP (\fBOHTable\fP)"
+.br
+.ti -1c
+.RI "\fBF_CONSTRUCT_FUNC\fP (\fBOHTable\fP)"
+.br
+.ti -1c
+.RI "\fBF_DESTRUCT\fP (\fBOHTable\fP)"
+.br
+.ti -1c
+.RI "\fBF_CLEAR\fP (\fBOHTable\fP)"
+.br
+.ti -1c
+.RI "int8_t \fBinsert_OHTable\fP (\fBOHTable\fP *table, void *element, size_t elesize, int8_t flag)"
+.br
+.ti -1c
+.RI "int8_t \fBdelete_OHTable\fP (\fBOHTable\fP *table, void *element, size_t elesize)"
+.br
+.ti -1c
+.RI "void * \fBfind_OHTable\fP (\fBOHTable\fP *table, void *element, size_t elesize)"
+.br
+.ti -1c
+.RI "\fBF_PRINT\fP (\fBOHTable\fP)"
+.br
+.ti -1c
+.RI "int8_t \fBset_hash_OHTable\fP (\fBOHTable\fP *table, uint32_t(*hash)(void *, size_t))"
+.br
+.ti -1c
+.RI "\fBF_DUPLICATE\fP (\fBOHTable\fP)"
+.br
+.ti -1c
+.RI "int8_t \fBprev_OHTableIter\fP (\fBOHTableIter\fP *iter)"
+.br
+.ti -1c
+.RI "int8_t \fBnext_OHTableIter\fP (\fBOHTableIter\fP *iter)"
+.br
+.ti -1c
+.RI "int8_t \fBhead_OHTableIter\fP (\fBOHTableIter\fP *iter)"
+.br
+.ti -1c
+.RI "int8_t \fBtail_OHTableIter\fP (\fBOHTableIter\fP *iter)"
+.br
+.ti -1c
+.RI "int8_t \fBassign_OHTableIter\fP (\fBOHTableIter\fP *iter, \fBOHTable\fP *obj)"
+.br
+.ti -1c
+.RI "void * \fBretrieve_OHTableIter\fP (\fBOHTableIter\fP *iter)"
+.br
+.ti -1c
+.RI "void \fBdestroy_OHTableIter\fP (\fBOHTableIter\fP *iter)"
+.br
+.ti -1c
+.RI "\fBOHTableIter\fP * \fBcreate_OHTableIter\fP (\fBOHTable\fP *obj)"
+.br
+.ti -1c
+.RI "int8_t \fBcopy_OHTableIter\fP (\fBOHTableIter\fP *dst, \fBOHTableIter\fP *src)"
+.br
+.ti -1c
+.RI "int8_t \fBswap_OHTableIter\fP (\fBOHTableIter\fP *first, \fBOHTableIter\fP *\fBsecond\fP)"
+.br
+.ti -1c
+.RI "\fBfunction\fP (set_compare, \fBOHTable\fP)"
+.br
+.ti -1c
+.RI "\fBF_DESTRUCT\fP (\fBCHTable\fP)"
+.br
+.ti -1c
+.RI "\fBF_CLEAR\fP (\fBCHTable\fP)"
+.br
+.ti -1c
+.RI "int8_t \fBinsert_CHTable\fP (\fBCHTable\fP *table, void *element, size_t elesize, int8_t flag)"
+.br
+.ti -1c
+.RI "int8_t \fBdelete_CHTable\fP (\fBCHTable\fP *table, void *element, size_t elesize)"
+.br
+.ti -1c
+.RI "void * \fBfind_CHTable\fP (\fBCHTable\fP *table, void *element, size_t elesize)"
+.br
+.ti -1c
+.RI "\fBF_DUPLICATE\fP (\fBCHTable\fP)"
+.br
+.ti -1c
+.RI "int8_t \fBset_hash_CHTable\fP (\fBCHTable\fP *table, uint32_t(*hash)(void *, size_t))"
+.br
+.ti -1c
+.RI "int8_t \fBset_probe_CHTable\fP (\fBCHTable\fP *table, uint32_t(*prob)(uint32_t))"
+.br
+.ti -1c
+.RI "\fBF_PRINT\fP (\fBCHTable\fP)"
+.br
+.ti -1c
+.RI "int8_t \fBprev_CHTableIter\fP (\fBCHTableIter\fP *iter)"
+.br
+.ti -1c
+.RI "int8_t \fBnext_CHTableIter\fP (\fBCHTableIter\fP *iter)"
+.br
+.ti -1c
+.RI "int8_t \fBhead_CHTableIter\fP (\fBCHTableIter\fP *iter)"
+.br
+.ti -1c
+.RI "int8_t \fBtail_CHTableIter\fP (\fBCHTableIter\fP *iter)"
+.br
+.ti -1c
+.RI "int8_t \fBassign_CHTableIter\fP (\fBCHTableIter\fP *iter, \fBCHTable\fP *obj)"
+.br
+.ti -1c
+.RI "void * \fBretrieve_CHTableIter\fP (\fBCHTableIter\fP *iter)"
+.br
+.ti -1c
+.RI "void \fBdestroy_CHTableIter\fP (\fBCHTableIter\fP *iter)"
+.br
+.ti -1c
+.RI "\fBCHTableIter\fP * \fBcreate_CHTableIter\fP (\fBCHTable\fP *obj)"
+.br
+.ti -1c
+.RI "int8_t \fBcopy_CHTableIter\fP (\fBCHTableIter\fP *dst, \fBCHTableIter\fP *src)"
+.br
+.ti -1c
+.RI "int8_t \fBswap_CHTableIter\fP (\fBCHTableIter\fP *first, \fBCHTableIter\fP *\fBsecond\fP)"
+.br
+.ti -1c
+.RI "\fBfunction\fP (set_compare, \fBCHTable\fP)"
+.br
+.ti -1c
+.RI "uint32_t \fBnum_hash\fP (void *key, size_t \fBlen\fP)"
+.br
+.ti -1c
+.RI "uint32_t \fBlinear_probing\fP (uint32_t num)"
+.br
+.ti -1c
+.RI "uint32_t \fBquadratic_probing\fP (uint32_t num)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "int8_t assign_CHTableIter (\fBCHTableIter\fP *iter, \fBCHTable\fP *obj)"
+.PP
+Definition at line 617 of file hashtable.c.
+.SS "int8_t assign_OHTableIter (\fBOHTableIter\fP *iter, \fBOHTable\fP *obj)"
+.PP
+Definition at line 340 of file hashtable.c.
+.SS "int8_t copy_CHTableIter (\fBCHTableIter\fP *dst, \fBCHTableIter\fP *src)"
+.PP
+Definition at line 652 of file hashtable.c.
+.SS "int8_t copy_OHTableIter (\fBOHTableIter\fP *dst, \fBOHTableIter\fP *src)"
+.PP
+Definition at line 374 of file hashtable.c.
+.SS "\fBCHTableIter\fP* create_CHTableIter (\fBCHTable\fP *obj)"
+.PP
+Definition at line 640 of file hashtable.c.
+.SS "\fBOHTableIter\fP* create_OHTableIter (\fBOHTable\fP *obj)"
+.PP
+Definition at line 361 of file hashtable.c.
+.SS "int8_t delete_CHTable (\fBCHTable\fP *table, void *element, size_telesize)"
+.PP
+Definition at line 484 of file hashtable.c.
+.SS "int8_t delete_OHTable (\fBOHTable\fP *table, void *element, size_telesize)"
+.PP
+Definition at line 127 of file hashtable.c.
+.SS "void destroy_CHTableIter (\fBCHTableIter\fP *iter)"
+.PP
+Definition at line 634 of file hashtable.c.
+.SS "void destroy_OHTableIter (\fBOHTableIter\fP *iter)"
+.PP
+Definition at line 355 of file hashtable.c.
+.SS "F_CLEAR (\fBCHTable\fP)"
+.PP
+Definition at line 437 of file hashtable.c.
+.SS "F_CLEAR (\fBOHTable\fP)"
+.PP
+Definition at line 58 of file hashtable.c.
+.SS "F_CONSTRUCT (\fBOHTable\fP)"
+.PP
+Definition at line 17 of file hashtable.c.
+.SS "F_CONSTRUCT_FUNC (\fBOHTable\fP)"
+.PP
+Definition at line 32 of file hashtable.c.
+.SS "F_DESTRUCT (\fBCHTable\fP)"
+.PP
+Definition at line 422 of file hashtable.c.
+.SS "F_DESTRUCT (\fBOHTable\fP)"
+.PP
+Definition at line 42 of file hashtable.c.
+.SS "F_DUPLICATE (\fBOHTable\fP)"
+.PP
+Definition at line 237 of file hashtable.c.
+.SS "F_DUPLICATE (\fBCHTable\fP)"
+.PP
+Definition at line 531 of file hashtable.c.
+.SS "F_PRINT (\fBOHTable\fP)"
+.PP
+Definition at line 209 of file hashtable.c.
+.SS "F_PRINT (\fBCHTable\fP)"
+.PP
+Definition at line 570 of file hashtable.c.
+.SS "void* find_CHTable (\fBCHTable\fP *table, void *element, size_telesize)"
+.PP
+Definition at line 511 of file hashtable.c.
+.SS "void* find_OHTable (\fBOHTable\fP *table, void *element, size_telesize)"
+.PP
+Definition at line 187 of file hashtable.c.
+.SS "function (set_compare, \fBOHTable\fP)"
+.PP
+Definition at line 399 of file hashtable.c.
+.SS "function (set_compare, \fBCHTable\fP)"
+.PP
+Definition at line 673 of file hashtable.c.
+.SS "int8_t head_CHTableIter (\fBCHTableIter\fP *iter)"
+.PP
+Definition at line 597 of file hashtable.c.
+.SS "int8_t head_OHTableIter (\fBOHTableIter\fP *iter)"
+.PP
+Definition at line 315 of file hashtable.c.
+.SS "int8_t insert_CHTable (\fBCHTable\fP *table, void *element, size_telesize, int8_tflag)"
+.PP
+Definition at line 451 of file hashtable.c.
+.SS "int8_t insert_OHTable (\fBOHTable\fP *table, void *element, size_telesize, int8_tflag)"
+.PP
+Definition at line 82 of file hashtable.c.
+.SS "uint32_t linear_probing (uint32_tnum)"
+.PP
+Definition at line 697 of file hashtable.c.
+.SS "int8_t next_CHTableIter (\fBCHTableIter\fP *iter)"
+.PP
+Definition at line 587 of file hashtable.c.
+.SS "int8_t next_OHTableIter (\fBOHTableIter\fP *iter)"
+.PP
+Definition at line 285 of file hashtable.c.
+.SS "uint32_t num_hash (void *key, size_tlen)"
+.PP
+Definition at line 689 of file hashtable.c.
+.SS "int8_t prev_CHTableIter (\fBCHTableIter\fP *iter)"
+.PP
+Definition at line 577 of file hashtable.c.
+.SS "int8_t prev_OHTableIter (\fBOHTableIter\fP *iter)"
+.PP
+Definition at line 261 of file hashtable.c.
+.SS "uint32_t quadratic_probing (uint32_tnum)"
+.PP
+Definition at line 701 of file hashtable.c.
+.SS "void* retrieve_CHTableIter (\fBCHTableIter\fP *iter)"
+.PP
+Definition at line 628 of file hashtable.c.
+.SS "void* retrieve_OHTableIter (\fBOHTableIter\fP *iter)"
+.PP
+Definition at line 349 of file hashtable.c.
+.SS "int8_t set_hash_CHTable (\fBCHTable\fP *table, uint32_t(*)(void *, size_t)hash)"
+.PP
+Definition at line 556 of file hashtable.c.
+.SS "int8_t set_hash_OHTable (\fBOHTable\fP *table, uint32_t(*)(void *, size_t)hash)"
+.PP
+Definition at line 230 of file hashtable.c.
+.SS "int8_t set_probe_CHTable (\fBCHTable\fP *table, uint32_t(*)(uint32_t)prob)"
+.PP
+Definition at line 563 of file hashtable.c.
+.SS "int8_t swap_CHTableIter (\fBCHTableIter\fP *first, \fBCHTableIter\fP *second)"
+.PP
+Definition at line 660 of file hashtable.c.
+.SS "int8_t swap_OHTableIter (\fBOHTableIter\fP *first, \fBOHTableIter\fP *second)"
+.PP
+Definition at line 383 of file hashtable.c.
+.SS "int8_t tail_CHTableIter (\fBCHTableIter\fP *iter)"
+.PP
+Definition at line 607 of file hashtable.c.
+.SS "int8_t tail_OHTableIter (\fBOHTableIter\fP *iter)"
+.PP
+Definition at line 326 of file hashtable.c.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.

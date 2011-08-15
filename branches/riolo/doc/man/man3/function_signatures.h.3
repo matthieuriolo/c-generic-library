@@ -1,0 +1,116 @@
+.TH "/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/include/gen/function_signatures.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/include/gen/function_signatures.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBF_CONSTRUCT\fP(TYPE)   int8_t construct_##TYPE(TYPE* obj, size_t datasize, int flag)"
+.br
+.ti -1c
+.RI "#define \fBF_CONSTRUCT_FUNC\fP(TYPE)"
+.br
+.ti -1c
+.RI "#define \fBF_DESTRUCT\fP(TYPE)   int8_t destruct_##TYPE(TYPE* obj)"
+.br
+.ti -1c
+.RI "#define \fBF_CLEAR\fP(TYPE)   int8_t clear_##TYPE(TYPE* obj)"
+.br
+.ti -1c
+.RI "#define \fBF_DUPLICATE\fP(TYPE)   TYPE* duplicate_##TYPE(TYPE* obj)"
+.br
+.ti -1c
+.RI "#define \fBF_PRINT\fP(TYPE)   int8_t print_##TYPE(TYPE* obj)"
+.br
+.ti -1c
+.RI "#define \fBF_EMPTY\fP(TYPE)   int8_t empty_##TYPE(TYPE* obj)"
+.br
+.ti -1c
+.RI "#define \fBF_SIZE\fP(TYPE)   size_t size_##TYPE(TYPE* obj)"
+.br
+.ti -1c
+.RI "#define \fBF_DUMP\fP(TYPE)   int8_t dump_##TYPE(TYPE* obj)"
+.br
+.ti -1c
+.RI "#define \fBF_SIZE_OF\fP(TYPE)   size_t size_of_##TYPE(TYPE* obj)"
+.br
+.ti -1c
+.RI "#define \fBF_SET_COMPARE\fP(TYPE)   int8_t set_compare_##TYPE(TYPE* obj, int32_t (*cmp) (const void *, const void *, size_t))"
+.br
+.ti -1c
+.RI "#define \fBF_SET_PRINT\fP(TYPE)   int8_t set_print_##TYPE(TYPE* obj, void (*print) (const void *))"
+.br
+.ti -1c
+.RI "#define \fBF_SET_ALLOC\fP(TYPE)   int8_t set_alloc_##TYPE(TYPE* obj, void* (*alloc) (size_t))"
+.br
+.ti -1c
+.RI "#define \fBF_SET_DEALLOC\fP(TYPE)   int8_t set_dealloc_##TYPE(TYPE* obj, void (*dealloc) (void *))"
+.br
+.ti -1c
+.RI "#define \fBF_SET_COPY\fP(TYPE)   int8_t set_copy_##TYPE(TYPE* obj, void *(*copy)(void *, const void *, size_t))"
+.br
+.in -1c
+.SH "Define Documentation"
+.PP 
+.SS "#define F_CLEAR(TYPE)   int8_t clear_##TYPE(TYPE* obj)"
+.PP
+Definition at line 33 of file function_signatures.h.
+.SS "#define F_CONSTRUCT(TYPE)   int8_t construct_##TYPE(TYPE* obj, size_t datasize, int flag)"
+.PP
+Definition at line 12 of file function_signatures.h.
+.SS "#define F_CONSTRUCT_FUNC(TYPE)"\fBValue:\fP
+.PP
+.nf
+int8_t construct_func_##TYPE(TYPE* obj, size_t datasize, int flag,\
+                             void *(*alloc) (size_t),\
+                             void (*dealloc) (void *),\
+                             int32_t (*cmp) (const void *, const void *,size_t),\
+                             void (*print) (const void *),\
+                             void *(*copy) (void *, const void *, size_t))
+.fi
+.PP
+Definition at line 17 of file function_signatures.h.
+.SS "#define F_DESTRUCT(TYPE)   int8_t destruct_##TYPE(TYPE* obj)"
+.PP
+Definition at line 28 of file function_signatures.h.
+.SS "#define F_DUMP(TYPE)   int8_t dump_##TYPE(TYPE* obj)"
+.PP
+Definition at line 58 of file function_signatures.h.
+.SS "#define F_DUPLICATE(TYPE)   TYPE* duplicate_##TYPE(TYPE* obj)"
+.PP
+Definition at line 38 of file function_signatures.h.
+.SS "#define F_EMPTY(TYPE)   int8_t empty_##TYPE(TYPE* obj)"
+.PP
+Definition at line 48 of file function_signatures.h.
+.SS "#define F_PRINT(TYPE)   int8_t print_##TYPE(TYPE* obj)"
+.PP
+Definition at line 43 of file function_signatures.h.
+.SS "#define F_SET_ALLOC(TYPE)   int8_t set_alloc_##TYPE(TYPE* obj, void* (*alloc) (size_t))"
+.PP
+Definition at line 79 of file function_signatures.h.
+.SS "#define F_SET_COMPARE(TYPE)   int8_t set_compare_##TYPE(TYPE* obj, int32_t (*cmp) (const void *, const void *, size_t))"
+.PP
+Definition at line 68 of file function_signatures.h.
+.SS "#define F_SET_COPY(TYPE)   int8_t set_copy_##TYPE(TYPE* obj, void *(*copy)(void *, const void *, size_t))"
+.PP
+Definition at line 89 of file function_signatures.h.
+.SS "#define F_SET_DEALLOC(TYPE)   int8_t set_dealloc_##TYPE(TYPE* obj, void (*dealloc) (void *))"
+.PP
+Definition at line 84 of file function_signatures.h.
+.SS "#define F_SET_PRINT(TYPE)   int8_t set_print_##TYPE(TYPE* obj, void (*print) (const void *))"
+.PP
+Definition at line 73 of file function_signatures.h.
+.SS "#define F_SIZE(TYPE)   size_t size_##TYPE(TYPE* obj)"
+.PP
+Definition at line 53 of file function_signatures.h.
+.SS "#define F_SIZE_OF(TYPE)   size_t size_of_##TYPE(TYPE* obj)"
+.PP
+Definition at line 63 of file function_signatures.h.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.

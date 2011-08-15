@@ -1,0 +1,53 @@
+.TH "/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/src/node.c" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/src/node.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio.h>\fP
+.br
+\fC#include 'node.h'\fP
+.br
+\fC#include 'gen/access_macros.h'\fP
+.br
+\fC#include 'gen/error_macros.h'\fP
+.br
+
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBNode\fP * \fBconstruct_Node\fP (size_t nlinks)"
+.br
+.ti -1c
+.RI "void \fBdestruct_Node\fP (\fBNode\fP *node)"
+.br
+.in -1c
+.SH "Function Documentation"
+.PP 
+.SS "\fBNode\fP* construct_Node (size_tnlinks)"\fBParameters:\fP
+.RS 4
+\fInlinks\fP the number of links the Node should have 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+an allocated Node or NULL on error 
+.RE
+.PP
+
+.PP
+Definition at line 16 of file node.c.
+.SS "void destruct_Node (\fBNode\fP *node)"\fBParameters:\fP
+.RS 4
+\fInode\fP the Node to deallocate 
+.RE
+.PP
+
+.PP
+Definition at line 32 of file node.c.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.

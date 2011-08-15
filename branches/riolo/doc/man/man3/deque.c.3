@@ -1,0 +1,206 @@
+.TH "/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/src/deque.c" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/src/deque.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio.h>\fP
+.br
+\fC#include <string.h>\fP
+.br
+\fC#include <stdlib.h>\fP
+.br
+\fC#include 'node.h'\fP
+.br
+\fC#include 'deque.h'\fP
+.br
+\fC#include 'gen/error_macros.h'\fP
+.br
+\fC#include 'gen/access_macros.h'\fP
+.br
+\fC#include 'gen/control_macros.h'\fP
+.br
+\fC#include 'gen/function_macros.h'\fP
+.br
+\fC#include 'gen/control_arr_macros.h'\fP
+.br
+\fC#include 'gen/function_signatures.h'\fP
+.br
+
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNUM_LINKS\fP   2"
+.br
+.RI "\fIa reusable deque class that takes any object \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "\fBF_CONSTRUCT\fP (\fBDequeList\fP)"
+.br
+.ti -1c
+.RI "\fBF_CONSTRUCT_FUNC\fP (\fBDequeList\fP)"
+.br
+.ti -1c
+.RI "\fBF_DESTRUCT\fP (\fBDequeList\fP)"
+.br
+.ti -1c
+.RI "int8_t \fBconvert_DequeList\fP (\fBDequeList\fP *deque, void *obj, size_t objsize, int flag)"
+.br
+.ti -1c
+.RI "int8_t \fBpush_back_DequeList\fP (\fBDequeList\fP *deque, void *obj, size_t objsize, int flag)"
+.br
+.ti -1c
+.RI "int8_t \fBpush_front_DequeList\fP (\fBDequeList\fP *deque, void *obj, size_t objsize, int flag)"
+.br
+.ti -1c
+.RI "int8_t \fBpop_front_DequeList\fP (\fBDequeList\fP *deque)"
+.br
+.ti -1c
+.RI "int8_t \fBpop_back_DequeList\fP (\fBDequeList\fP *deque)"
+.br
+.ti -1c
+.RI "void * \fBfront_DequeList\fP (\fBDequeList\fP *deque)"
+.br
+.ti -1c
+.RI "void * \fBback_DequeList\fP (\fBDequeList\fP *deque)"
+.br
+.ti -1c
+.RI "\fBF_CLEAR\fP (\fBDequeList\fP)"
+.br
+.ti -1c
+.RI "\fBF_EMPTY\fP (\fBDequeList\fP)"
+.br
+.ti -1c
+.RI "\fBF_SIZE\fP (\fBDequeList\fP)"
+.br
+.ti -1c
+.RI "\fBcreate_iter_func\fP (Ptr_Based, \fBDequeList\fP)"
+.br
+.ti -1c
+.RI "\fBF_CONSTRUCT_FUNC\fP (\fBDequeVector\fP)"
+.br
+.ti -1c
+.RI "\fBF_DESTRUCT\fP (\fBDequeVector\fP)"
+.br
+.ti -1c
+.RI "int8_t \fBpop_front_DequeVector\fP (\fBDequeVector\fP *deque)"
+.br
+.ti -1c
+.RI "int8_t \fBpop_back_DequeVector\fP (\fBDequeVector\fP *deque)"
+.br
+.ti -1c
+.RI "void * \fBback_DequeVector\fP (\fBDequeVector\fP *deque)"
+.br
+.ti -1c
+.RI "void * \fBfront_DequeVector\fP (\fBDequeVector\fP *deque)"
+.br
+.ti -1c
+.RI "\fBF_CLEAR\fP (\fBDequeVector\fP)"
+.br
+.ti -1c
+.RI "int8_t \fBpush_front_DequeVector\fP (\fBDequeVector\fP *deque, void *obj, size_t objsize, int flag)"
+.br
+.ti -1c
+.RI "int8_t \fBpush_back_DequeVector\fP (\fBDequeVector\fP *deque, void *obj, size_t objsize, int flag)"
+.br
+.ti -1c
+.RI "int8_t \fBresize_DequeVector\fP (\fBDequeVector\fP *deque, size_t size)"
+.br
+.in -1c
+.SH "Define Documentation"
+.PP 
+.SS "#define NUM_LINKS   2"
+.PP
+a reusable deque class that takes any object Copyright 2006, All Rights Reserved, Micah Villmow 
+.PP
+\fBAuthor:\fP
+.RS 4
+Micah Villmow 
+.RE
+.PP
+
+.PP
+Definition at line 24 of file deque.c.
+.SH "Function Documentation"
+.PP 
+.SS "void* back_DequeList (\fBDequeList\fP *deque)"
+.PP
+Definition at line 152 of file deque.c.
+.SS "void* back_DequeVector (\fBDequeVector\fP *deque)"
+.PP
+Definition at line 232 of file deque.c.
+.SS "int8_t convert_DequeList (\fBDequeList\fP *deque, void *obj, size_tobjsize, intflag)"
+.PP
+Definition at line 58 of file deque.c.
+.SS "create_iter_func (Ptr_Based, \fBDequeList\fP)"
+.PP
+Definition at line 173 of file deque.c.
+.SS "F_CLEAR (\fBDequeList\fP)"
+.PP
+Definition at line 157 of file deque.c.
+.SS "F_CLEAR (\fBDequeVector\fP)"
+.PP
+Definition at line 243 of file deque.c.
+.SS "F_CONSTRUCT (\fBDequeList\fP)"
+.PP
+Definition at line 26 of file deque.c.
+.SS "F_CONSTRUCT_FUNC (\fBDequeList\fP)"
+.PP
+Definition at line 36 of file deque.c.
+.SS "F_CONSTRUCT_FUNC (\fBDequeVector\fP)"
+.PP
+Definition at line 190 of file deque.c.
+.SS "F_DESTRUCT (\fBDequeVector\fP)"
+.PP
+Definition at line 201 of file deque.c.
+.SS "F_DESTRUCT (\fBDequeList\fP)"
+.PP
+Definition at line 46 of file deque.c.
+.SS "F_EMPTY (\fBDequeList\fP)"
+.PP
+Definition at line 162 of file deque.c.
+.SS "F_SIZE (\fBDequeList\fP)"
+.PP
+Definition at line 168 of file deque.c.
+.SS "void* front_DequeList (\fBDequeList\fP *deque)"
+.PP
+Definition at line 144 of file deque.c.
+.SS "void* front_DequeVector (\fBDequeVector\fP *deque)"
+.PP
+Definition at line 237 of file deque.c.
+.SS "int8_t pop_back_DequeList (\fBDequeList\fP *deque)"
+.PP
+Definition at line 128 of file deque.c.
+.SS "int8_t pop_back_DequeVector (\fBDequeVector\fP *deque)"
+.PP
+Definition at line 220 of file deque.c.
+.SS "int8_t pop_front_DequeList (\fBDequeList\fP *deque)"
+.PP
+Definition at line 110 of file deque.c.
+.SS "int8_t pop_front_DequeVector (\fBDequeVector\fP *deque)"
+.PP
+Definition at line 209 of file deque.c.
+.SS "int8_t push_back_DequeList (\fBDequeList\fP *deque, void *obj, size_tobjsize, intflag)"
+.PP
+Definition at line 62 of file deque.c.
+.SS "int8_t push_back_DequeVector (\fBDequeVector\fP *deque, void *obj, size_tobjsize, intflag)"
+.PP
+Definition at line 265 of file deque.c.
+.SS "int8_t push_front_DequeList (\fBDequeList\fP *deque, void *obj, size_tobjsize, intflag)"
+.PP
+Definition at line 86 of file deque.c.
+.SS "int8_t push_front_DequeVector (\fBDequeVector\fP *deque, void *obj, size_tobjsize, intflag)"
+.PP
+Definition at line 252 of file deque.c.
+.SS "int8_t resize_DequeVector (\fBDequeVector\fP *deque, size_tsize)"
+.PP
+Definition at line 278 of file deque.c.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.

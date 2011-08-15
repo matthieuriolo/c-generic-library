@@ -1,0 +1,71 @@
+.TH "_open_hash_table" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+_open_hash_table \- 
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <hashtable.h>\fP
+.SS "Data Fields"
+
+.in +1c
+.ti -1c
+.RI "size_t \fBcapacity\fP"
+.br
+.ti -1c
+.RI "size_t \fBcur_size\fP"
+.br
+.ti -1c
+.RI "size_t \fBnum_elem\fP"
+.br
+.ti -1c
+.RI "int8_t \fBobjfree\fP"
+.br
+.ti -1c
+.RI "\fBHashListNode\fP * \fBnodes\fP"
+.br
+.ti -1c
+.RI "\fBHashListNode\fP * \fBfree_list\fP"
+.br
+.ti -1c
+.RI "\fBFunctor_API\fP \fBAPI\fP"
+.br
+.ti -1c
+.RI "uint32_t(* \fBhash\fP )(void *, size_t)"
+.br
+.in -1c
+.SH "Detailed Description"
+.PP 
+Definition at line 15 of file hashtable.h.
+.SH "Field Documentation"
+.PP 
+.SS "\fBFunctor_API\fP \fBAPI\fP"
+.PP
+Definition at line 22 of file hashtable.h.
+.SS "size_t \fBcapacity\fP"
+.PP
+Definition at line 16 of file hashtable.h.
+.SS "size_t \fBcur_size\fP"
+.PP
+Definition at line 17 of file hashtable.h.
+.SS "\fBHashListNode\fP * \fBfree_list\fP"
+.PP
+Definition at line 21 of file hashtable.h.
+.SS "uint32_t(* \fBhash\fP)(void *, size_t)"
+.PP
+Definition at line 23 of file hashtable.h.
+.SS "\fBHashListNode\fP * \fBnodes\fP"
+.PP
+Definition at line 20 of file hashtable.h.
+.SS "size_t \fBnum_elem\fP"
+.PP
+Definition at line 18 of file hashtable.h.
+.SS "int8_t \fBobjfree\fP"
+.PP
+Definition at line 19 of file hashtable.h.
+
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.

@@ -1,0 +1,266 @@
+.TH "/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/include/gen/access_macros.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/include/gen/access_macros.h \- 
+.SH SYNOPSIS
+.br
+.PP
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBSTATIC\fP   (0x2)"
+.br
+.RI "\fIflag to pass in if the data to be stored is statically allocated. \fP"
+.ti -1c
+.RI "#define \fBDYNAMIC\fP   (0x01)"
+.br
+.RI "\fIflag to pass in if the data to be stored is dynamically allocated. \fP"
+.ti -1c
+.RI "#define \fBINITIAL_SIZE\fP   256"
+.br
+.RI "\fIInitial number of nodes in the extra node list. \fP"
+.ti -1c
+.RI "#define \fBFREEOBJ\fP   0x1"
+.br
+.RI "\fIflag to specify to free dynamically allocated objects \fP"
+.ti -1c
+.RI "#define \fBNOFREE\fP   0x2"
+.br
+.RI "\fIflag to specify not to free dynamically allocated objects \fP"
+.ti -1c
+.RI "#define \fBT\fP(X)   ((X)->tail)"
+.br
+.RI "\fImacro to make accessing the tail pointer faster \fP"
+.ti -1c
+.RI "#define \fBH\fP(X)   ((X)->head)"
+.br
+.RI "\fImacro to make accessing the head pointer faster \fP"
+.ti -1c
+.RI "#define \fBLEFT\fP   0x00"
+.br
+.RI "\fIindex to pointer array for left child \fP"
+.ti -1c
+.RI "#define \fBRIGHT\fP   0x01"
+.br
+.RI "\fIindex to pointer array for right child \fP"
+.ti -1c
+.RI "#define \fBP\fP(X)   L(X)"
+.br
+.RI "\fImacro for the previous node \fP"
+.ti -1c
+.RI "#define \fBL\fP(X)   ((X)->ptr[LEFT])"
+.br
+.RI "\fImacro for the left child \fP"
+.ti -1c
+.RI "#define \fBflag\fP(X)   ((X)->flags)"
+.br
+.RI "\fImacro for the flags variable \fP"
+.ti -1c
+.RI "#define \fBN\fP(X)   R(X)"
+.br
+.RI "\fImacro for the next node \fP"
+.ti -1c
+.RI "#define \fBR\fP(X)   ((X)->ptr[RIGHT])"
+.br
+.RI "\fImacro for the right child \fP"
+.ti -1c
+.RI "#define \fBB\fP(X)   ((X)->base)"
+.br
+.RI "\fImacro for the base pointer \fP"
+.ti -1c
+.RI "#define \fBS\fP(X)   ((X)->size)"
+.br
+.RI "\fImacro for the structure size variable \fP"
+.ti -1c
+.RI "#define \fBC\fP(X)   ((X)->capacity)"
+.br
+.RI "\fImacro for the structure capacity variable \fP"
+.ti -1c
+.RI "#define \fBO\fP(X)   ((X)->objsize)"
+.br
+.RI "\fImacro for the object size variable \fP"
+.ti -1c
+.RI "#define \fBM\fP(X)   ((X)->mem)"
+.br
+.ti -1c
+.RI "#define \fBFL\fP(X)   ((X)->free_list)"
+.br
+.RI "\fImacro to get the free list pointer \fP"
+.ti -1c
+.RI "#define \fBITERLIST_OBJ\fP(X)   ((X)->ptr->objptr)"
+.br
+.RI "\fImacro to get to the object of the pointer based iterator \fP"
+.ti -1c
+.RI "#define \fBITERLIST_NEXT\fP(X)   ((X)->ptr = R((X)->ptr))"
+.br
+.RI "\fImacro to move the pointer based iterator to the next item \fP"
+.ti -1c
+.RI "#define \fBITERLIST_PREV\fP(X)   ((X)->ptr = L((X)->ptr))"
+.br
+.RI "\fImacro to move the pointer based iterator to the prev item \fP"
+.ti -1c
+.RI "#define \fBITERARRAY_OBJ\fP(X)   ((X)->ptr)"
+.br
+.RI "\fImacro to get the object of the array based pointer \fP"
+.ti -1c
+.RI "#define \fBITERARRAY_NEXT\fP(X)   ((X)->ptr = (((char*)(X)->ptr) + O((X)->parent)))"
+.br
+.RI "\fImacro to mave the array based iterator to the next item \fP"
+.ti -1c
+.RI "#define \fBITERARRAY_PREV\fP(X)   ((X)->ptr = (((char*)(X)->ptr) - O((X)->parent)))"
+.br
+.RI "\fImacro to move the array based iterator to the prev item \fP"
+.ti -1c
+.RI "#define \fBITER_HEAD\fP(X)   ((X)->ptr = H((X)->parent))"
+.br
+.RI "\fImacro to move the iterator to the head \fP"
+.ti -1c
+.RI "#define \fBITER_TAIL\fP(X)   ((X)->ptr = T((X)->parent))"
+.br
+.RI "\fImacro to move the iterator to the tail \fP"
+.in -1c
+.SH "Define Documentation"
+.PP 
+.SS "#define B(X)   ((X)->base)"
+.PP
+macro for the base pointer 
+.PP
+Definition at line 112 of file access_macros.h.
+.SS "#define C(X)   ((X)->capacity)"
+.PP
+macro for the structure capacity variable 
+.PP
+Definition at line 124 of file access_macros.h.
+.SS "#define DYNAMIC   (0x01)"
+.PP
+flag to pass in if the data to be stored is dynamically allocated. If the data passed in to a function is created dynamically, then the function will not make a copy and instead just point to the dynamically allocated memory. 
+.PP
+Definition at line 32 of file access_macros.h.
+.SS "#define FL(X)   ((X)->free_list)"
+.PP
+macro to get the free list pointer 
+.PP
+Definition at line 140 of file access_macros.h.
+.SS "#define flag(X)   ((X)->flags)"
+.PP
+macro for the flags variable 
+.PP
+Definition at line 94 of file access_macros.h.
+.SS "#define FREEOBJ   0x1"
+.PP
+flag to specify to free dynamically allocated objects 
+.PP
+Definition at line 50 of file access_macros.h.
+.SS "#define H(X)   ((X)->head)"
+.PP
+macro to make accessing the head pointer faster 
+.PP
+Definition at line 68 of file access_macros.h.
+.SS "#define INITIAL_SIZE   256"
+.PP
+Initial number of nodes in the extra node list. Each of the pointer based classes has an initial number of objects that they use to minimize the amount of individual allocations that are needed. This value is used to establish the initial size of this list. 
+.PP
+Definition at line 43 of file access_macros.h.
+.SS "#define ITER_HEAD(X)   ((X)->ptr = H((X)->parent))"
+.PP
+macro to move the iterator to the head 
+.PP
+Definition at line 169 of file access_macros.h.
+.SS "#define ITER_TAIL(X)   ((X)->ptr = T((X)->parent))"
+.PP
+macro to move the iterator to the tail 
+.PP
+Definition at line 173 of file access_macros.h.
+.SS "#define ITERARRAY_NEXT(X)   ((X)->ptr = (((char*)(X)->ptr) + O((X)->parent)))"
+.PP
+macro to mave the array based iterator to the next item 
+.PP
+Definition at line 161 of file access_macros.h.
+.SS "#define ITERARRAY_OBJ(X)   ((X)->ptr)"
+.PP
+macro to get the object of the array based pointer 
+.PP
+Definition at line 157 of file access_macros.h.
+.SS "#define ITERARRAY_PREV(X)   ((X)->ptr = (((char*)(X)->ptr) - O((X)->parent)))"
+.PP
+macro to move the array based iterator to the prev item 
+.PP
+Definition at line 165 of file access_macros.h.
+.SS "#define ITERLIST_NEXT(X)   ((X)->ptr = R((X)->ptr))"
+.PP
+macro to move the pointer based iterator to the next item 
+.PP
+Definition at line 149 of file access_macros.h.
+.SS "#define ITERLIST_OBJ(X)   ((X)->ptr->objptr)"
+.PP
+macro to get to the object of the pointer based iterator 
+.PP
+Definition at line 145 of file access_macros.h.
+.SS "#define ITERLIST_PREV(X)   ((X)->ptr = L((X)->ptr))"
+.PP
+macro to move the pointer based iterator to the prev item 
+.PP
+Definition at line 153 of file access_macros.h.
+.SS "#define L(X)   ((X)->ptr[LEFT])"
+.PP
+macro for the left child 
+.PP
+Definition at line 89 of file access_macros.h.
+.SS "#define LEFT   0x00"
+.PP
+index to pointer array for left child 
+.PP
+Definition at line 73 of file access_macros.h.
+.SS "#define M(X)   ((X)->mem)"
+.PP
+Definition at line 134 of file access_macros.h.
+.SS "#define N(X)   R(X)"
+.PP
+macro for the next node 
+.PP
+Definition at line 100 of file access_macros.h.
+.SS "#define NOFREE   0x2"
+.PP
+flag to specify not to free dynamically allocated objects 
+.PP
+Definition at line 56 of file access_macros.h.
+.SS "#define O(X)   ((X)->objsize)"
+.PP
+macro for the object size variable 
+.PP
+Definition at line 130 of file access_macros.h.
+.SS "#define P(X)   L(X)"
+.PP
+macro for the previous node 
+.PP
+Definition at line 83 of file access_macros.h.
+.SS "#define R(X)   ((X)->ptr[RIGHT])"
+.PP
+macro for the right child 
+.PP
+Definition at line 106 of file access_macros.h.
+.SS "#define RIGHT   0x01"
+.PP
+index to pointer array for right child 
+.PP
+Definition at line 77 of file access_macros.h.
+.SS "#define S(X)   ((X)->size)"
+.PP
+macro for the structure size variable 
+.PP
+Definition at line 118 of file access_macros.h.
+.SS "#define STATIC   (0x2)"
+.PP
+flag to pass in if the data to be stored is statically allocated. If the data passed in to a function is statically allocated, then the function will make a copy of the data and store that data instead. 
+.PP
+Definition at line 20 of file access_macros.h.
+.SS "#define T(X)   ((X)->tail)"
+.PP
+macro to make accessing the tail pointer faster 
+.PP
+Definition at line 62 of file access_macros.h.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.

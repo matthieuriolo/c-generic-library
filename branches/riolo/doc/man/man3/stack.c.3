@@ -1,0 +1,195 @@
+.TH "/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/src/stack.c" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+/Users/matthieuriolo/Sourcecode/libgenc/branches/riolo/trunk/src/stack.c \- 
+.SH SYNOPSIS
+.br
+.PP
+\fC#include <stdio.h>\fP
+.br
+\fC#include <string.h>\fP
+.br
+\fC#include 'node.h'\fP
+.br
+\fC#include 'stack.h'\fP
+.br
+\fC#include 'gen/error_macros.h'\fP
+.br
+\fC#include 'gen/access_macros.h'\fP
+.br
+\fC#include 'gen/control_macros.h'\fP
+.br
+\fC#include 'gen/function_macros.h'\fP
+.br
+\fC#include 'gen/control_arr_macros.h'\fP
+.br
+\fC#include 'gen/function_signatures.h'\fP
+.br
+
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBNUM_LINKS\fP   2"
+.br
+.RI "\fIa reusable stack class that takes any object \fP"
+.in -1c
+.SS "Functions"
+
+.in +1c
+.ti -1c
+.RI "int8_t \fBpush_StackList\fP (\fBStackList\fP *stack, void *obj, size_t objsize, int8_t flag)"
+.br
+.RI "\fIpushes an item onto the stack \fP"
+.ti -1c
+.RI "int8_t \fBpop_StackList\fP (\fBStackList\fP *stack)"
+.br
+.RI "\fIpops the first item off the stack \fP"
+.ti -1c
+.RI "void * \fBtop_StackList\fP (\fBStackList\fP *stack)"
+.br
+.RI "\fIreturns a pointer to the top of the stack so it can be easily referenced \fP"
+.ti -1c
+.RI "\fBF_CONSTRUCT\fP (\fBStackList\fP)"
+.br
+.ti -1c
+.RI "\fBF_CONSTRUCT_FUNC\fP (\fBStackList\fP)"
+.br
+.ti -1c
+.RI "\fBF_DESTRUCT\fP (\fBStackList\fP)"
+.br
+.ti -1c
+.RI "\fBF_CLEAR\fP (\fBStackList\fP)"
+.br
+.ti -1c
+.RI "\fBcreate_iter_func\fP (Ptr_Based, \fBStackList\fP)"
+.br
+.ti -1c
+.RI "\fBF_CONSTRUCT_FUNC\fP (\fBStackVector\fP)"
+.br
+.ti -1c
+.RI "\fBF_DESTRUCT\fP (\fBStackVector\fP)"
+.br
+.ti -1c
+.RI "int8_t \fBpop_StackVector\fP (\fBStackVector\fP *stack)"
+.br
+.ti -1c
+.RI "void * \fBtop_StackVector\fP (\fBStackVector\fP *stack)"
+.br
+.ti -1c
+.RI "\fBF_CLEAR\fP (\fBStackVector\fP)"
+.br
+.ti -1c
+.RI "int8_t \fBpush_StackVector\fP (\fBStackVector\fP *stack, void *obj, size_t objsize, int flag)"
+.br
+.ti -1c
+.RI "int8_t \fBresize_StackVector\fP (\fBStackVector\fP *stack, size_t size)"
+.br
+.in -1c
+.SH "Define Documentation"
+.PP 
+.SS "#define NUM_LINKS   2"
+.PP
+a reusable stack class that takes any object Copyright 2006, All Rights Reserved, Micah Villmow 
+.PP
+\fBAuthor:\fP
+.RS 4
+Micah Villmow the stack class offers two flavors, a stacklist and a stackvector, depending on which underlying structure the programmer prefers 
+.RE
+.PP
+
+.PP
+Definition at line 24 of file stack.c.
+.SH "Function Documentation"
+.PP 
+.SS "create_iter_func (Ptr_Based, \fBStackList\fP)"
+.PP
+Definition at line 115 of file stack.c.
+.SS "F_CLEAR (\fBStackList\fP)"
+.PP
+Definition at line 108 of file stack.c.
+.SS "F_CLEAR (\fBStackVector\fP)"
+.PP
+Definition at line 158 of file stack.c.
+.SS "F_CONSTRUCT (\fBStackList\fP)"
+.PP
+Definition at line 76 of file stack.c.
+.SS "F_CONSTRUCT_FUNC (\fBStackList\fP)"
+.PP
+Definition at line 86 of file stack.c.
+.SS "F_CONSTRUCT_FUNC (\fBStackVector\fP)"
+.PP
+Definition at line 123 of file stack.c.
+.SS "F_DESTRUCT (\fBStackVector\fP)"
+.PP
+Definition at line 134 of file stack.c.
+.SS "F_DESTRUCT (\fBStackList\fP)"
+.PP
+Definition at line 96 of file stack.c.
+.SS "int8_t pop_StackList (\fBStackList\fP *stack)"
+.PP
+pops the first item off the stack \fBParameters:\fP
+.RS 4
+\fIstack\fP the stack to remove the top item from 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on failure 
+.RE
+.PP
+
+.PP
+Definition at line 51 of file stack.c.
+.SS "int8_t pop_StackVector (\fBStackVector\fP *stack)"
+.PP
+Definition at line 142 of file stack.c.
+.SS "int8_t push_StackList (\fBStackList\fP *stack, void *obj, size_tobjsize, int8_tflag)"
+.PP
+pushes an item onto the stack \fBParameters:\fP
+.RS 4
+\fIstack\fP the stack to push an item onto 
+.br
+\fIobj\fP the obj to push onto the stack 
+.br
+\fIobjsize\fP the size of the object 
+.br
+\fIflag\fP the flag for this specific push 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+0 on success, non-zero on error 
+.RE
+.PP
+
+.PP
+Definition at line 27 of file stack.c.
+.SS "int8_t push_StackVector (\fBStackVector\fP *stack, void *obj, size_tobjsize, intflag)"
+.PP
+Definition at line 167 of file stack.c.
+.SS "int8_t resize_StackVector (\fBStackVector\fP *stack, size_tsize)"
+.PP
+Definition at line 180 of file stack.c.
+.SS "void* top_StackList (\fBStackList\fP *stack)"
+.PP
+returns a pointer to the top of the stack so it can be easily referenced \fBParameters:\fP
+.RS 4
+\fIstack\fP the stack to return the top object from 
+.RE
+.PP
+\fBReturns:\fP
+.RS 4
+the object on success, NULL on failure 
+.RE
+.PP
+
+.PP
+Definition at line 69 of file stack.c.
+.SS "void* top_StackVector (\fBStackVector\fP *stack)"
+.PP
+Definition at line 152 of file stack.c.
+.SH "Author"
+.PP 
+Generated automatically by Doxygen for 'c generic library' from the source code.
