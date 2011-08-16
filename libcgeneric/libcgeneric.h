@@ -20,10 +20,10 @@ extern "C" {
 #include "gen/function_macros.h"
 #include "gen/function_signatures.h"
 #include "gen/gen_macros.h"
-#include "gen/stdin.h"
+#include "gen/stdint.h"
 
 #include "binary_tree.h"
-#include "comparison.h"
+#include "comparisons.h"
 #include "deque.h"
 #include "hashtable.h"
 #include "heap.h"

@@ -10,7 +10,7 @@
  * prototype
  */
 #define CMPFUNC_PROTO(TYPE) int TYPE##cmp(void *, void *, size_t)
-#define CMPFUNC_IMPL(TYPE)
+#define CMPFUNC_IMPL(TYPE) \
 	int TYPE##cmp(void *first, void *second, size_t size) {\
 		return (*(const TYPE *)first) - (*(const TYPE *)second);\
 	}
