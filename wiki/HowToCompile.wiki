@@ -14,9 +14,17 @@ make
 The compiled libraries should be found in the directory ./lib. By default there should be a static and a dynamic library.
 
 
+= Optionals builds =
 
-As of revision 42, make check requires that check unit test infrastructure exists. It can be installed from here:
-http://check.sourceforge.net/
+The units and test files are optionally. This means that the command above won't compile them! If you wish to compile the test and unit cases you have to call configure with the enabling flag.
+
+{{{
+./configure --enable-tests=yes --enable-units=yes
+make
+}}}
+
+
+The units are based on the library [http://check.sourceforge.net/ check]. If you want to build the unit tests then you have to install the *check* library.
 
 = Trouble? =
 
