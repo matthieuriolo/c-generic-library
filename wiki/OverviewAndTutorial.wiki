@@ -132,7 +132,7 @@ Write following code above your main function:
 {{{
 void myPrintFunction(const void *element) {
 	//cast it to the right type and format the output string
-	printf("%u ", (*(const unsigned int *) element));
+	printf("%u\n", (*(const unsigned int *) element));
 }
 }}}
 
@@ -169,7 +169,7 @@ You can use the generic functions retrieve, next, previous and head for reseting
 if(!empty(List, &container)){
 	head(List, &container);
 	do {
-		printf("%u\", *((unsigned int*)retrieve(List, &container)));
+		printf("%u\n", *((unsigned int*)retrieve(List, &container)));
 	}while(next(List, &container));
 }
 
@@ -204,4 +204,4 @@ destruct(List, &container);
 
 
 
-We hope you're going to enjoy it!
+We hope you'll enjoy it!
