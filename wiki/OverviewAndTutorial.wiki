@@ -63,7 +63,7 @@ The most easiest way to find out which datatypes are possible is to look into th
 man List
 }}}
 
-Now we need to initialize the container. All datatypes have a function called construct{{{_<}}}datatype>. To find out which generic functions exists look into the file <libcgenericIncludingPath>/gen/function_macros.h. You can also use the _man_ command (passing the filename) for displaying a description.
+Now we need to initialize the container. All datatypes have a function called construct{{{_<}}}datatype>. To find out which generic functions exists look into the file {{{<}}}libcgenericIncludingPath{{{>}}}/gen/function_macros.h. You can also use the _man_ command (passing the filename) for displaying a description.
 
 {{{
 man list.h
