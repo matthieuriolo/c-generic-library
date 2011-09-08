@@ -22,7 +22,7 @@ gcc -lcgeneric tutorial.c -o tutorial
 
 == Library uninstalled ==
 {{{
-gcc -i{{{<}}}pathToLibcgeneric{{{>}}} {{{<}}}pathToLibcgeneric{{{>}}}/libs/libcgen.a tutorial.c -o tutorial
+gcc -i<pathToLibcgeneric> <pathToLibcgeneric>/libs/libcgen.a tutorial.c -o tutorial
 }}}
 
 
@@ -63,7 +63,7 @@ The most easiest way to find out which datatypes are possible is to look into th
 man List
 }}}
 
-Now we need to initialize the container. All datatypes have a function called construct{{{_<}}}datatype{{{>}}}. To find out which generic functions exists look into the file {{{<}}}libcgenericIncludingPath{{{>}}}/gen/function_macros.h. You can also use the _man_ command (passing the filename) for displaying a description.
+Now we need to initialize the container. All datatypes have a function called construct{{{_<}}}datatype>. To find out which generic functions exists look into the file <libcgenericIncludingPath>/gen/function_macros.h. You can also use the _man_ command (passing the filename) for displaying a description.
 
 {{{
 man list.h
@@ -182,7 +182,7 @@ The most datatype contains a function for sorting. As already said the container
 
 {{{
 int unintcmp(const void* a, const void* b, size_t x UNUSED) {
-	return (*((unsigned int*)a)>*((unsigned int*)b))-(*((unsigned int*)a){{{<}}}*((unsigned int*)b));
+	return (*((unsigned int*)a)>*((unsigned int*)b))-(*((unsigned int*)a)<*((unsigned int*)b));
 }
 }}}
 
