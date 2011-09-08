@@ -1,5 +1,5 @@
+#summary Miniatur Tutorial
 #labels Phase-Implementation
-#Miniatur Tutorial
 
 = Introduction =
 
