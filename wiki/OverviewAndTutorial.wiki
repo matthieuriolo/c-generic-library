@@ -3,7 +3,7 @@
 
 = Introduction =
 
-This tutorial should be read be everyone who wants to know how the code would feellike, what the basic functions are and, briefly, how they work.
+This tutorial should be read be everyone who wants to know how the code would feel like, what the basic functions are and, briefly, how they work.
 
 However, we will create a little dummy applications that does collect an unlimited amount of positive numbers. If the number 0 is entered then the application will print out twice the numbers in the given order and once in ascending order. After printing the list the application will terminated himself.
 
@@ -26,13 +26,13 @@ gcc -i<pathToLibcgeneric> <pathToLibcgeneric>/libs/libcgen.a tutorial.c -o tutor
 }}}
 
 
-The explanation of the command line _gcc_ does not belong to the topis of this tutorial. If you need to know more about gcc then visit the page [http://linux.die.net/man/1/gcc GCC's manpage].
+The explanation of the command line _gcc_ does not belong to the topics of this tutorial. If you need to know more about gcc then visit the page [http://linux.die.net/man/1/gcc GCC's manpage].
 
 
 
 = Our First step =
 
-Create a new file and write into it the skeleton of a C file. Extend your code be including the needed header files. Like the most linux libraries the c generic library  The headerfile libcgeneric.h includes all other libcgeneric header files.
+Create a new file and write into it the skeleton of a C file. Extend your code be including the needed header files. Like the most linux libraries the c generic library  provides a "main headerfile" that is called libcgeneric.h. Actually the headerfile does nothing else than including all other libcgeneric header files.
 
 {{{
 //all headers of the library are bundled in the directory libcgeneric
