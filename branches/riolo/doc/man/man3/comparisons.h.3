@@ -1,11 +1,8 @@
-.TH "/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/comparisons.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.TH "/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/trunk/include/comparisons.h" 3 "Mon Sep 26 2011" ""c generic library"" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/comparisons.h \- 
-.PP
-File containing generic comparison functions for most of the built in data types for C.  
-
+/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/trunk/include/comparisons.h \- 
 .SH SYNOPSIS
 .br
 .PP
@@ -24,37 +21,37 @@ File containing generic comparison functions for most of the built in data types
 
 .in +1c
 .ti -1c
-.RI "int \fBcharcmp\fP (void *, void *, size_t)"
+.RI "\fBCMPFUNC_PROTO\fP (char)"
 .br
 .ti -1c
-.RI "int \fBfloatcmp\fP (void *, void *, size_t)"
+.RI "\fBCMPFUNC_PROTO\fP (float)"
 .br
 .ti -1c
-.RI "int \fBdoublecmp\fP (void *, void *, size_t)"
+.RI "\fBCMPFUNC_PROTO\fP (double)"
 .br
 .ti -1c
-.RI "int \fBint8_tcmp\fP (void *, void *, size_t)"
+.RI "\fBCMPFUNC_PROTO\fP (int8_t)"
 .br
 .ti -1c
-.RI "int \fBint16_tcmp\fP (void *, void *, size_t)"
+.RI "\fBCMPFUNC_PROTO\fP (int16_t)"
 .br
 .ti -1c
-.RI "int \fBint32_tcmp\fP (void *, void *, size_t)"
+.RI "\fBCMPFUNC_PROTO\fP (int32_t)"
 .br
 .ti -1c
-.RI "int \fBint64_tcmp\fP (void *, void *, size_t)"
+.RI "\fBCMPFUNC_PROTO\fP (int64_t)"
 .br
 .ti -1c
-.RI "int \fBuint8_tcmp\fP (void *, void *, size_t)"
+.RI "\fBCMPFUNC_PROTO\fP (uint8_t)"
 .br
 .ti -1c
-.RI "int \fBuint16_tcmp\fP (void *, void *, size_t)"
+.RI "\fBCMPFUNC_PROTO\fP (uint16_t)"
 .br
 .ti -1c
-.RI "int \fBuint32_tcmp\fP (void *, void *, size_t)"
+.RI "\fBCMPFUNC_PROTO\fP (uint32_t)"
 .br
 .ti -1c
-.RI "int \fBuint64_tcmp\fP (void *, void *, size_t)"
+.RI "\fBCMPFUNC_PROTO\fP (uint64_t)"
 .br
 .in -1c
 .SS "Variables"
@@ -64,13 +61,6 @@ File containing generic comparison functions for most of the built in data types
 .RI "int TYPE return TYPE first TYPE \fBsecond\fP"
 .br
 .in -1c
-.SH "Detailed Description"
-.PP 
-File containing generic comparison functions for most of the built in data types for C. 
-
-Copyright 2006, All Rights Reserved, Micah Villmow 
-.PP
-Definition in file \fBcomparisons.h\fP.
 .SH "Define Documentation"
 .PP 
 .SS "#define CMPFUNC_IMPL(TYPE)"
@@ -83,17 +73,17 @@ macro to expand to the comparison function prototype
 Definition at line 12 of file comparisons.h.
 .SH "Function Documentation"
 .PP 
-.SS "int charcmp (void *, void *, size_t)"
-.SS "int doublecmp (void *, void *, size_t)"
-.SS "int floatcmp (void *, void *, size_t)"
-.SS "int int16_tcmp (void *, void *, size_t)"
-.SS "int int32_tcmp (void *, void *, size_t)"
-.SS "int int64_tcmp (void *, void *, size_t)"
-.SS "int int8_tcmp (void *, void *, size_t)"
-.SS "int uint16_tcmp (void *, void *, size_t)"
-.SS "int uint32_tcmp (void *, void *, size_t)"
-.SS "int uint64_tcmp (void *, void *, size_t)"
-.SS "int uint8_tcmp (void *, void *, size_t)"
+.SS "CMPFUNC_PROTO (char)"
+.SS "CMPFUNC_PROTO (uint64_t)"
+.SS "CMPFUNC_PROTO (uint32_t)"
+.SS "CMPFUNC_PROTO (uint16_t)"
+.SS "CMPFUNC_PROTO (uint8_t)"
+.SS "CMPFUNC_PROTO (int64_t)"
+.SS "CMPFUNC_PROTO (int32_t)"
+.SS "CMPFUNC_PROTO (int16_t)"
+.SS "CMPFUNC_PROTO (int8_t)"
+.SS "CMPFUNC_PROTO (double)"
+.SS "CMPFUNC_PROTO (float)"
 .SH "Variable Documentation"
 .PP 
 .SS "int TYPE return TYPE first TYPE \fBsecond\fP"
