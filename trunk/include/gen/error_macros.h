@@ -96,7 +96,7 @@ do {\
 #        define CHECK_OBJSIZE(X,Y,Z) \
 do {\
 	if(O((X)) != (Y)) {\
-		fprintf(stderr,"%s:%s:%d - Invalid object size(%d), should be %d\n",ERRORINFO,(unsigned)(Y),(unsigned)O((X)));\
+		fprintf(stderr,"%s:%s:%d - Invalid object size(%d), should be %d\n",ERRORINFO,(Y),O((X)));\
 		return (Z);\
 	}\
 }while(0)
