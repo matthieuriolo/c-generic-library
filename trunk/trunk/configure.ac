@@ -20,7 +20,6 @@ AC_PROG_INSTALL
 AC_PROG_LIBTOOL
 AC_PROG_RANLIB
 # Checks for libraries.
-PKG_CHECK_MODULES([CHECK], [check >= 0.9.4])
 
 # Checks for header files.
 AC_CHECK_HEADERS([limits.h stddef.h stdint.h stdlib.h string.h])
@@ -46,7 +45,6 @@ AC_CONFIG_FILES([Makefile
 	m4/Makefile
 	lib/Makefile
 	src/Makefile
-	tests/Makefile
-  units/Makefile])
+	tests/Makefile])
 AC_OUTPUT
 

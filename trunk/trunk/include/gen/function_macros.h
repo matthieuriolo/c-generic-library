@@ -71,51 +71,37 @@
 #    define back(TYPE,STRUCT) \
 	back_##TYPE((STRUCT))
 /**
- * @brief expands to the correct format for the push function.
- * The OBJ macro parameter should be a pointer to the object
- * and not the object itself.
+ * @brief expands to the correct format for the push function
  */
 #define push(TYPE,STRUCT,OBJ,FLAG)\
 	push_##TYPE((STRUCT),(OBJ),sizeof *(OBJ),(FLAG))
 /**
  * @brief expands to the correct format for the push_back function
- * The OBJ macro parameter should be a pointer to the object
- * and not the object itself.
  */
 #    define push_back(TYPE,STRUCT,OBJ,FLAG)\
 	push_back_##TYPE((STRUCT),(OBJ),sizeof *(OBJ),(FLAG))
 /**
  * @brief expands to the correct format for the push_front function
- * The OBJ macro parameter should be a pointer to the object
- * and not the object itself.
  */
 #    define push_front(TYPE,STRUCT,OBJ,FLAG)\
 	push_front_##TYPE((STRUCT),(OBJ),sizeof *(OBJ),(FLAG))
 /**
  * @brief expands to the correct format for the delete function
- * The OBJ macro parameter should be a pointer to the object
- * and not the object itself.
  */
 #    define delete(TYPE,STRUCT,OBJ)\
 	delete_##TYPE((STRUCT),(OBJ),sizeof *(OBJ))
 /**
  * @brief expands to the correct format for the insert function
- * The OBJ macro parameter should be a pointer to the object
- * and not the object itself.
  */
 #    define insert(TYPE,STRUCT,OBJ,FLAG)\
 	insert_##TYPE((STRUCT),(OBJ),sizeof *(OBJ),(FLAG))
 /**
  * @brief expands to the correct format for the convert function
- * The OBJ macro parameter should be a pointer to the object
- * and not the object itself.
  */
 #define convert(TYPE,STRUCT,OBJ,SIZE,FLAG) \
 	convert_##TYPE((STRUCT),(OBJ),(SIZE),(FLAG))
 /**
  * @brief expands to the correct format for the find function
- * The OBJ macro parameter should be a pointer to the object
- * and not the object itself.
  */
 #    define find(TYPE,STRUCT,OBJ)\
 	find_##TYPE((STRUCT),(OBJ),sizeof *(OBJ))

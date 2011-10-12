@@ -40,7 +40,10 @@ DIST_COMMON = README $(am__configure_deps) $(srcdir)/Makefile.am \
 	compile config.guess config.sub depcomp install-sh ltmain.sh \
 	missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
+	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
+	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
+	$(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
@@ -102,18 +105,16 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /home/mvillmow/Source/c-generic-library/branches/mvillmow/missing --run aclocal-1.11
-AMTAR = ${SHELL} /home/mvillmow/Source/c-generic-library/branches/mvillmow/missing --run tar
+ACLOCAL = ${SHELL} /home/mvillmow/Source/c-generic-library/missing --run aclocal-1.11
+AMTAR = ${SHELL} /home/mvillmow/Source/c-generic-library/missing --run tar
 AR = ar
-AUTOCONF = ${SHELL} /home/mvillmow/Source/c-generic-library/branches/mvillmow/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/mvillmow/Source/c-generic-library/branches/mvillmow/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/mvillmow/Source/c-generic-library/branches/mvillmow/missing --run automake-1.11
+AUTOCONF = ${SHELL} /home/mvillmow/Source/c-generic-library/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/mvillmow/Source/c-generic-library/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/mvillmow/Source/c-generic-library/missing --run automake-1.11
 AWK = mawk
 CC = gcc
 CCDEPMODE = depmode=gcc3
 CFLAGS = -g -O2
-CHECK_CFLAGS =  
-CHECK_LIBS = -lcheck  
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
@@ -141,7 +142,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = 
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /home/mvillmow/Source/c-generic-library/branches/mvillmow/missing --run makeinfo
+MAKEINFO = ${SHELL} /home/mvillmow/Source/c-generic-library/missing --run makeinfo
 MKDIR_P = /bin/mkdir -p
 NM = /usr/bin/nm -B
 NMEDIT = 
@@ -157,19 +158,16 @@ PACKAGE_TARNAME = libcgeneric
 PACKAGE_URL = 
 PACKAGE_VERSION = 0.4.2
 PATH_SEPARATOR = :
-PKG_CONFIG = /usr/bin/pkg-config
-PKG_CONFIG_LIBDIR = 
-PKG_CONFIG_PATH = 
 RANLIB = ranlib
 SED = /bin/sed
 SET_MAKE = 
 SHELL = /bin/bash
 STRIP = strip
 VERSION = 0.4.2
-abs_builddir = /home/mvillmow/Source/c-generic-library/branches/mvillmow
-abs_srcdir = /home/mvillmow/Source/c-generic-library/branches/mvillmow
-abs_top_builddir = /home/mvillmow/Source/c-generic-library/branches/mvillmow
-abs_top_srcdir = /home/mvillmow/Source/c-generic-library/branches/mvillmow
+abs_builddir = /home/mvillmow/Source/c-generic-library
+abs_srcdir = /home/mvillmow/Source/c-generic-library
+abs_top_builddir = /home/mvillmow/Source/c-generic-library
+abs_top_srcdir = /home/mvillmow/Source/c-generic-library
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
 am__include = include
@@ -197,7 +195,7 @@ host_vendor = unknown
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /home/mvillmow/Source/c-generic-library/branches/mvillmow/install-sh
+install_sh = ${SHELL} /home/mvillmow/Source/c-generic-library/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -220,7 +218,7 @@ top_builddir = .
 top_srcdir = .
 ACLOCAL_AMFLAGS = -I m4
 EXTRA_DIST = reconf
-SUBDIRS = m4 doc lib src tests units
+SUBDIRS = m4 doc lib src tests
 INCLUDES = -I$(top_srcdir)/src
 LDADD = -lcgeneric
 all: config.h

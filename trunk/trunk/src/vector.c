@@ -22,16 +22,12 @@
 
 F_CONSTRUCT(Vector) {
   CHECK_VARN(obj, EINVAL);
-  CHECK_VARE(datasize, EINVAL);
-  CHECK_VARE(flag, EINVAL);
   ARR_CONSTRUCT(Vector,obj,datasize,flag);
   return SUCCESS;
 }
 
 F_CONSTRUCT_FUNC(Vector) {
   CHECK_VARN(obj,EINVAL);
-  CHECK_VARE(datasize, EINVAL);
-  CHECK_VARE(flag, EINVAL);
   ARR_STRUCT_SETUP(obj,datasize,flag);
   obj->API.alloc = alloc;
   obj->API.dealloc = dealloc;
@@ -212,7 +208,7 @@ return_at_Vector(Vector * vec, uint32_t loc)
 {
   register uint32_t offset = (loc * O(vec));
   CHECK_VARN(vec, NULL);
-  if(loc >= S(vec)) {
+  if(loc > C(vec)) {
 	  return NULL;
   }
   if(H(vec) < T(vec)) {
