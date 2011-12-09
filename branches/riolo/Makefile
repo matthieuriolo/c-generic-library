@@ -34,7 +34,7 @@ PRE_UNINSTALL = :
 POST_UNINSTALL = :
 build_triplet = x86_64-apple-darwin10.8.0
 host_triplet = x86_64-apple-darwin10.8.0
-#am__append_1 = tests
+am__append_1 = tests
 #am__append_2 = units
 subdir = .
 DIST_COMMON = README $(am__configure_deps) \
@@ -44,10 +44,7 @@ DIST_COMMON = README $(am__configure_deps) \
 	compile config.guess config.sub depcomp install-sh ltmain.sh \
 	missing
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
-	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
-	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
@@ -56,6 +53,8 @@ mkinstalldirs = $(install_sh) -d
 CONFIG_HEADER = config.h
 CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
+depcomp =
+am__depfiles_maybe =
 SOURCES =
 DIST_SOURCES =
 RECURSIVE_TARGETS = all-recursive check-recursive dvi-recursive \
@@ -135,12 +134,12 @@ DIST_ARCHIVES = $(distdir).tar.gz
 GZIP_ENV = --best
 distuninstallcheck_listfiles = find . -type f -print
 distcleancheck_listfiles = find . -type f -print
-ACLOCAL = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run aclocal-1.11
-AMTAR = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run tar
+ACLOCAL = ${SHELL} /Users/matthieuriolo/Downloads/libgenc/branches/riolo/missing --run aclocal-1.11
+AMTAR = ${SHELL} /Users/matthieuriolo/Downloads/libgenc/branches/riolo/missing --run tar
 AR = ar
-AUTOCONF = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run autoconf
-AUTOHEADER = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run autoheader
-AUTOMAKE = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run automake-1.11
+AUTOCONF = ${SHELL} /Users/matthieuriolo/Downloads/libgenc/branches/riolo/missing --run autoconf
+AUTOHEADER = ${SHELL} /Users/matthieuriolo/Downloads/libgenc/branches/riolo/missing --run autoheader
+AUTOMAKE = ${SHELL} /Users/matthieuriolo/Downloads/libgenc/branches/riolo/missing --run automake-1.11
 AWK = awk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -173,7 +172,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = lipo
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run makeinfo
+MAKEINFO = ${SHELL} /Users/matthieuriolo/Downloads/libgenc/branches/riolo/missing --run makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = ./install-sh -c -d
 NM = /usr/bin/nm
@@ -196,10 +195,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = strip
 VERSION = 0.4.2
-abs_builddir = /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo
-abs_srcdir = /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo
-abs_top_builddir = /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo
-abs_top_srcdir = /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo
+abs_builddir = /Users/matthieuriolo/Downloads/libgenc/branches/riolo
+abs_srcdir = /Users/matthieuriolo/Downloads/libgenc/branches/riolo
+abs_top_builddir = /Users/matthieuriolo/Downloads/libgenc/branches/riolo
+abs_top_srcdir = /Users/matthieuriolo/Downloads/libgenc/branches/riolo
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -228,7 +227,7 @@ host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/install-sh
+install_sh = ${SHELL} /Users/matthieuriolo/Downloads/libgenc/branches/riolo/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -294,15 +293,15 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
-	      echo ' cd $(srcdir) && $(AUTOMAKE) --gnu'; \
-	      $(am__cd) $(srcdir) && $(AUTOMAKE) --gnu \
+	      echo ' cd $(srcdir) && $(AUTOMAKE) --gnu --ignore-deps'; \
+	      $(am__cd) $(srcdir) && $(AUTOMAKE) --gnu --ignore-deps \
 		&& exit 0; \
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu --ignore-deps Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu Makefile
+	  $(AUTOMAKE) --gnu --ignore-deps Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
