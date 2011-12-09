@@ -38,10 +38,7 @@ check_PROGRAMS = check_basevector$(EXEEXT)
 subdir = units
 DIST_COMMON = $(srcdir)/Makefile.am $(srcdir)/Makefile.in
 ACLOCAL_M4 = $(top_srcdir)/aclocal.m4
-am__aclocal_m4_deps = $(top_srcdir)/m4/libtool.m4 \
-	$(top_srcdir)/m4/ltoptions.m4 $(top_srcdir)/m4/ltsugar.m4 \
-	$(top_srcdir)/m4/ltversion.m4 $(top_srcdir)/m4/lt~obsolete.m4 \
-	$(top_srcdir)/configure.ac
+am__aclocal_m4_deps = $(top_srcdir)/configure.ac
 am__configure_deps = $(am__aclocal_m4_deps) $(CONFIGURE_DEPENDENCIES) \
 	$(ACLOCAL_M4)
 mkinstalldirs = $(install_sh) -d
@@ -57,9 +54,8 @@ check_basevector_LINK = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) \
 	$(LIBTOOLFLAGS) --mode=link $(CCLD) $(check_basevector_CFLAGS) \
 	$(CFLAGS) $(AM_LDFLAGS) $(LDFLAGS) -o $@
 DEFAULT_INCLUDES = -I. -I$(top_builddir)
-depcomp = $(SHELL) $(top_srcdir)/depcomp
-am__depfiles_maybe = depfiles
-am__mv = mv -f
+depcomp =
+am__depfiles_maybe =
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) \
@@ -76,12 +72,12 @@ CTAGS = ctags
 am__tty_colors = \
 red=; grn=; lgn=; blu=; std=
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run aclocal-1.11
-AMTAR = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run tar
+ACLOCAL = ${SHELL} /Users/matthieuriolo/Downloads/libgenc/branches/riolo/missing --run aclocal-1.11
+AMTAR = ${SHELL} /Users/matthieuriolo/Downloads/libgenc/branches/riolo/missing --run tar
 AR = ar
-AUTOCONF = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run autoconf
-AUTOHEADER = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run autoheader
-AUTOMAKE = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run automake-1.11
+AUTOCONF = ${SHELL} /Users/matthieuriolo/Downloads/libgenc/branches/riolo/missing --run autoconf
+AUTOHEADER = ${SHELL} /Users/matthieuriolo/Downloads/libgenc/branches/riolo/missing --run autoheader
+AUTOMAKE = ${SHELL} /Users/matthieuriolo/Downloads/libgenc/branches/riolo/missing --run automake-1.11
 AWK = awk
 CC = gcc
 CCDEPMODE = depmode=gcc3
@@ -114,7 +110,7 @@ LIBTOOL = $(SHELL) $(top_builddir)/libtool
 LIPO = lipo
 LN_S = ln -s
 LTLIBOBJS = 
-MAKEINFO = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/missing --run makeinfo
+MAKEINFO = ${SHELL} /Users/matthieuriolo/Downloads/libgenc/branches/riolo/missing --run makeinfo
 MANIFEST_TOOL = :
 MKDIR_P = .././install-sh -c -d
 NM = /usr/bin/nm
@@ -137,10 +133,10 @@ SET_MAKE =
 SHELL = /bin/sh
 STRIP = strip
 VERSION = 0.4.2
-abs_builddir = /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/units
-abs_srcdir = /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/units
-abs_top_builddir = /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo
-abs_top_srcdir = /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo
+abs_builddir = /Users/matthieuriolo/Downloads/libgenc/branches/riolo/units
+abs_srcdir = /Users/matthieuriolo/Downloads/libgenc/branches/riolo/units
+abs_top_builddir = /Users/matthieuriolo/Downloads/libgenc/branches/riolo
+abs_top_srcdir = /Users/matthieuriolo/Downloads/libgenc/branches/riolo
 ac_ct_AR = ar
 ac_ct_CC = gcc
 ac_ct_DUMPBIN = 
@@ -169,7 +165,7 @@ host_vendor = apple
 htmldir = ${docdir}
 includedir = ${prefix}/include
 infodir = ${datarootdir}/info
-install_sh = ${SHELL} /Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/install-sh
+install_sh = ${SHELL} /Users/matthieuriolo/Downloads/libgenc/branches/riolo/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${datarootdir}/locale
@@ -207,9 +203,9 @@ $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
 	      exit 1;; \
 	  esac; \
 	done; \
-	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu units/Makefile'; \
+	echo ' cd $(top_srcdir) && $(AUTOMAKE) --gnu --ignore-deps units/Makefile'; \
 	$(am__cd) $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu units/Makefile
+	  $(AUTOMAKE) --gnu --ignore-deps units/Makefile
 .PRECIOUS: Makefile
 Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 	@case '$?' in \
@@ -247,42 +243,20 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-include ./$(DEPDIR)/check_basevector-check_basevector.Po
-
 .c.o:
-	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
-#	source='$<' object='$@' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(COMPILE) -c $<
+	$(COMPILE) -c $<
 
 .c.obj:
-	$(COMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ `$(CYGPATH_W) '$<'`
-	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Po
-#	source='$<' object='$@' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(COMPILE) -c `$(CYGPATH_W) '$<'`
+	$(COMPILE) -c `$(CYGPATH_W) '$<'`
 
 .c.lo:
-	$(LTCOMPILE) -MT $@ -MD -MP -MF $(DEPDIR)/$*.Tpo -c -o $@ $<
-	$(am__mv) $(DEPDIR)/$*.Tpo $(DEPDIR)/$*.Plo
-#	source='$<' object='$@' libtool=yes \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(LTCOMPILE) -c -o $@ $<
+	$(LTCOMPILE) -c -o $@ $<
 
 check_basevector-check_basevector.o: check_basevector.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_basevector_CFLAGS) $(CFLAGS) -MT check_basevector-check_basevector.o -MD -MP -MF $(DEPDIR)/check_basevector-check_basevector.Tpo -c -o check_basevector-check_basevector.o `test -f 'check_basevector.c' || echo '$(srcdir)/'`check_basevector.c
-	$(am__mv) $(DEPDIR)/check_basevector-check_basevector.Tpo $(DEPDIR)/check_basevector-check_basevector.Po
-#	source='check_basevector.c' object='check_basevector-check_basevector.o' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_basevector_CFLAGS) $(CFLAGS) -c -o check_basevector-check_basevector.o `test -f 'check_basevector.c' || echo '$(srcdir)/'`check_basevector.c
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_basevector_CFLAGS) $(CFLAGS) -c -o check_basevector-check_basevector.o `test -f 'check_basevector.c' || echo '$(srcdir)/'`check_basevector.c
 
 check_basevector-check_basevector.obj: check_basevector.c
-	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_basevector_CFLAGS) $(CFLAGS) -MT check_basevector-check_basevector.obj -MD -MP -MF $(DEPDIR)/check_basevector-check_basevector.Tpo -c -o check_basevector-check_basevector.obj `if test -f 'check_basevector.c'; then $(CYGPATH_W) 'check_basevector.c'; else $(CYGPATH_W) '$(srcdir)/check_basevector.c'; fi`
-	$(am__mv) $(DEPDIR)/check_basevector-check_basevector.Tpo $(DEPDIR)/check_basevector-check_basevector.Po
-#	source='check_basevector.c' object='check_basevector-check_basevector.obj' libtool=no \
-#	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) \
-#	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_basevector_CFLAGS) $(CFLAGS) -c -o check_basevector-check_basevector.obj `if test -f 'check_basevector.c'; then $(CYGPATH_W) 'check_basevector.c'; else $(CYGPATH_W) '$(srcdir)/check_basevector.c'; fi`
+	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(check_basevector_CFLAGS) $(CFLAGS) -c -o check_basevector-check_basevector.obj `if test -f 'check_basevector.c'; then $(CYGPATH_W) 'check_basevector.c'; else $(CYGPATH_W) '$(srcdir)/check_basevector.c'; fi`
 
 mostlyclean-libtool:
 	-rm -f *.lo
@@ -501,7 +475,6 @@ clean-am: clean-checkPROGRAMS clean-generic clean-libtool \
 	mostlyclean-am
 
 distclean: distclean-am
-	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -547,7 +520,6 @@ install-ps-am:
 installcheck-am:
 
 maintainer-clean: maintainer-clean-am
-	-rm -rf ./$(DEPDIR)
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
