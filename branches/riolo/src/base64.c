@@ -76,5 +76,3 @@ void* base64_decode(const char* str, size_t* len) {
 	
 	return buffer;
 }
-
-#endif
