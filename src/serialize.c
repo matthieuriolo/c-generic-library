@@ -1,36 +1,46 @@
 #include "serialize.h"
 
-typedef struct {
-	(int*)spush(SerializeFormatter* form);
-	(int*)epush(SerializeFormatter* form);
-	(int*)print(SerializeFormatter* form);
-	(int*)sread();
-	(int*)eread();
-} SerializeFormatter;
+/*
+
+TODO:
+
+- think about the point to insert the coder into the API and and remove the CODER parameter in the encoding functions
+- proper FUNC, PROTO ec. declarations
+- change the name formatter to coder
+- make the coder simpler
+	coder {
+		push_begin(obj, size(obj), &length)// obj is passed for the case that you want to insert more information
+		push_end(obj, size(obj), &length)
+		
+		coder* element_coder //pointer to the same type of structure but with different functions
+	}
+
+
+
+- create the decode AKA read function
+*/
+
+
 
 
 //predefined formatter
-SerializeFormatter* create_SerializerFormatter_base64() {
-	SerializeFormatter* form = (SerializeFormatter*)malloc(sizeof(SerializeFormatter));
+Coder* createBase64Coder() {
+	Coder* coder = (Coder*)malloc(sizeof(Coder));
+	/*
+	coder->spush=push_base64_start;
+	coder->epush=push_base64_end;
 	
-	form->spush=push_base64_start;
-	form->epush=push_base64_end;
-	
-	form->sread=read_base64_start;
-	form->eread=read_base64_end;
-	
-	return form;
+	coder->sread=read_base64_start;
+	coder->eread=read_base64_end;
+	*/
+	return coder;
 }
 
-int push_base64_start(SerializeFormatter* form) {
-	
-}
 
-int push_base64_end(SerializeFormatter* form);
-int read_base64_start(SerializeFormatter* form);
-int read_base64_end(SerializeFormatter* form);
 
-int serializeArrayToFile(_array_struct* obj, SerializeFormatter* form, char* path) {
+
+/*
+int serializeArrayToFile(_array_struct* obj, Coder* form, char* path) {
 	FILE* f = fopen(path, "w+");
 	void* data;
 	size_t length;
@@ -43,7 +53,7 @@ int serializeArrayToFile(_array_struct* obj, SerializeFormatter* form, char* pat
 	API(obj)->print = form->print;
 	print(type, obj);
 	
-	data = form->epush(obj, &length);
+	data = form->epush(obj, size(obj), &length);
 	fwrite(data, 1, length, f);
 	free(data);
 	
@@ -59,5 +69,4 @@ int serializeListToFile(_array_struct* obj, SerializeFormatter* form, char* path
 int unserializeArrayFromFile(_array_struct* obj, SerializeFormatter* form, char* path) {}
 
 int serializeListFromFile(_array_struct* obj, SerializeFormatter* form, char* path) {}
-
-#endif
+*/

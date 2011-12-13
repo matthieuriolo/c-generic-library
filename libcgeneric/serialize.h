@@ -3,30 +3,47 @@
 #ifndef __SERIALIZE_H__
 #define __SERIALIZE_H__
 
-//shall ends up in the functions
-
-int encode(TYPE, STRUCT, FILEPTR, CODER)
-int encodeToFile(TYPE, STRUCT, FILEPTR, CODER)
-int encodeToMemory(TYPE, STRUCT, FILEPTR, CODER)
-
-//pushes and fetches data in the correct form
-struct Coder {
-	writeContainerBegin(file, obj, size, obj_size)
-	writeContainerEnd(file, obj, size, obj_size)
-	writeContainerElement(file, elem)
+/*
+ *
+ * Coder Structure
+ * The encode/decode method uses this structures to create the correct format
+ */
+typedef struct {
+	void (*writeContainerBegin)(FILE* file, const void*  obj, size_t size, size_t obj_size);
+	void (*writeContainerEnd)(FILE* file, const void* obj, size_t size, size_t obj_size);
+	void (*writeContainerElement)(FILE* file, const void* elem);
 	
-	readContainerBegin
+	/*readContainerBegin
 	readContainerEnd
-	readContainerElement
-}
+	readContainerElement*/
+} Coder;
 
-//shortcut
-#define encode(TYPE, STRUCT, FILEPTR, CODER) encode_##TYPE##(STRUCT, FILEPTR, CODER)
 
-//function declaration
 
-#define F_ENCODE(TYPE, STRUCT, FILEPTR, CODER) encode_##TYPE##(TYPE* STRUCT, FILE* FILEPTR, Coder* CODER)
 
+
+//predefined formatter
+Coder* createBase64Coder();
+
+
+
+// -- shortcuts -- 
+//std serializer that writes everything to a FILE pointer (can be used for sockets to)
+#define encode(TYPE, STRUCT, FILEPTR, CODER) encode_##TYPE(STRUCT, FILEPTR, CODER)
+//serializer that writes everything to a specific file
+#define encodeToFile(TYPE, STRUCT, FILEPATH, CODER) encodeToFile_##TYPE(STRUCT, FILEPATH, CODER)
+//serializer that writes everything to memory
+#define encodeToMemory(TYPE, STRUCT, LENGTH, CODER) encodeToFile_##TYPE(STRUCT, LENGTH, CODER)
+
+
+
+// -- function declaration -- 
+//signature for encode
+#define F_ENCODE(TYPE) int encode_##TYPE(TYPE* STRUCT, FILE* FILEPTR, Coder* CODER)
+
+
+
+//definition of the content
 #define FUNC_ENCODE(TYPE) { \
 CODER->writeContainerBegin(fileptr, obj, size(TYPE, STRUCT), O(STRUCT)); \
 \
@@ -42,11 +59,11 @@ CODER->writeContainerEnd(fileptr, obj, size(TYPE, STRUCT), O(STRUCT)); \
 }
 
 
-//shortcut for accessing the encoded data directly - this is quit slow and dangerous ... don't use it
-void* serializeToMemory(TYPE, STRUCT, coder, size_t* length) {
-	
-}
 
 
+
+// -- declaration of the existing encode method -- 
+
+F_ENCODE(Vector);
 
 #endif

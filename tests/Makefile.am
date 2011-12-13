@@ -1,7 +1,9 @@
 INCLUDES = -I../libcgeneric
 AM_LDFLAGS = -L../lib
 LDADD = -lcgen
+
 bin_PROGRAMS = basevector_test binarytree_test closedhash_test dequelist_test dequevector_test heap_test list_test openhash_test prio_test queuelist_test queuevector_test stacklist_test stackvector_test vec_test vector_test
+
 basevector_test_SOURCES = basevector_test.c
 binarytree_test_SOURCES = binarytree_test.c
 closedhash_test_SOURCES = closedhash_test.c
