@@ -1,5 +1,13 @@
 #include "base64.h"
 
+/*
+TODO:
+
+- Extract the length calculation from the main functions. It's often useful to access them directly for getting a suggestion for the length
+- Add (optionals) paddings
+
+*/
+
 const char* base64_characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
 /*
 http://tools.ietf.org/html/rfc4648#section-4

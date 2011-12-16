@@ -1,7 +1,16 @@
+#include <string.h>
 #include "base64.h"
+#include "vector.h"
+
+#include "gen/error_macros.h"
 
 #ifndef __SERIALIZE_H__
 #define __SERIALIZE_H__
+
+/* belongs to error_macros */
+#define ECODERWRITE 0x40
+#define ECODERREAD 0x50
+
 
 /*
  *
@@ -9,9 +18,9 @@
  * The encode/decode method uses this structures to create the correct format
  */
 typedef struct {
-	void (*writeContainerBegin)(FILE* file, const void*  obj, size_t size, size_t obj_size);
-	void (*writeContainerEnd)(FILE* file, const void* obj, size_t size, size_t obj_size);
-	void (*writeContainerElement)(FILE* file, const void* elem);
+	int (*writeContainerBegin)(FILE* file, const void*  obj, size_t size, size_t obj_size);
+	int (*writeContainerEnd)(FILE* file, const void* obj, size_t size, size_t obj_size);
+	int (*writeContainerElement)(FILE* file, const void* elem, size_t size);
 	
 	/*readContainerBegin
 	readContainerEnd
@@ -24,8 +33,16 @@ typedef struct {
 
 //predefined formatter
 Coder* createBase64Coder();
+Coder* createXMLCoder();
+
+int base64_WriteContainerBegin(FILE* file, const void* obj, size_t size, size_t obj_size);
+int base64_WriteContainerEnd(FILE* file, const void* obj, size_t size, size_t obj_size);
+int base64_WriteContainerElement(FILE* file, const void* elem, size_t size);
 
 
+int xml_WriteContainerBegin(FILE* file, const void* obj, size_t size, size_t obj_size);
+int xml_WriteContainerEnd(FILE* file, const void* obj, size_t size, size_t obj_size);
+int xml_WriteContainerElement(FILE* file, const void* elem, size_t size);
 
 // -- shortcuts -- 
 //std serializer that writes everything to a FILE pointer (can be used for sockets to)
@@ -39,26 +56,28 @@ Coder* createBase64Coder();
 
 // -- function declaration -- 
 //signature for encode
-#define F_ENCODE(TYPE) int encode_##TYPE(TYPE* STRUCT, FILE* FILEPTR, Coder* CODER)
+#define F_ENCODE(TYPE) \
+int encode_##TYPE(TYPE* obj, FILE* fileptr, Coder* coder)
 
 
 
 //definition of the content
-#define FUNC_ENCODE(TYPE) { \
-CODER->writeContainerBegin(fileptr, obj, size(TYPE, STRUCT), O(STRUCT)); \
+#define FUNC_ENCODE(TYPE) F_ENCODE(TYPE) { \
+size_t obj_size = O(obj); \
+coder->writeContainerBegin(fileptr, obj, size_of(TYPE, obj), obj_size); \
 \
 \
 \
-TYPE##Iter* ptr = create(TYPE##Iter, STRUCT); \
+TYPE##Iter* ptr = create(TYPE##Iter, obj); \
 head(TYPE##Iter, ptr); \
 do { \
-	CODER->writeContainerElement(file, retrieve(TYPE##Iter, ptr)); \
-}while(!next(BinaryTreeIter, ptr)); \
+	coder->writeContainerElement(fileptr, retrieve(TYPE##Iter, ptr), obj_size); \
+}while(!next(TYPE##Iter, ptr)); \
 \
-CODER->writeContainerEnd(fileptr, obj, size(TYPE, STRUCT), O(STRUCT)); \
+destroy(TYPE##Iter, ptr); \
+coder->writeContainerEnd(fileptr, obj, size_of(TYPE, obj), obj_size); \
+return SUCCESS; \
 }
-
-
 
 
 
