@@ -1,22 +1,9 @@
 #include "base64.h"
 
-/*
-TODO:
-
-- Extract the length calculation from the main functions. It's often useful to access them directly for getting a suggestion for the length
-- Add (optionals) paddings
-
-*/
-
 const char* base64_characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-/*
-http://tools.ietf.org/html/rfc4648#section-4
-openssl does not create a base64 after this rfc!
-*/
-char* base64_encode(const void* data, size_t length/*, size_t lineBreaks*/) {
-	size_t len = (((length + 2) / 3) * 4);
-	
-	//len += len / lineBreaks;
+
+char* base64_encode(const void* data, size_t length) {
+	size_t len = base64_encode_length(length);
 	
 	char* buffer = (char*)malloc(sizeof(char)*(len+1));
 	buffer[len-1] = '\0';
@@ -45,35 +32,54 @@ char* base64_encode(const void* data, size_t length/*, size_t lineBreaks*/) {
 	return buffer;
 }
 
-void* base64_decode(const char* str, size_t* len) {
-	size_t length = strlen(str), i, x, a;
-	*len = ((length + 3) /4)*3;
-	
+
+
+size_t base64_encode_length(size_t length) {
+	return (((length + 2) / 3) * 4);
+}
+
+size_t base64_decode_length(const char* str, size_t *length) {
+	*length = strlen(str);
+	size_t len = ((*length + 3) / 4)*3, i;
 	
 	//remove paddings
 	for(i=0;i<2;i++)
-		if(str[length-1]=='=') {
-			length--;
-			(*len)--;
+		if(str[*length-1]=='=') {
+			(*length)--;
+			len--;
 		}else
 			break;
 	
+	return len;
+}
+
+void* base64_decode(const char* str, size_t* len) {
+	size_t length, i, a;
+	*len = base64_decode_length(str, &length);
 	
-	char* buffer = malloc(*len);
-	for(i=0;i<length;i+=3) {
+	
+	char* buffer = (char*)malloc(*len*sizeof(char));
+	for(i=0; i<length; i+=3) {
 		size_t pos = (i/3)*4;
 		char tmp[4];
 		
 		//find the corresponding letter
 		for(a=0;a<4;a++) {
-			for(x=0;x<64;x++) {
+			/*for(x=0;x<64;x++) {
 				if(str[pos+a]==base64_characters[x]) {
 					tmp[a] = x;
 					break;
 				}
+			}*/
+			
+			char* val = strchr(base64_characters, str[pos+a]);
+			if(val == NULL) {
+				free(buffer);
+				return NULL;
 			}
+			
+			tmp[a] = val - base64_characters;
 		}
-		
 		
 		//remap it
 		buffer[i] = (tmp[0] << 2) | (tmp[1] >> 4);
