@@ -5,34 +5,7 @@
 TODO:
 
 - think about the point to insert the coder into the API and remove the CODER parameter in the encoding functions
-- make the coder simpler
-	coder {
-		push_begin(obj, size(obj), &length)// obj is passed for the case that you want to insert more information
-		push_end(obj, size(obj), &length)
-		
-		coder* element_coder //pointer to the same type of structure but with different functions
-	}
-
-
-
 - create the decode AKA read function
-- Create a makro for the standard-coder creators (signatur + prototype)
-
--rewrite the coder to this structures (rethink about that...):
-
-typedef Coder_t struct {
-	writeContainerStart
-	writeContainerEnd
-	writeContainerValue
-	
-	Coder_t* subcoder;
-} Coder;
-
-
-this structure is more sophisticated because the programmer
-can simpler declare the container typ and the value encoding
-
-- remove the predefined formatter and store them in the files serialize_coder.c / .h
 - rewrite default coder in following matter:
 	Coder* coder = createCoderFormatLineSeparated();//subcoder points to NULL
 	initializeCoderForBase64(coder);//initialize the subcoder
@@ -41,7 +14,22 @@ can simpler declare the container typ and the value encoding
 	//the subcoder contains an empty BEGIN and END function. The
 	
 - add format Line Separated, XML and JSON
-- add value coding Base64, Base85, HEX, ASCII, Point-Line-Coding (if Bit(x)=0 then print "."; if Bit(x)=1 then print "-"; I guess that this is useful if you're using this library with microcontrollers) 
+- add value coding Base64, Base85, HEX, ASCII, Point-Line-Coding (if Bit(x)=0 then print "."; if Bit(x)=1 then print "-"; I guess that this is useful if you're using this library with microcontrollers)
+
+
+
+- add length calculation function (may not supported by all codings)
+
+- think about iconv and openssl
+	+ support for more encryptions
+	+ perfomance / library size
+	- won't work without them
+
+
+- write a detection function that helps to recognize what kind of data the developer want to safe.
+  this helps to store the data more "human" like
+
+- create better documentation
 */
 	
 	
@@ -52,6 +40,8 @@ Coder* createBase64Coder() {
 	coder->writeContainerBegin = base64_WriteContainerBegin;
 	coder->writeContainerEnd = base64_WriteContainerEnd;
 	coder->writeContainerElement = base64_WriteContainerElement;
+	
+	coder->subcoder = (Coder*)malloc(sizeof(Coder));
 	
 	return coder;
 }
@@ -99,6 +89,53 @@ int base64_WriteContainerElement(FILE* file, const void* elem, size_t size) {
 	
 	return SUCCESS;
 }
+
+
+int base64_ReadContainerBegin(FILE* file, const void*  obj, size_t size, size_t obj_size) {
+	char* tmp = base64_encode(&size, sizeof(size));
+	size_t ret = fwrite(tmp, strlen(tmp), 1, file);
+	free(tmp);
+	
+	if(ret < 1)
+		return ECODERWRITE;
+	
+	if(fwrite("\n", 1, 1, file) < 1)
+		return ECODERWRITE;
+	
+	tmp = base64_encode(&obj_size, sizeof(obj_size));
+	ret = fwrite(tmp, strlen(tmp), 1, file);
+	free(tmp);
+	
+	if(ret < 1)
+		return ECODERWRITE;
+	
+	if(fwrite("\n", 1, 1, file) < 1)
+		return ECODERWRITE;
+	
+	return SUCCESS;
+}
+
+
+int base64_ReadContainerEnd(FILE* file, const void* obj, size_t size, size_t obj_size) {
+	return SUCCESS;
+}
+
+int base64_ReadContainerElement(FILE* file, const void* elem, size_t size) {
+	char* tmp = base64_encode(elem, size);
+	size_t ret = fwrite(tmp, strlen(tmp), 1, file);
+	free(tmp);
+	
+	if(ret < 1)
+		return ECODERWRITE;
+	
+	if(fwrite("\n", 1, 1, file) < 1)
+		return ECODERWRITE;
+	
+	return SUCCESS;
+}
+
+
+
 
 
 
