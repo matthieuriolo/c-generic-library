@@ -39,6 +39,7 @@ int main(void) {
 				break;
 		};
 	}
+	
 	/*print_all(Heap,&object);
 	dump(Heap,&object);*/
 	destruct(Heap,&object);
