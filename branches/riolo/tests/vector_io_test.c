@@ -1,7 +1,5 @@
 /*
-
-gcc -o vector_io_test ./vector_io_test.c ../src/serialize.c ../src/base64.c ../lib/libcgen.a -I../libcgeneric 
-
+gcc -o vector_io_test ./vector_io_test.c ../src/serialize.c ../src/base64.c ../lib/libcgen.a -I../libcgeneric
 */
 
 
@@ -31,7 +29,6 @@ ClosedHashTable: .cbe
 
 StackList: .tbe (last letter in this case here)
 StackVector: .rbe
-
 */
 const char* filepath = "vector_io_test.cbe";
 
@@ -40,43 +37,69 @@ void intprint(const void* number) {
   printf("%u\n", *(unsigned int*)number);
 }
 
+void printer(const void* obj) {
+  Vector* vec = (Vector*)obj;
+  set_print(Vector, vec, intprint);
+  print_all(Vector, vec);
+  printf("\n");
+}
+
+FUNC_PRINT(Vector)
 
 int main(void) {
-  fprintf(stderr, "Create a vector with the numbers 1 to 10\n");
-  
-  Vector* object = (Vector*)malloc(sizeof(Vector));
   unsigned int x, y;
-  memset(object, 0, sizeof(Vector));
-  construct(Vector, object,sizeof(x),FREEOBJ);
+  Vector* masterObject = (Vector*)malloc(sizeof(Vector));
   
-  for (x = 0; x < 10; x++) {
-    push_back(Vector,  object, &x, DYNAMIC);
+  memset(masterObject, 0, sizeof(Vector));
+  construct(Vector, masterObject,sizeof(Vector),FREEOBJ);
+  
+  fprintf(stderr, "Construct content\n");
+  
+  for(x = 0; x < 10; x++) {
+	Vector* object = (Vector*)malloc(sizeof(Vector));
+	memset(object, 0, sizeof(Vector));
+	construct(Vector, object,sizeof(x),FREEOBJ);
+	
+	for(y = 0; y < 3; y++) {
+	  unsigned int t = y+x;
+	  
+      push_back(Vector, object, &t, STATIC);
+    }
+    push_back(Vector, masterObject, object, DYNAMIC);
   }
   
   fprintf(stderr, "Print content\n");
   
-  set_print(Vector, object, intprint);
-  //print_all(Vector, object);
+  set_print(Vector, masterObject, printer);
+  print_all(Vector, masterObject);
   
-  fprintf(stderr, "Write the vector down!\n");
+  
+  fprintf(stderr, "Write content\n");
+  
   FILE* f;
   
-  /* you can change the coder the way you want to (may you've a list holding lists ... ) */
-  Coder* coder = createXMLCoder();//createBase64Coder();
+  Coder* coder = createBase64Coder();
+  coder->subcoder = createBase64Coder();
   
   if(f = fopen(filepath, "w")) {
   	/* encode the vector as base64 in a file */
-  	if(encode(Vector, object, f, coder) != SUCCESS)
+  	if(encode(Vector, masterObject, f, coder) != SUCCESS)
   		fprintf(stderr, "There was an error during encoding!\n");
-  	
   	fclose(f);
   }else
     fprintf(stderr, "Could not create or edit the file!\n");
   
-  destruct(Vector, object);
   
+  for(x = 0; x < 10; x++) {
+  	Vector* obj = return_at_Vector(masterObject, x);
+    destruct(Vector, obj);
+    //free(obj);
+  }
   
-  /*fprintf(stderr, "Read the vector from the file!\n");
+  destruct(Vector, masterObject);
+  free(masterObject);
+  
+  /*fprintf(stderr, "Read content!\n");
   if(f = fopen(filepath, "r")) {
     object = decode(Vector, f, coder);
     
@@ -92,16 +115,17 @@ int main(void) {
 	     }while (!next(VectorIter, ptr));
 			  
 		 destroy(VectorIter,ptr);
-		 destruct(Vector,&object);
+		 destruct(Vector,object);
     }else
       fprintf(stderr, "There was an problem during the decoding\n");
     
   }else
     fprintf(stderr, "Could not read the file!\n");
   
-  */
+  
   
   /* you've to release it yourself */
+  free(coder->subcoder);
   free(coder);
   
   return EXIT_SUCCESS;
