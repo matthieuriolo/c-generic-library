@@ -260,6 +260,11 @@ resize_Vector(Vector * vec, size_t size)
   return SUCCESS;
 }
 
+
+F_EMPTY(Vector) {
+	return !S(obj);
+}
+
 create_iter_func(Arr_Based,Vector)
 
 function(size_of, Vector)

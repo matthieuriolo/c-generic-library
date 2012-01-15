@@ -13,6 +13,8 @@ void  print(const void *);
 void  ckfree(void *);
 void *ckalloc(size_t);
 
+
+
 int
 main(void) {
   BinaryTree  object,*dupe;
@@ -23,11 +25,15 @@ main(void) {
   unsigned int value;
   memset(&object, 0, sizeof (object));
   x = RUNS;
+
   construct(BinaryTree, &object,sizeof(x),FREEOBJ);
-  set_alloc(BinaryTree,  &object, ckalloc);
+  
+set_alloc(BinaryTree,  &object, ckalloc);
   set_dealloc(BinaryTree,  &object, ckfree);
   set_compare(BinaryTree,  &object, intcmp);
   set_print(BinaryTree,  &object, print);
+
+	
   for (y = 0; y < x; y++) {
 	  if (!(y % (RUNS/10))) fprintf(stderr, ".");
     srand((x * y) / (x - y) + (x + y / x));
