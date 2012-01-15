@@ -41,7 +41,7 @@ Coder* createBase64Coder() {
 	coder->writeContainerEnd = base64_WriteContainerEnd;
 	coder->writeContainerElement = base64_WriteContainerElement;
 	
-	coder->subcoder = (Coder*)malloc(sizeof(Coder));
+	//coder->subcoder = (Coder*)malloc(sizeof(Coder));
 	
 	return coder;
 }
@@ -76,7 +76,7 @@ int base64_WriteContainerEnd(FILE* file, const void* obj, size_t size, size_t ob
 	return SUCCESS;
 }
 
-int base64_WriteContainerElement(FILE* file, const void* elem, size_t size) {
+int base64_WriteContainerElement(FILE* file, const void* elem, size_t size, struct coder_t* coder) {
 	char* tmp = base64_encode(elem, size);
 	size_t ret = fwrite(tmp, strlen(tmp), 1, file);
 	free(tmp);
@@ -166,7 +166,7 @@ int xml_WriteContainerEnd(FILE* file, const void* obj, size_t size, size_t obj_s
 }
 
 /* You've to overwrite this function for a proper xml representation (with proper is meant that it is readable for human) */
-int xml_WriteContainerElement(FILE* file, const void* elem, size_t size) {
+int xml_WriteContainerElement(FILE* file, const void* elem, size_t size, struct coder_t* coder) {
 	char* tmp = base64_encode(elem, size);
 	size_t ret = fprintf(file, "\t<item>%s</item>\n", tmp);
 	free(tmp);
@@ -181,10 +181,10 @@ int xml_WriteContainerElement(FILE* file, const void* elem, size_t size) {
 
 // -- datatypes --
 
-FUNC_ENCODE(Vector)
+F_ENCODE(Vector)
 
 /*
-FUNC_ENCODE(BinaryTree)
-FUNC_ENCODE(Queue)
+F_ENCODE(BinaryTree)
+F_ENCODE(Queue)
 ...
 */
