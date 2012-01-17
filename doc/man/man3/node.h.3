@@ -1,11 +1,8 @@
-.TH "/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/node.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.TH "/Users/matthieuriolo/Downloads/libgenc/branches/riolo/trunk/include/node.h" 3 "Wed Jan 11 2012" ""c generic library"" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/node.h \- 
-.PP
-header file for the Node implementation  
-
+/Users/matthieuriolo/Downloads/libgenc/branches/riolo/trunk/include/node.h \- 
 .SH SYNOPSIS
 .br
 .PP
@@ -35,15 +32,6 @@ header file for the Node implementation
 .RI "void \fBdestruct_Node\fP (\fBNode\fP *node)"
 .br
 .in -1c
-.SH "Detailed Description"
-.PP 
-header file for the Node implementation 
-
-Copyright 2006, Micah Villmow, All Rights Reserved
-.PP
-Micah Villmow 
-.PP
-Definition in file \fBnode.h\fP.
 .SH "Typedef Documentation"
 .PP 
 .SS "typedef struct \fB_Node\fP \fBNode\fP"
@@ -51,7 +39,7 @@ Definition in file \fBnode.h\fP.
 Definition at line 15 of file node.h.
 .SH "Function Documentation"
 .PP 
-.SS "\fBNode\fP * construct_Node (size_tnlinks)"\fBParameters:\fP
+.SS "\fBNode\fP* construct_Node (size_t nlinks)"\fBParameters:\fP
 .RS 4
 \fInlinks\fP the number of links the Node should have 
 .RE
@@ -62,12 +50,16 @@ an allocated Node or NULL on error
 .RE
 .PP
 
-.SS "void destruct_Node (\fBNode\fP *node)"\fBParameters:\fP
+.PP
+Definition at line 16 of file node.c.
+.SS "void destruct_Node (\fBNode\fP * node)"\fBParameters:\fP
 .RS 4
 \fInode\fP the Node to deallocate 
 .RE
 .PP
 
+.PP
+Definition at line 32 of file node.c.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for 'c generic library' from the source code.

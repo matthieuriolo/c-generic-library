@@ -1,11 +1,8 @@
-.TH "/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/deque.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.TH "/Users/matthieuriolo/Downloads/libgenc/branches/riolo/trunk/include/deque.h" 3 "Wed Jan 11 2012" ""c generic library"" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/deque.h \- 
-.PP
-a resuable deque class that takes any object  
-
+/Users/matthieuriolo/Downloads/libgenc/branches/riolo/trunk/include/deque.h \- 
 .SH SYNOPSIS
 .br
 .PP
@@ -22,66 +19,34 @@ a resuable deque class that takes any object
 
 .in +1c
 .ti -1c
+.RI "#define \fBDEQUELIST_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBDEQUELIST_ITER_DEFINED\fP"
+.br
+.RI "\fIthe iterator object that helps traverse the deque \fP"
+.ti -1c
+.RI "#define \fBDEQUEVECTOR_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBDEQUEVECTOR_ITER_DEFINED\fP"
+.br
+.ti -1c
 .RI "#define \fBconvert_DequeVector\fP(A, B, C, D)   push_DequeVector((A),(B),(C),(D))"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fB_ptr_struct\fP \fBDequeList\fP"
 .br
 .in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
-.RI "int8_t \fBconstruct_DequeList\fP (\fBDequeList\fP *obj, size_t datasize, int flag)"
-.br
-.RI "\fIthe iterator object that helps traverse the deque \fP"
-.ti -1c
-.RI "int8_t \fBconstruct_func_DequeList\fP (\fBDequeList\fP *obj, size_t datasize, int flag, void *(*alloc)(size_t), void(*dealloc)(void *), int32_t(*cmp)(const void *, const void *, size_t), void(*print)(const void *), void *(*copy)(void *, const void *, size_t))"
-.br
-.RI "\fIassigns all the * function pointers in one function call \fP"
-.ti -1c
-.RI "int8_t \fBdestruct_DequeList\fP (\fBDequeList\fP *obj)"
-.br
-.RI "\fIRemoves all the allocated memory for * the object. \fP"
-.ti -1c
-.RI "int8_t \fBclear_DequeList\fP (\fBDequeList\fP *obj)"
-.br
-.RI "\fIremoves all the data from the object \fP"
-.ti -1c
-.RI "\fBDequeList\fP * \fBduplicate_DequeList\fP (\fBDequeList\fP *obj)"
-.br
-.RI "\fIduplicates the object * * Duplicates all the data that the object holds * and returns it in its own object. The new object * has copies of the data and does not use copy * on write semantics. Therefor the new object will * handle the deallocation of data memory * when destroyed. \fP"
-.ti -1c
-.RI "int8_t \fBprint_DequeList\fP (\fBDequeList\fP *obj)"
-.br
-.RI "\fIprints out the data inside the object \fP"
-.ti -1c
-.RI "int8_t \fBempty_DequeList\fP (\fBDequeList\fP *obj)"
-.br
-.ti -1c
-.RI "size_t \fBsize_DequeList\fP (\fBDequeList\fP *obj)"
-.br
-.ti -1c
-.RI "int8_t \fBdump_DequeList\fP (\fBDequeList\fP *obj)"
-.br
-.RI "\fIdumps out the internal structure of the object \fP"
-.ti -1c
-.RI "size_t \fBsize_of_DequeList\fP (\fBDequeList\fP *obj)"
-.br
-.ti -1c
-.RI "int8_t \fBset_compare_DequeList\fP (\fBDequeList\fP *obj, int32_t(*cmp)(const void *, const void *, size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBset_print_DequeList\fP (\fBDequeList\fP *obj, void(*print)(const void *))"
-.br
-.ti -1c
-.RI "int8_t \fBset_alloc_DequeList\fP (\fBDequeList\fP *obj, void *(*alloc)(size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBset_dealloc_DequeList\fP (\fBDequeList\fP *obj, void(*dealloc)(void *))"
-.br
-.ti -1c
-.RI "int8_t \fBset_copy_DequeList\fP (\fBDequeList\fP *obj, void *(*copy)(void *, const void *, size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBpop_front_DequeList\fP (\fBDequeList\fP *deque)"
+.RI "struct \fB_ptr_iter\fP \fBITER\fP (\fBDequeList\fP)"
 .br
 .ti -1c
 .RI "int8_t \fBpop_back_DequeList\fP (\fBDequeList\fP *deque)"
@@ -93,105 +58,22 @@ a resuable deque class that takes any object
 .RI "void * \fBback_DequeList\fP (\fBDequeList\fP *deque)"
 .br
 .ti -1c
-.RI "int8_t \fBpush_back_DequeList\fP (\fBDequeList\fP *deque, void *obj, size_t objsize, int flag)"
+.RI "int8_t \fBpush_back_DequeList\fP (\fBDequeList\fP *deque, void *\fBobj\fP, size_t \fBobjsize\fP, int \fBflag\fP)"
 .br
 .ti -1c
-.RI "int8_t \fBconvert_DequeList\fP (\fBDequeList\fP *deque, void *obj, size_t objsize, int flag)"
+.RI "int8_t \fBconvert_DequeList\fP (\fBDequeList\fP *deque, void *\fBobj\fP, size_t \fBobjsize\fP, int \fBflag\fP)"
 .br
 .ti -1c
-.RI "int8_t \fBpush_front_DequeList\fP (\fBDequeList\fP *deque, void *obj, size_t objsize, int flag)"
+.RI "int8_t \fBpush_front_DequeList\fP (\fBDequeList\fP *deque, void *\fBobj\fP, size_t \fBobjsize\fP, int \fBflag\fP)"
 .br
 .ti -1c
-.RI "int8_t \fBprev_DequeListIter\fP (\fBDequeListIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the prev element in the * obj \fP"
-.ti -1c
-.RI "int8_t \fBnext_DequeListIter\fP (\fBDequeListIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the next element in the * obj \fP"
-.ti -1c
-.RI "int8_t \fBassign_DequeListIter\fP (\fBDequeListIter\fP *iter, \fBDequeList\fP *obj)"
-.br
-.RI "\fIassign statically created iterator to the obj \fP"
-.ti -1c
-.RI "void \fBdestroy_DequeListIter\fP (\fBDequeListIter\fP *iter)"
+.RI "\fBcreate_iter_prototypes\fP (\fBDequeList\fP) typedef struct \fB_array_struct\fP \fBDequeVector\fP"
 .br
 .ti -1c
-.RI "int8_t \fBhead_DequeListIter\fP (\fBDequeListIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the head of the obj * it has been assigned to \fP"
-.ti -1c
-.RI "int8_t \fBtail_DequeListIter\fP (\fBDequeListIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the tail of the * obj it has been assigned to \fP"
-.ti -1c
-.RI "\fBDequeListIter\fP * \fBcreate_DequeListIter\fP (\fBDequeList\fP *obj)"
-.br
-.RI "\fIcreates and iterator and assigns it to the obj \fP"
-.ti -1c
-.RI "void * \fBretrieve_DequeListIter\fP (\fBDequeListIter\fP *iter)"
-.br
-.RI "\fIreturns a void poitner to the object that * the iterator points to \fP"
-.ti -1c
-.RI "int8_t \fBcopy_DequeListIter\fP (\fBDequeListIter\fP *src, \fBDequeListIter\fP *dst)"
+.RI "struct \fB_array_iter\fP \fBITER\fP (\fBDequeVector\fP)"
 .br
 .ti -1c
-.RI "int8_t \fBswap_DequeListIter\fP (\fBDequeListIter\fP *iter1, \fBDequeListIter\fP *iter2)"
-.br
-.RI "\fIswaps the position of iter1 and iter2 * \fP"
-.ti -1c
-.RI "int8_t \fBconstruct_DequeVector\fP (\fBDequeVector\fP *obj, size_t datasize, int flag)"
-.br
-.ti -1c
-.RI "int8_t \fBconstruct_func_DequeVector\fP (\fBDequeVector\fP *obj, size_t datasize, int flag, void *(*alloc)(size_t), void(*dealloc)(void *), int32_t(*cmp)(const void *, const void *, size_t), void(*print)(const void *), void *(*copy)(void *, const void *, size_t))"
-.br
-.RI "\fIassigns all the * function pointers in one function call \fP"
-.ti -1c
-.RI "int8_t \fBdestruct_DequeVector\fP (\fBDequeVector\fP *obj)"
-.br
-.RI "\fIRemoves all the allocated memory for * the object. \fP"
-.ti -1c
-.RI "int8_t \fBclear_DequeVector\fP (\fBDequeVector\fP *obj)"
-.br
-.RI "\fIremoves all the data from the object \fP"
-.ti -1c
-.RI "\fBDequeVector\fP * \fBduplicate_DequeVector\fP (\fBDequeVector\fP *obj)"
-.br
-.RI "\fIduplicates the object * * Duplicates all the data that the object holds * and returns it in its own object. The new object * has copies of the data and does not use copy * on write semantics. Therefor the new object will * handle the deallocation of data memory * when destroyed. \fP"
-.ti -1c
-.RI "int8_t \fBprint_DequeVector\fP (\fBDequeVector\fP *obj)"
-.br
-.RI "\fIprints out the data inside the object \fP"
-.ti -1c
-.RI "int8_t \fBempty_DequeVector\fP (\fBDequeVector\fP *obj)"
-.br
-.ti -1c
-.RI "size_t \fBsize_DequeVector\fP (\fBDequeVector\fP *obj)"
-.br
-.ti -1c
-.RI "int8_t \fBdump_DequeVector\fP (\fBDequeVector\fP *obj)"
-.br
-.RI "\fIdumps out the internal structure of the object \fP"
-.ti -1c
-.RI "size_t \fBsize_of_DequeVector\fP (\fBDequeVector\fP *obj)"
-.br
-.ti -1c
-.RI "int8_t \fBset_compare_DequeVector\fP (\fBDequeVector\fP *obj, int32_t(*cmp)(const void *, const void *, size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBset_print_DequeVector\fP (\fBDequeVector\fP *obj, void(*print)(const void *))"
-.br
-.ti -1c
-.RI "int8_t \fBset_alloc_DequeVector\fP (\fBDequeVector\fP *obj, void *(*alloc)(size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBset_dealloc_DequeVector\fP (\fBDequeVector\fP *obj, void(*dealloc)(void *))"
-.br
-.ti -1c
-.RI "int8_t \fBset_copy_DequeVector\fP (\fBDequeVector\fP *obj, void *(*copy)(void *, const void *, size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBpop_front_DequeVector\fP (\fBDequeVector\fP *deque)"
+.RI "\fBCOMMON_FUNCTION_PROTOTYPES\fP (\fBDequeVector\fP) int8_t pop_front_DequeVector(\fBDequeVector\fP *deque)"
 .br
 .ti -1c
 .RI "int8_t \fBpop_back_DequeVector\fP (\fBDequeVector\fP *deque)"
@@ -203,882 +85,79 @@ a resuable deque class that takes any object
 .RI "void * \fBback_DequeVector\fP (\fBDequeVector\fP *deque)"
 .br
 .ti -1c
-.RI "int8_t \fBpush_front_DequeVector\fP (\fBDequeVector\fP *deque, void *obj, size_t objsize, int flag)"
+.RI "int8_t \fBpush_front_DequeVector\fP (\fBDequeVector\fP *deque, void *\fBobj\fP, size_t \fBobjsize\fP, int \fBflag\fP)"
 .br
 .ti -1c
-.RI "int8_t \fBpush_back_DequeVector\fP (\fBDequeVector\fP *deque, void *obj, size_t objsize, int flag)"
+.RI "int8_t \fBpush_back_DequeVector\fP (\fBDequeVector\fP *deque, void *\fBobj\fP, size_t \fBobjsize\fP, int \fBflag\fP)"
 .br
 .ti -1c
 .RI "int8_t \fBresize_DequeVector\fP (\fBDequeVector\fP *deque, size_t size)"
 .br
-.ti -1c
-.RI "int8_t \fBprev_DequeVectorIter\fP (\fBDequeVectorIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the prev element in the * obj \fP"
-.ti -1c
-.RI "int8_t \fBnext_DequeVectorIter\fP (\fBDequeVectorIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the next element in the * obj \fP"
-.ti -1c
-.RI "int8_t \fBassign_DequeVectorIter\fP (\fBDequeVectorIter\fP *iter, \fBDequeVector\fP *obj)"
-.br
-.RI "\fIassign statically created iterator to the obj \fP"
-.ti -1c
-.RI "void \fBdestroy_DequeVectorIter\fP (\fBDequeVectorIter\fP *iter)"
-.br
-.ti -1c
-.RI "int8_t \fBhead_DequeVectorIter\fP (\fBDequeVectorIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the head of the obj * it has been assigned to \fP"
-.ti -1c
-.RI "int8_t \fBtail_DequeVectorIter\fP (\fBDequeVectorIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the tail of the * obj it has been assigned to \fP"
-.ti -1c
-.RI "\fBDequeVectorIter\fP * \fBcreate_DequeVectorIter\fP (\fBDequeVector\fP *obj)"
-.br
-.RI "\fIcreates and iterator and assigns it to the obj \fP"
-.ti -1c
-.RI "void * \fBretrieve_DequeVectorIter\fP (\fBDequeVectorIter\fP *iter)"
-.br
-.RI "\fIreturns a void poitner to the object that * the iterator points to \fP"
-.ti -1c
-.RI "int8_t \fBcopy_DequeVectorIter\fP (\fBDequeVectorIter\fP *src, \fBDequeVectorIter\fP *dst)"
-.br
-.ti -1c
-.RI "int8_t \fBswap_DequeVectorIter\fP (\fBDequeVectorIter\fP *iter1, \fBDequeVectorIter\fP *iter2)"
-.br
-.RI "\fIswaps the position of iter1 and iter2 * \fP"
 .in -1c
-.SH "Detailed Description"
-.PP 
-a resuable deque class that takes any object 
-
-\fBAuthor:\fP
-.RS 4
-Micah Villmow 
-.RE
-.PP
-
-.PP
-Definition in file \fBdeque.h\fP.
 .SH "Define Documentation"
 .PP 
 .SS "#define convert_DequeVector(A, B, C, D)   push_DequeVector((A),(B),(C),(D))"
 .PP
 Definition at line 120 of file deque.h.
+.SS "#define DEQUELIST_DEFINED"
+.PP
+Definition at line 22 of file deque.h.
+.SS "#define DEQUELIST_ITER_DEFINED"
+.PP
+the iterator object that helps traverse the deque 
+.PP
+Definition at line 31 of file deque.h.
+.SS "#define DEQUEVECTOR_DEFINED"
+.SS "#define DEQUEVECTOR_ITER_DEFINED"
+.PP
+Definition at line 107 of file deque.h.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fB_ptr_struct\fP \fBDequeList\fP"
+.PP
+Definition at line 23 of file deque.h.
 .SH "Function Documentation"
 .PP 
-.SS "int8_t assign_DequeListIter (\fBDequeListIter\fP *iter, \fBDequeList\fP *obj)"
+.SS "void* back_DequeList (\fBDequeList\fP * deque)"
 .PP
-assign statically created iterator to the obj * 
+Definition at line 152 of file deque.c.
+.SS "void* back_DequeVector (\fBDequeVector\fP * deque)"
 .PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to assign to the obj * 
-.br
-\fIobj\fP the obj to point the iterator to * 
-.RE
+Definition at line 232 of file deque.c.
+.SS "COMMON_FUNCTION_PROTOTYPES (\fBDequeVector\fP)"
+.SS "int8_t convert_DequeList (\fBDequeList\fP * deque, void * obj, size_t objsize, int flag)"
 .PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
+Definition at line 58 of file deque.c.
+.SS "create_iter_prototypes (\fBDequeList\fP)"
+.SS "void* front_DequeList (\fBDequeList\fP * deque)"
 .PP
-
-.SS "int8_t assign_DequeVectorIter (\fBDequeVectorIter\fP *iter, \fBDequeVector\fP *obj)"
+Definition at line 144 of file deque.c.
+.SS "void* front_DequeVector (\fBDequeVector\fP * deque)"
 .PP
-assign statically created iterator to the obj * 
+Definition at line 237 of file deque.c.
+.SS "struct \fB_array_iter\fP ITER (\fBDequeVector\fP)\fC [read]\fP"
+.SS "struct \fB_ptr_iter\fP ITER (\fBDequeList\fP)\fC [read]\fP"
+.SS "int8_t pop_back_DequeList (\fBDequeList\fP * deque)"
 .PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to assign to the obj * 
-.br
-\fIobj\fP the obj to point the iterator to * 
-.RE
+Definition at line 128 of file deque.c.
+.SS "int8_t pop_back_DequeVector (\fBDequeVector\fP * deque)"
 .PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
+Definition at line 220 of file deque.c.
+.SS "int8_t push_back_DequeList (\fBDequeList\fP * deque, void * obj, size_t objsize, int flag)"
 .PP
-
-.SS "void* back_DequeList (\fBDequeList\fP *deque)"
-.SS "void* back_DequeVector (\fBDequeVector\fP *deque)"
-.SS "int8_t clear_DequeList (\fBDequeList\fP *obj)"
+Definition at line 62 of file deque.c.
+.SS "int8_t push_back_DequeVector (\fBDequeVector\fP * deque, void * obj, size_t objsize, int flag)"
 .PP
-removes all the data from the object * 
+Definition at line 265 of file deque.c.
+.SS "int8_t push_front_DequeList (\fBDequeList\fP * deque, void * obj, size_t objsize, int flag)"
 .PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to clear * 
-.RE
+Definition at line 86 of file deque.c.
+.SS "int8_t push_front_DequeVector (\fBDequeVector\fP * deque, void * obj, size_t objsize, int flag)"
 .PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * 
-.RE
+Definition at line 252 of file deque.c.
+.SS "int8_t resize_DequeVector (\fBDequeVector\fP * deque, size_t size)"
 .PP
-
-.SS "int8_t clear_DequeVector (\fBDequeVector\fP *obj)"
-.PP
-removes all the data from the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to clear * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * 
-.RE
-.PP
-
-.SS "int8_t construct_DequeList (\fBDequeList\fP *obj, size_tdatasize, intflag)"
-.PP
-the iterator object that helps traverse the deque * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to initialize * 
-.br
-\fIdatasize\fP the size of the data to store * 
-.br
-\fIflag\fP the flag for how to handle memory * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-if you are using a local variable * clear out the memory before calling this * function using memset or bzero 
-.RE
-.PP
-
-.SS "int8_t construct_DequeVector (\fBDequeVector\fP *obj, size_tdatasize, intflag)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to initialize * 
-.br
-\fIdatasize\fP the size of the data to store * 
-.br
-\fIflag\fP the flag for how to handle memory * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-if you are using a local variable * clear out the memory before calling this * function using memset or bzero 
-.RE
-.PP
-
-.SS "int8_t construct_func_DequeList (\fBDequeList\fP *obj, size_tdatasize, intflag, void *(*)(size_t)alloc, void(*)(void *)dealloc, int32_t(*)(const void *, const void *, size_t)cmp, void(*)(const void *)print, void *(*)(void *, const void *, size_t)copy)"
-.PP
-assigns all the * function pointers in one function call * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to initialize * 
-.br
-\fIdatasize\fP the size of the data to store * 
-.br
-\fIflag\fP the flag for how to handle memory * 
-.br
-\fIalloc\fP the allocation functor * 
-.br
-\fIdealloc\fP the deallocation functor * 
-.br
-\fIcmp\fP the comparison functor * 
-.br
-\fIprint\fP the print functor * 
-.br
-\fIcopy\fP the copy functor * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * * 
-.RE
-.PP
-
-.SS "int8_t construct_func_DequeVector (\fBDequeVector\fP *obj, size_tdatasize, intflag, void *(*)(size_t)alloc, void(*)(void *)dealloc, int32_t(*)(const void *, const void *, size_t)cmp, void(*)(const void *)print, void *(*)(void *, const void *, size_t)copy)"
-.PP
-assigns all the * function pointers in one function call * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to initialize * 
-.br
-\fIdatasize\fP the size of the data to store * 
-.br
-\fIflag\fP the flag for how to handle memory * 
-.br
-\fIalloc\fP the allocation functor * 
-.br
-\fIdealloc\fP the deallocation functor * 
-.br
-\fIcmp\fP the comparison functor * 
-.br
-\fIprint\fP the print functor * 
-.br
-\fIcopy\fP the copy functor * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * * 
-.RE
-.PP
-
-.SS "int8_t convert_DequeList (\fBDequeList\fP *deque, void *obj, size_tobjsize, intflag)"
-.SS "int8_t copy_DequeListIter (\fBDequeListIter\fP *src, \fBDequeListIter\fP *dst)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIsrc\fP the source iterator * 
-.br
-\fIdst\fP the destination iterator * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-zero on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t copy_DequeVectorIter (\fBDequeVectorIter\fP *src, \fBDequeVectorIter\fP *dst)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIsrc\fP the source iterator * 
-.br
-\fIdst\fP the destination iterator * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-zero on success, non-zero on error 
-.RE
-.PP
-
-.SS "\fBDequeListIter\fP* create_DequeListIter (\fBDequeList\fP *obj)"
-.PP
-creates and iterator and assigns it to the obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to create iterator for * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-returns an iterator to the obj on success * or NULL on error * 
-.RE
-.PP
-
-.SS "\fBDequeVectorIter\fP* create_DequeVectorIter (\fBDequeVector\fP *obj)"
-.PP
-creates and iterator and assigns it to the obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to create iterator for * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-returns an iterator to the obj on success * or NULL on error * 
-.RE
-.PP
-
-.SS "void destroy_DequeListIter (\fBDequeListIter\fP *iter)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to destroy * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-only use this in conjunction with create 
-.RE
-.PP
-
-.SS "void destroy_DequeVectorIter (\fBDequeVectorIter\fP *iter)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to destroy * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-only use this in conjunction with create 
-.RE
-.PP
-
-.SS "int8_t destruct_DequeList (\fBDequeList\fP *obj)"
-.PP
-Removes all the allocated memory for * the object. * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to deinitialize * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on succss, non-zero on failure * 
-.RE
-.PP
-
-.SS "int8_t destruct_DequeVector (\fBDequeVector\fP *obj)"
-.PP
-Removes all the allocated memory for * the object. * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to deinitialize * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on succss, non-zero on failure * 
-.RE
-.PP
-
-.SS "int8_t dump_DequeList (\fBDequeList\fP *obj)"
-.PP
-dumps out the internal structure of the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to dump the internal structure of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success,non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t dump_DequeVector (\fBDequeVector\fP *obj)"
-.PP
-dumps out the internal structure of the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to dump the internal structure of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success,non-zero on error * 
-.RE
-.PP
-
-.SS "\fBDequeList\fP* duplicate_DequeList (\fBDequeList\fP *obj)"
-.PP
-duplicates the object * * Duplicates all the data that the object holds * and returns it in its own object. The new object * has copies of the data and does not use copy * on write semantics. Therefor the new object will * handle the deallocation of data memory * when destroyed. * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to duplicate * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-copy of the object or NULL on error * 
-.RE
-.PP
-
-.SS "\fBDequeVector\fP* duplicate_DequeVector (\fBDequeVector\fP *obj)"
-.PP
-duplicates the object * * Duplicates all the data that the object holds * and returns it in its own object. The new object * has copies of the data and does not use copy * on write semantics. Therefor the new object will * handle the deallocation of data memory * when destroyed. * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to duplicate * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-copy of the object or NULL on error * 
-.RE
-.PP
-
-.SS "int8_t empty_DequeList (\fBDequeList\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to check for emptiness * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on empty, non-zero otherwise 
-.RE
-.PP
-
-.SS "int8_t empty_DequeVector (\fBDequeVector\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to check for emptiness * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on empty, non-zero otherwise 
-.RE
-.PP
-
-.SS "void* front_DequeList (\fBDequeList\fP *deque)"
-.SS "void* front_DequeVector (\fBDequeVector\fP *deque)"
-.SS "int8_t head_DequeListIter (\fBDequeListIter\fP *iter)"
-.PP
-moves the iterator to the head of the obj * it has been assigned to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to move to the head * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t head_DequeVectorIter (\fBDequeVectorIter\fP *iter)"
-.PP
-moves the iterator to the head of the obj * it has been assigned to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to move to the head * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t next_DequeListIter (\fBDequeListIter\fP *iter)"
-.PP
-moves the iterator to the next element in the * obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iter to move to the next element * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t next_DequeVectorIter (\fBDequeVectorIter\fP *iter)"
-.PP
-moves the iterator to the next element in the * obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iter to move to the next element * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t pop_back_DequeList (\fBDequeList\fP *deque)"
-.SS "int8_t pop_back_DequeVector (\fBDequeVector\fP *deque)"
-.SS "int8_t pop_front_DequeList (\fBDequeList\fP *deque)"
-.SS "int8_t pop_front_DequeVector (\fBDequeVector\fP *deque)"
-.SS "int8_t prev_DequeListIter (\fBDequeListIter\fP *iter)"
-.PP
-moves the iterator to the prev element in the * obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iter to move to the prev element * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t prev_DequeVectorIter (\fBDequeVectorIter\fP *iter)"
-.PP
-moves the iterator to the prev element in the * obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iter to move to the prev element * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t print_DequeList (\fBDequeList\fP *obj)"
-.PP
-prints out the data inside the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to print * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t print_DequeVector (\fBDequeVector\fP *obj)"
-.PP
-prints out the data inside the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to print * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t push_back_DequeList (\fBDequeList\fP *deque, void *obj, size_tobjsize, intflag)"
-.SS "int8_t push_back_DequeVector (\fBDequeVector\fP *deque, void *obj, size_tobjsize, intflag)"
-.SS "int8_t push_front_DequeList (\fBDequeList\fP *deque, void *obj, size_tobjsize, intflag)"
-.SS "int8_t push_front_DequeVector (\fBDequeVector\fP *deque, void *obj, size_tobjsize, intflag)"
-.SS "int8_t resize_DequeVector (\fBDequeVector\fP *deque, size_tsize)"
-.SS "void* retrieve_DequeListIter (\fBDequeListIter\fP *iter)"
-.PP
-returns a void poitner to the object that * the iterator points to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to retrieve the object from * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-object on success, NULL on error * 
-.RE
-.PP
-
-.SS "void* retrieve_DequeVectorIter (\fBDequeVectorIter\fP *iter)"
-.PP
-returns a void poitner to the object that * the iterator points to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to retrieve the object from * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-object on success, NULL on error * 
-.RE
-.PP
-
-.SS "int8_t set_alloc_DequeList (\fBDequeList\fP *obj, void *(*)(size_t)alloc)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the alloc funtion for * 
-.br
-\fIalloc\fP the function pointer to the alloc function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_alloc_DequeVector (\fBDequeVector\fP *obj, void *(*)(size_t)alloc)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the alloc funtion for * 
-.br
-\fIalloc\fP the function pointer to the alloc function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_compare_DequeList (\fBDequeList\fP *obj, int32_t(*)(const void *, const void *, size_t)cmp)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the compare function of * 
-.br
-\fIcmp\fP the function pointer to the comparison function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_compare_DequeVector (\fBDequeVector\fP *obj, int32_t(*)(const void *, const void *, size_t)cmp)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the compare function of * 
-.br
-\fIcmp\fP the function pointer to the comparison function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_copy_DequeList (\fBDequeList\fP *obj, void *(*)(void *, const void *, size_t)copy)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to set the copy function for * 
-.br
-\fIcopy\fP the function pointer to the copy function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_copy_DequeVector (\fBDequeVector\fP *obj, void *(*)(void *, const void *, size_t)copy)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to set the copy function for * 
-.br
-\fIcopy\fP the function pointer to the copy function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_dealloc_DequeList (\fBDequeList\fP *obj, void(*)(void *)dealloc)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIptr\fP the obj to set the dealloc function for * 
-.br
-\fIdealloc\fP the function pointer to the dealloc function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_dealloc_DequeVector (\fBDequeVector\fP *obj, void(*)(void *)dealloc)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIptr\fP the obj to set the dealloc function for * 
-.br
-\fIdealloc\fP the function pointer to the dealloc function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_print_DequeList (\fBDequeList\fP *obj, void(*)(const void *)print)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the print function of * 
-.br
-\fIprint\fP the function pointer to the print function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_print_DequeVector (\fBDequeVector\fP *obj, void(*)(const void *)print)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the print function of * 
-.br
-\fIprint\fP the function pointer to the print function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "size_t size_DequeList (\fBDequeList\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to get the size of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-size of object or zero on failure 
-.RE
-.PP
-
-.SS "size_t size_DequeVector (\fBDequeVector\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to get the size of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-size of object or zero on failure 
-.RE
-.PP
-
-.SS "size_t size_of_DequeList (\fBDequeList\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to get the size of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-size of the object or 0 on error/empty 
-.RE
-.PP
-
-.SS "size_t size_of_DequeVector (\fBDequeVector\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to get the size of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-size of the object or 0 on error/empty 
-.RE
-.PP
-
-.SS "int8_t swap_DequeListIter (\fBDequeListIter\fP *iter1, \fBDequeListIter\fP *iter2)"
-.PP
-swaps the position of iter1 and iter2 * * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter1\fP the first iterator * 
-.br
-\fIiter2\fP the second iterator * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-iterators must be pointing to same parent * object or the swap will fail * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t swap_DequeVectorIter (\fBDequeVectorIter\fP *iter1, \fBDequeVectorIter\fP *iter2)"
-.PP
-swaps the position of iter1 and iter2 * * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter1\fP the first iterator * 
-.br
-\fIiter2\fP the second iterator * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-iterators must be pointing to same parent * object or the swap will fail * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t tail_DequeListIter (\fBDequeListIter\fP *iter)"
-.PP
-moves the iterator to the tail of the * obj it has been assigned to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to move to the tail * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t tail_DequeVectorIter (\fBDequeVectorIter\fP *iter)"
-.PP
-moves the iterator to the tail of the * obj it has been assigned to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to move to the tail * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
+Definition at line 278 of file deque.c.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for 'c generic library' from the source code.

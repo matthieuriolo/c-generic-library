@@ -1,11 +1,8 @@
-.TH "/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/gen/error_macros.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.TH "/Users/matthieuriolo/Downloads/libgenc/branches/riolo/trunk/include/gen/error_macros.h" 3 "Wed Jan 11 2012" ""c generic library"" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/gen/error_macros.h \- 
-.PP
-Macros to handle error messages.  
-
+/Users/matthieuriolo/Downloads/libgenc/branches/riolo/trunk/include/gen/error_macros.h \- 
 .SH SYNOPSIS
 .br
 .PP
@@ -79,20 +76,6 @@ Macros to handle error messages.
 .RI "#define \fBCHECK_OBJSIZE\fP(X, Y, Z)"
 .br
 .in -1c
-.SH "Detailed Description"
-.PP 
-Macros to handle error messages. 
-
-Copyright 2006, All Rights Reserved, Micah Villmow
-.PP
-\fBAuthor:\fP
-.RS 4
-Micah Villmow 
-.RE
-.PP
-
-.PP
-Definition in file \fBerror_macros.h\fP.
 .SH "Define Documentation"
 .PP 
 .SS "#define ALLOCFAIL(X)   do{}while(0)"
@@ -103,7 +86,7 @@ Definition at line 42 of file error_macros.h.
 .nf
 do {\
         if(O((X)) != (Y)) {\
-                fprintf(stderr,'%s:%s:%d - Invalid object size(%d), should be %d\n',ERRORINFO,(unsigned)(Y),(unsigned)O((X)));\
+                fprintf(stderr,'%s:%s:%d - Invalid object size(%d), should be %d\n',ERRORINFO,(Y),O((X)));\
                 return (Z);\
         }\
 }while(0)
@@ -191,7 +174,7 @@ Definition at line 50 of file error_macros.h.
 .SS "#define NULLMSG(X)   do{}while(0)"
 .PP
 Definition at line 34 of file error_macros.h.
-.SS "#define SUCCESS   0x00"
+.SS "#define \fBSUCCESS\fP   0x00"
 .PP
 Definition at line 11 of file error_macros.h.
 .SS "#define UNUSED   __attribute__((__unused__))"
