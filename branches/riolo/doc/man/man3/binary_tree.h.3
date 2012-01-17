@@ -1,8 +1,8 @@
-.TH "/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/binary_tree.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.TH "/Users/matthieuriolo/Downloads/libgenc/branches/riolo/trunk/include/binary_tree.h" 3 "Wed Jan 11 2012" ""c generic library"" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/binary_tree.h \- 
+/Users/matthieuriolo/Downloads/libgenc/branches/riolo/trunk/include/binary_tree.h \- 
 .SH SYNOPSIS
 .br
 .PP
@@ -19,71 +19,27 @@
 
 .in +1c
 .ti -1c
+.RI "#define \fBBINARYTREE_DEFINED\fP"
+.br
+.ti -1c
 .RI "#define \fBconvert_BinaryTree\fP(A, B, C, D)   insert_BinaryTree((A),(B),(C),(D))"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fB_ptr_struct\fP \fBBinaryTree\fP"
 .br
 .in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
-.RI "int8_t \fBconstruct_BinaryTree\fP (\fBBinaryTree\fP *obj, size_t datasize, int flag)"
+.RI "int8_t \fBdelete_BinaryTree\fP (\fBBinaryTree\fP *tree, void *\fBobj\fP, size_t \fBobjsize\fP)"
 .br
 .ti -1c
-.RI "int8_t \fBconstruct_func_BinaryTree\fP (\fBBinaryTree\fP *obj, size_t datasize, int flag, void *(*alloc)(size_t), void(*dealloc)(void *), int32_t(*cmp)(const void *, const void *, size_t), void(*print)(const void *), void *(*copy)(void *, const void *, size_t))"
-.br
-.RI "\fIassigns all the * function pointers in one function call \fP"
-.ti -1c
-.RI "int8_t \fBdestruct_BinaryTree\fP (\fBBinaryTree\fP *obj)"
-.br
-.RI "\fIRemoves all the allocated memory for * the object. \fP"
-.ti -1c
-.RI "int8_t \fBclear_BinaryTree\fP (\fBBinaryTree\fP *obj)"
-.br
-.RI "\fIremoves all the data from the object \fP"
-.ti -1c
-.RI "\fBBinaryTree\fP * \fBduplicate_BinaryTree\fP (\fBBinaryTree\fP *obj)"
-.br
-.RI "\fIduplicates the object * * Duplicates all the data that the object holds * and returns it in its own object. The new object * has copies of the data and does not use copy * on write semantics. Therefor the new object will * handle the deallocation of data memory * when destroyed. \fP"
-.ti -1c
-.RI "int8_t \fBprint_BinaryTree\fP (\fBBinaryTree\fP *obj)"
-.br
-.RI "\fIprints out the data inside the object \fP"
-.ti -1c
-.RI "int8_t \fBempty_BinaryTree\fP (\fBBinaryTree\fP *obj)"
-.br
-.ti -1c
-.RI "size_t \fBsize_BinaryTree\fP (\fBBinaryTree\fP *obj)"
-.br
-.ti -1c
-.RI "int8_t \fBdump_BinaryTree\fP (\fBBinaryTree\fP *obj)"
-.br
-.RI "\fIdumps out the internal structure of the object \fP"
-.ti -1c
-.RI "size_t \fBsize_of_BinaryTree\fP (\fBBinaryTree\fP *obj)"
-.br
-.ti -1c
-.RI "int8_t \fBset_compare_BinaryTree\fP (\fBBinaryTree\fP *obj, int32_t(*cmp)(const void *, const void *, size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBset_print_BinaryTree\fP (\fBBinaryTree\fP *obj, void(*print)(const void *))"
-.br
-.ti -1c
-.RI "int8_t \fBset_alloc_BinaryTree\fP (\fBBinaryTree\fP *obj, void *(*alloc)(size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBset_dealloc_BinaryTree\fP (\fBBinaryTree\fP *obj, void(*dealloc)(void *))"
-.br
-.ti -1c
-.RI "int8_t \fBset_copy_BinaryTree\fP (\fBBinaryTree\fP *obj, void *(*copy)(void *, const void *, size_t))"
-.br
-.ti -1c
-.RI "void * \fBinsert_BinaryTree\fP (\fBBinaryTree\fP *tree, void *obj, size_t objsize, int flag)"
-.br
-.ti -1c
-.RI "int8_t \fBdelete_BinaryTree\fP (\fBBinaryTree\fP *tree, void *obj, size_t objsize)"
-.br
-.ti -1c
-.RI "void * \fBfind_BinaryTree\fP (\fBBinaryTree\fP *tree, void *obj, size_t objsize)"
+.RI "void * \fBfind_BinaryTree\fP (\fBBinaryTree\fP *tree, void *\fBobj\fP, size_t \fBobjsize\fP)"
 .br
 .ti -1c
 .RI "void * \fBmax_BinaryTree\fP (\fBBinaryTree\fP *tree)"
@@ -92,653 +48,121 @@
 .RI "void * \fBmin_BinaryTree\fP (\fBBinaryTree\fP *tree)"
 .br
 .ti -1c
-.RI "int8_t \fBnext_BinaryTreeDFSIter\fP (\fBBinaryTreeDFSIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the next element in the * obj \fP"
-.ti -1c
-.RI "void \fBdestroy_BinaryTreeDFSIter\fP (\fBBinaryTreeDFSIter\fP *iter)"
+.RI "\fBiter_proto\fP (next, BinaryTreeDFS)"
 .br
 .ti -1c
-.RI "int8_t \fBhead_BinaryTreeDFSIter\fP (\fBBinaryTreeDFSIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the head of the obj * it has been assigned to \fP"
-.ti -1c
-.RI "int8_t \fBtail_BinaryTreeDFSIter\fP (\fBBinaryTreeDFSIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the tail of the * obj it has been assigned to \fP"
-.ti -1c
-.RI "void * \fBretrieve_BinaryTreeDFSIter\fP (\fBBinaryTreeDFSIter\fP *iter)"
-.br
-.RI "\fIreturns a void poitner to the object that * the iterator points to \fP"
-.ti -1c
-.RI "int8_t \fBnext_BinaryTreeBFSIter\fP (\fBBinaryTreeBFSIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the next element in the * obj \fP"
-.ti -1c
-.RI "void \fBdestroy_BinaryTreeBFSIter\fP (\fBBinaryTreeBFSIter\fP *iter)"
+.RI "\fBiter_proto\fP (destroy, BinaryTreeDFS)"
 .br
 .ti -1c
-.RI "int8_t \fBhead_BinaryTreeBFSIter\fP (\fBBinaryTreeBFSIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the head of the obj * it has been assigned to \fP"
-.ti -1c
-.RI "int8_t \fBtail_BinaryTreeBFSIter\fP (\fBBinaryTreeBFSIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the tail of the * obj it has been assigned to \fP"
-.ti -1c
-.RI "void * \fBretrieve_BinaryTreeBFSIter\fP (\fBBinaryTreeBFSIter\fP *iter)"
-.br
-.RI "\fIreturns a void poitner to the object that * the iterator points to \fP"
-.ti -1c
-.RI "int8_t \fBassign_BinaryTreeDFSIter\fP (\fBBinaryTreeDFSIter\fP *iter, \fBBinaryTree\fP *obj)"
+.RI "\fBiter_proto\fP (head, BinaryTreeDFS)"
 .br
 .ti -1c
-.RI "int8_t \fBassign_BinaryTreeBFSIter\fP (\fBBinaryTreeBFSIter\fP *iter, \fBBinaryTree\fP *obj)"
+.RI "\fBiter_proto\fP (tail, BinaryTreeDFS)"
 .br
 .ti -1c
-.RI "\fBBinaryTreeBFSIter\fP * \fBcreate_BinaryTreeBFSIter\fP (\fBBinaryTree\fP *obj)"
+.RI "\fBiter_proto\fP (retrieve, BinaryTreeDFS)"
 .br
 .ti -1c
-.RI "\fBBinaryTreeDFSIter\fP * \fBcreate_BinaryTreeDFSIter\fP (\fBBinaryTree\fP *obj)"
+.RI "\fBiter_proto\fP (next, BinaryTreeBFS)"
 .br
 .ti -1c
-.RI "int8_t \fBprev_BinaryTreeIter\fP (\fBBinaryTreeIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the prev element in the * obj \fP"
-.ti -1c
-.RI "int8_t \fBnext_BinaryTreeIter\fP (\fBBinaryTreeIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the next element in the * obj \fP"
-.ti -1c
-.RI "int8_t \fBassign_BinaryTreeIter\fP (\fBBinaryTreeIter\fP *iter, \fBBinaryTree\fP *obj)"
-.br
-.RI "\fIassign statically created iterator to the obj \fP"
-.ti -1c
-.RI "void \fBdestroy_BinaryTreeIter\fP (\fBBinaryTreeIter\fP *iter)"
+.RI "\fBiter_proto\fP (destroy, BinaryTreeBFS)"
 .br
 .ti -1c
-.RI "int8_t \fBhead_BinaryTreeIter\fP (\fBBinaryTreeIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the head of the obj * it has been assigned to \fP"
-.ti -1c
-.RI "int8_t \fBtail_BinaryTreeIter\fP (\fBBinaryTreeIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the tail of the * obj it has been assigned to \fP"
-.ti -1c
-.RI "\fBBinaryTreeIter\fP * \fBcreate_BinaryTreeIter\fP (\fBBinaryTree\fP *obj)"
-.br
-.RI "\fIcreates and iterator and assigns it to the obj \fP"
-.ti -1c
-.RI "void * \fBretrieve_BinaryTreeIter\fP (\fBBinaryTreeIter\fP *iter)"
-.br
-.RI "\fIreturns a void poitner to the object that * the iterator points to \fP"
-.ti -1c
-.RI "int8_t \fBcopy_BinaryTreeIter\fP (\fBBinaryTreeIter\fP *src, \fBBinaryTreeIter\fP *dst)"
+.RI "\fBiter_proto\fP (head, BinaryTreeBFS)"
 .br
 .ti -1c
-.RI "int8_t \fBswap_BinaryTreeIter\fP (\fBBinaryTreeIter\fP *iter1, \fBBinaryTreeIter\fP *iter2)"
+.RI "\fBiter_proto\fP (tail, BinaryTreeBFS)"
 .br
-.RI "\fIswaps the position of iter1 and iter2 * \fP"
+.ti -1c
+.RI "\fBiter_proto\fP (retrieve, BinaryTreeBFS)"
+.br
+.ti -1c
+.RI "int8_t \fBassign_BinaryTreeDFSIter\fP (\fBBinaryTreeDFSIter\fP *iter, \fBBinaryTree\fP *\fBobj\fP)"
+.br
+.ti -1c
+.RI "int8_t \fBassign_BinaryTreeBFSIter\fP (\fBBinaryTreeBFSIter\fP *iter, \fBBinaryTree\fP *\fBobj\fP)"
+.br
+.ti -1c
+.RI "\fBBinaryTreeBFSIter\fP * \fBcreate_BinaryTreeBFSIter\fP (\fBBinaryTree\fP *\fBobj\fP)"
+.br
+.ti -1c
+.RI "\fBBinaryTreeDFSIter\fP * \fBcreate_BinaryTreeDFSIter\fP (\fBBinaryTree\fP *\fBobj\fP)"
+.br
+.in -1c
+.SS "Variables"
+
+.in +1c
+.ti -1c
+.RI "void * \fBobj\fP"
+.br
+.ti -1c
+.RI "void size_t \fBobjsize\fP"
+.br
+.ti -1c
+.RI "void size_t int \fBflag\fP"
+.br
 .in -1c
 .SH "Define Documentation"
 .PP 
+.SS "#define BINARYTREE_DEFINED"
+.PP
+Definition at line 25 of file binary_tree.h.
 .SS "#define convert_BinaryTree(A, B, C, D)   insert_BinaryTree((A),(B),(C),(D))"
 .PP
 Definition at line 41 of file binary_tree.h.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fB_ptr_struct\fP \fBBinaryTree\fP"
+.PP
+Definition at line 26 of file binary_tree.h.
 .SH "Function Documentation"
 .PP 
-.SS "int8_t assign_BinaryTreeBFSIter (\fBBinaryTreeBFSIter\fP *iter, \fBBinaryTree\fP *obj)"
-.SS "int8_t assign_BinaryTreeDFSIter (\fBBinaryTreeDFSIter\fP *iter, \fBBinaryTree\fP *obj)"
-.SS "int8_t assign_BinaryTreeIter (\fBBinaryTreeIter\fP *iter, \fBBinaryTree\fP *obj)"
-.PP
-assign statically created iterator to the obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to assign to the obj * 
-.br
-\fIobj\fP the obj to point the iterator to * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t clear_BinaryTree (\fBBinaryTree\fP *obj)"
-.PP
-removes all the data from the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to clear * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * 
-.RE
-.PP
-
-.SS "int8_t construct_BinaryTree (\fBBinaryTree\fP *obj, size_tdatasize, intflag)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to initialize * 
-.br
-\fIdatasize\fP the size of the data to store * 
-.br
-\fIflag\fP the flag for how to handle memory * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-if you are using a local variable * clear out the memory before calling this * function using memset or bzero 
-.RE
-.PP
-
-.SS "int8_t construct_func_BinaryTree (\fBBinaryTree\fP *obj, size_tdatasize, intflag, void *(*)(size_t)alloc, void(*)(void *)dealloc, int32_t(*)(const void *, const void *, size_t)cmp, void(*)(const void *)print, void *(*)(void *, const void *, size_t)copy)"
-.PP
-assigns all the * function pointers in one function call * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to initialize * 
-.br
-\fIdatasize\fP the size of the data to store * 
-.br
-\fIflag\fP the flag for how to handle memory * 
-.br
-\fIalloc\fP the allocation functor * 
-.br
-\fIdealloc\fP the deallocation functor * 
-.br
-\fIcmp\fP the comparison functor * 
-.br
-\fIprint\fP the print functor * 
-.br
-\fIcopy\fP the copy functor * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * * 
-.RE
-.PP
-
-.SS "int8_t copy_BinaryTreeIter (\fBBinaryTreeIter\fP *src, \fBBinaryTreeIter\fP *dst)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIsrc\fP the source iterator * 
-.br
-\fIdst\fP the destination iterator * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-zero on success, non-zero on error 
-.RE
-.PP
-
-.SS "\fBBinaryTreeBFSIter\fP* create_BinaryTreeBFSIter (\fBBinaryTree\fP *obj)"
-.SS "\fBBinaryTreeDFSIter\fP* create_BinaryTreeDFSIter (\fBBinaryTree\fP *obj)"
-.SS "\fBBinaryTreeIter\fP* create_BinaryTreeIter (\fBBinaryTree\fP *obj)"
-.PP
-creates and iterator and assigns it to the obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to create iterator for * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-returns an iterator to the obj on success * or NULL on error * 
-.RE
-.PP
-
-.SS "int8_t delete_BinaryTree (\fBBinaryTree\fP *tree, void *obj, size_tobjsize)"
-.SS "void destroy_BinaryTreeBFSIter (\fBBinaryTreeBFSIter\fP *iter)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to destroy * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-only use this in conjunction with create 
-.RE
-.PP
-
-.SS "void destroy_BinaryTreeDFSIter (\fBBinaryTreeDFSIter\fP *iter)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to destroy * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-only use this in conjunction with create 
-.RE
-.PP
-
-.SS "void destroy_BinaryTreeIter (\fBBinaryTreeIter\fP *iter)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to destroy * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-only use this in conjunction with create 
-.RE
-.PP
-
-.SS "int8_t destruct_BinaryTree (\fBBinaryTree\fP *obj)"
-.PP
-Removes all the allocated memory for * the object. * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to deinitialize * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on succss, non-zero on failure * 
-.RE
-.PP
-
-.SS "int8_t dump_BinaryTree (\fBBinaryTree\fP *obj)"
-.PP
-dumps out the internal structure of the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to dump the internal structure of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success,non-zero on error * 
-.RE
-.PP
-
-.SS "\fBBinaryTree\fP* duplicate_BinaryTree (\fBBinaryTree\fP *obj)"
-.PP
-duplicates the object * * Duplicates all the data that the object holds * and returns it in its own object. The new object * has copies of the data and does not use copy * on write semantics. Therefor the new object will * handle the deallocation of data memory * when destroyed. * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to duplicate * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-copy of the object or NULL on error * 
-.RE
-.PP
-
-.SS "int8_t empty_BinaryTree (\fBBinaryTree\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to check for emptiness * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on empty, non-zero otherwise 
-.RE
-.PP
-
-.SS "void* find_BinaryTree (\fBBinaryTree\fP *tree, void *obj, size_tobjsize)"
-.SS "int8_t head_BinaryTreeBFSIter (\fBBinaryTreeBFSIter\fP *iter)"
-.PP
-moves the iterator to the head of the obj * it has been assigned to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to move to the head * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t head_BinaryTreeDFSIter (\fBBinaryTreeDFSIter\fP *iter)"
-.PP
-moves the iterator to the head of the obj * it has been assigned to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to move to the head * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t head_BinaryTreeIter (\fBBinaryTreeIter\fP *iter)"
-.PP
-moves the iterator to the head of the obj * it has been assigned to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to move to the head * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "void* insert_BinaryTree (\fBBinaryTree\fP *tree, void *obj, size_tobjsize, intflag)"
-.SS "void* max_BinaryTree (\fBBinaryTree\fP *tree)"
-.SS "void* min_BinaryTree (\fBBinaryTree\fP *tree)"
-.SS "int8_t next_BinaryTreeBFSIter (\fBBinaryTreeBFSIter\fP *iter)"
-.PP
-moves the iterator to the next element in the * obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iter to move to the next element * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t next_BinaryTreeDFSIter (\fBBinaryTreeDFSIter\fP *iter)"
-.PP
-moves the iterator to the next element in the * obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iter to move to the next element * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t next_BinaryTreeIter (\fBBinaryTreeIter\fP *iter)"
-.PP
-moves the iterator to the next element in the * obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iter to move to the next element * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t prev_BinaryTreeIter (\fBBinaryTreeIter\fP *iter)"
-.PP
-moves the iterator to the prev element in the * obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iter to move to the prev element * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t print_BinaryTree (\fBBinaryTree\fP *obj)"
-.PP
-prints out the data inside the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to print * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "void* retrieve_BinaryTreeBFSIter (\fBBinaryTreeBFSIter\fP *iter)"
-.PP
-returns a void poitner to the object that * the iterator points to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to retrieve the object from * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-object on success, NULL on error * 
-.RE
-.PP
-
-.SS "void* retrieve_BinaryTreeDFSIter (\fBBinaryTreeDFSIter\fP *iter)"
-.PP
-returns a void poitner to the object that * the iterator points to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to retrieve the object from * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-object on success, NULL on error * 
-.RE
-.PP
-
-.SS "void* retrieve_BinaryTreeIter (\fBBinaryTreeIter\fP *iter)"
-.PP
-returns a void poitner to the object that * the iterator points to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to retrieve the object from * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-object on success, NULL on error * 
-.RE
-.PP
-
-.SS "int8_t set_alloc_BinaryTree (\fBBinaryTree\fP *obj, void *(*)(size_t)alloc)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the alloc funtion for * 
-.br
-\fIalloc\fP the function pointer to the alloc function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_compare_BinaryTree (\fBBinaryTree\fP *obj, int32_t(*)(const void *, const void *, size_t)cmp)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the compare function of * 
-.br
-\fIcmp\fP the function pointer to the comparison function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_copy_BinaryTree (\fBBinaryTree\fP *obj, void *(*)(void *, const void *, size_t)copy)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to set the copy function for * 
-.br
-\fIcopy\fP the function pointer to the copy function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_dealloc_BinaryTree (\fBBinaryTree\fP *obj, void(*)(void *)dealloc)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIptr\fP the obj to set the dealloc function for * 
-.br
-\fIdealloc\fP the function pointer to the dealloc function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_print_BinaryTree (\fBBinaryTree\fP *obj, void(*)(const void *)print)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the print function of * 
-.br
-\fIprint\fP the function pointer to the print function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "size_t size_BinaryTree (\fBBinaryTree\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to get the size of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-size of object or zero on failure 
-.RE
-.PP
-
-.SS "size_t size_of_BinaryTree (\fBBinaryTree\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to get the size of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-size of the object or 0 on error/empty 
-.RE
-.PP
-
-.SS "int8_t swap_BinaryTreeIter (\fBBinaryTreeIter\fP *iter1, \fBBinaryTreeIter\fP *iter2)"
-.PP
-swaps the position of iter1 and iter2 * * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter1\fP the first iterator * 
-.br
-\fIiter2\fP the second iterator * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-iterators must be pointing to same parent * object or the swap will fail * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t tail_BinaryTreeBFSIter (\fBBinaryTreeBFSIter\fP *iter)"
-.PP
-moves the iterator to the tail of the * obj it has been assigned to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to move to the tail * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t tail_BinaryTreeDFSIter (\fBBinaryTreeDFSIter\fP *iter)"
-.PP
-moves the iterator to the tail of the * obj it has been assigned to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to move to the tail * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t tail_BinaryTreeIter (\fBBinaryTreeIter\fP *iter)"
-.PP
-moves the iterator to the tail of the * obj it has been assigned to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to move to the tail * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
+.SS "int8_t assign_BinaryTreeBFSIter (\fBBinaryTreeBFSIter\fP * iter, \fBBinaryTree\fP * obj)"
+.PP
+Definition at line 365 of file binary_tree.c.
+.SS "int8_t assign_BinaryTreeDFSIter (\fBBinaryTreeDFSIter\fP * iter, \fBBinaryTree\fP * obj)"
+.PP
+Definition at line 389 of file binary_tree.c.
+.SS "\fBBinaryTreeBFSIter\fP* create_BinaryTreeBFSIter (\fBBinaryTree\fP * obj)"
+.PP
+Definition at line 425 of file binary_tree.c.
+.SS "\fBBinaryTreeDFSIter\fP* create_BinaryTreeDFSIter (\fBBinaryTree\fP * obj)"
+.PP
+Definition at line 400 of file binary_tree.c.
+.SS "int8_t delete_BinaryTree (\fBBinaryTree\fP * tree, void * obj, size_t objsize)"
+.PP
+Definition at line 154 of file binary_tree.c.
+.SS "void* find_BinaryTree (\fBBinaryTree\fP * tree, void * obj, size_t objsize)"
+.PP
+Definition at line 245 of file binary_tree.c.
+.SS "iter_proto (tail, BinaryTreeBFS)"
+.SS "iter_proto (retrieve, BinaryTreeBFS)"
+.SS "iter_proto (destroy, BinaryTreeBFS)"
+.SS "iter_proto (next, BinaryTreeBFS)"
+.SS "iter_proto (tail, BinaryTreeDFS)"
+.SS "iter_proto (retrieve, BinaryTreeDFS)"
+.SS "iter_proto (destroy, BinaryTreeDFS)"
+.SS "iter_proto (head, BinaryTreeBFS)"
+.SS "iter_proto (next, BinaryTreeDFS)"
+.SS "iter_proto (head, BinaryTreeDFS)"
+.SS "void* max_BinaryTree (\fBBinaryTree\fP * tree)"
+.PP
+Definition at line 291 of file binary_tree.c.
+.SS "void* min_BinaryTree (\fBBinaryTree\fP * tree)"
+.PP
+Definition at line 303 of file binary_tree.c.
+.SH "Variable Documentation"
+.PP 
+.SS "void size_t int \fBflag\fP"
+.PP
+Definition at line 40 of file binary_tree.h.
+.SS "void* \fBobj\fP"
+.PP
+Definition at line 40 of file binary_tree.h.
+.SS "void size_t \fBobjsize\fP"
+.PP
+Definition at line 40 of file binary_tree.h.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for 'c generic library' from the source code.

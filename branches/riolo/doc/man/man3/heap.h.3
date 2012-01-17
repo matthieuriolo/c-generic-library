@@ -1,11 +1,8 @@
-.TH "/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/heap.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.TH "/Users/matthieuriolo/Downloads/libgenc/branches/riolo/trunk/include/heap.h" 3 "Wed Jan 11 2012" ""c generic library"" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/heap.h \- 
-.PP
-Generic heap implementation.  
-
+/Users/matthieuriolo/Downloads/libgenc/branches/riolo/trunk/include/heap.h \- 
 .SH SYNOPSIS
 .br
 .PP
@@ -18,234 +15,74 @@ Generic heap implementation.
 \fC#include 'gen/function_signatures.h'\fP
 .br
 
+.SS "Defines"
+
+.in +1c
+.ti -1c
+.RI "#define \fBHEAP_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBHEAP_ITER_DEFINED\fP"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fB_array_struct\fP \fBHeap\fP"
+.br
+.in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
-.RI "int8_t \fBconstruct_Heap\fP (\fBHeap\fP *obj, size_t datasize, int flag)"
+.RI "struct \fB_array_iter\fP \fBITER\fP (\fBHeap\fP)"
 .br
 .ti -1c
-.RI "int8_t \fBconstruct_func_Heap\fP (\fBHeap\fP *obj, size_t datasize, int flag, void *(*alloc)(size_t), void(*dealloc)(void *), int32_t(*cmp)(const void *, const void *, size_t), void(*print)(const void *), void *(*copy)(void *, const void *, size_t))"
-.br
-.RI "\fIassigns all the * function pointers in one function call \fP"
-.ti -1c
-.RI "int8_t \fBdestruct_Heap\fP (\fBHeap\fP *obj)"
-.br
-.RI "\fIRemoves all the allocated memory for * the object. \fP"
-.ti -1c
-.RI "int8_t \fBclear_Heap\fP (\fBHeap\fP *obj)"
-.br
-.RI "\fIremoves all the data from the object \fP"
-.ti -1c
-.RI "\fBHeap\fP * \fBduplicate_Heap\fP (\fBHeap\fP *obj)"
-.br
-.RI "\fIduplicates the object * * Duplicates all the data that the object holds * and returns it in its own object. The new object * has copies of the data and does not use copy * on write semantics. Therefor the new object will * handle the deallocation of data memory * when destroyed. \fP"
-.ti -1c
-.RI "int8_t \fBprint_Heap\fP (\fBHeap\fP *obj)"
-.br
-.RI "\fIprints out the data inside the object \fP"
-.ti -1c
-.RI "int8_t \fBempty_Heap\fP (\fBHeap\fP *obj)"
-.br
-.ti -1c
-.RI "size_t \fBsize_Heap\fP (\fBHeap\fP *obj)"
-.br
-.ti -1c
-.RI "int8_t \fBdump_Heap\fP (\fBHeap\fP *obj)"
-.br
-.RI "\fIdumps out the internal structure of the object \fP"
-.ti -1c
-.RI "size_t \fBsize_of_Heap\fP (\fBHeap\fP *obj)"
-.br
-.ti -1c
-.RI "int8_t \fBset_compare_Heap\fP (\fBHeap\fP *obj, int32_t(*cmp)(const void *, const void *, size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBset_print_Heap\fP (\fBHeap\fP *obj, void(*print)(const void *))"
-.br
-.ti -1c
-.RI "int8_t \fBset_alloc_Heap\fP (\fBHeap\fP *obj, void *(*alloc)(size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBset_dealloc_Heap\fP (\fBHeap\fP *obj, void(*dealloc)(void *))"
-.br
-.ti -1c
-.RI "int8_t \fBset_copy_Heap\fP (\fBHeap\fP *obj, void *(*copy)(void *, const void *, size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBinsert_Heap\fP (\fBHeap\fP *obj, void *data, size_t datasize, int flag)"
-.br
-.RI "\fIinsert data into the heap in sorted order \fP"
-.ti -1c
-.RI "void * \fBtop_Heap\fP (\fBHeap\fP *obj)"
+.RI "void * \fBtop_Heap\fP (\fBHeap\fP *\fBobj\fP)"
 .br
 .RI "\fIreturns the first value to be removed from the delete function \fP"
 .ti -1c
-.RI "int8_t \fBpop_Heap\fP (\fBHeap\fP *obj)"
+.RI "int8_t \fBpop_Heap\fP (\fBHeap\fP *\fBobj\fP)"
 .br
 .RI "\fIRemoves the top value of the heap. \fP"
 .ti -1c
-.RI "int8_t \fBmerge_Heap\fP (\fBHeap\fP *obj, \fBHeap\fP *src)"
+.RI "int8_t \fBmerge_Heap\fP (\fBHeap\fP *\fBobj\fP, \fBHeap\fP *src)"
 .br
 .ti -1c
-.RI "int8_t \fBresize_Heap\fP (\fBHeap\fP *obj, size_t size)"
+.RI "int8_t \fBresize_Heap\fP (\fBHeap\fP *\fBobj\fP, size_t size)"
 .br
 .in -1c
-.SH "Detailed Description"
-.PP 
-Generic heap implementation. 
+.SS "Variables"
 
-Copyright 2006, All Rights Reserved, Micah Villmow
+.in +1c
+.ti -1c
+.RI "void * \fBdata\fP"
+.br
+.ti -1c
+.RI "void size_t \fBdatasize\fP"
+.br
+.ti -1c
+.RI "void size_t int \fBflag\fP"
+.br
+.in -1c
+.SH "Define Documentation"
+.PP 
+.SS "#define HEAP_DEFINED"
 .PP
-The generic heap implementation, when completed will consist of the following heap types: Binary Heap Skew Heap Trinary Heap Leftist Heap 
+Definition at line 21 of file heap.h.
+.SS "#define HEAP_ITER_DEFINED"
 .PP
-Definition in file \fBheap.h\fP.
+Definition at line 25 of file heap.h.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fB_array_struct\fP \fBHeap\fP"
+.PP
+Definition at line 22 of file heap.h.
 .SH "Function Documentation"
 .PP 
-.SS "int8_t clear_Heap (\fBHeap\fP *obj)"
-.PP
-removes all the data from the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to clear * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * 
-.RE
-.PP
-
-.SS "int8_t construct_func_Heap (\fBHeap\fP *obj, size_tdatasize, intflag, void *(*)(size_t)alloc, void(*)(void *)dealloc, int32_t(*)(const void *, const void *, size_t)cmp, void(*)(const void *)print, void *(*)(void *, const void *, size_t)copy)"
-.PP
-assigns all the * function pointers in one function call * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to initialize * 
-.br
-\fIdatasize\fP the size of the data to store * 
-.br
-\fIflag\fP the flag for how to handle memory * 
-.br
-\fIalloc\fP the allocation functor * 
-.br
-\fIdealloc\fP the deallocation functor * 
-.br
-\fIcmp\fP the comparison functor * 
-.br
-\fIprint\fP the print functor * 
-.br
-\fIcopy\fP the copy functor * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * * 
-.RE
-.PP
-
-.SS "int8_t construct_Heap (\fBHeap\fP *obj, size_tdatasize, intflag)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to initialize * 
-.br
-\fIdatasize\fP the size of the data to store * 
-.br
-\fIflag\fP the flag for how to handle memory * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-if you are using a local variable * clear out the memory before calling this * function using memset or bzero 
-.RE
-.PP
-
-.SS "int8_t destruct_Heap (\fBHeap\fP *obj)"
-.PP
-Removes all the allocated memory for * the object. * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to deinitialize * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on succss, non-zero on failure * 
-.RE
-.PP
-
-.SS "int8_t dump_Heap (\fBHeap\fP *obj)"
-.PP
-dumps out the internal structure of the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to dump the internal structure of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success,non-zero on error * 
-.RE
-.PP
-
-.SS "\fBHeap\fP* duplicate_Heap (\fBHeap\fP *obj)"
-.PP
-duplicates the object * * Duplicates all the data that the object holds * and returns it in its own object. The new object * has copies of the data and does not use copy * on write semantics. Therefor the new object will * handle the deallocation of data memory * when destroyed. * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to duplicate * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-copy of the object or NULL on error * 
-.RE
-.PP
-
-.SS "int8_t empty_Heap (\fBHeap\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to check for emptiness * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on empty, non-zero otherwise 
-.RE
-.PP
-
-.SS "int8_t insert_Heap (\fBHeap\fP *obj, void *data, size_tdatasize, intflag)"
-.PP
-insert data into the heap in sorted order \fBParameters:\fP
-.RS 4
-\fIobj\fP the heap object to insert data into 
-.br
-\fIdata\fP the data to insert into the heap object 
-.br
-\fIdatasize\fP the size of data to insert 
-.br
-\fIflag\fP flag whether data is dynamic or static 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t merge_Heap (\fBHeap\fP *obj, \fBHeap\fP *src)"\fBParameters:\fP
+.SS "struct \fB_array_iter\fP ITER (\fBHeap\fP)\fC [read]\fP"
+.SS "int8_t merge_Heap (\fBHeap\fP * obj, \fBHeap\fP * src)"\fBParameters:\fP
 .RS 4
 \fIobj\fP the destination heap 
 .br
@@ -258,7 +95,9 @@ insert data into the heap in sorted order \fBParameters:\fP
 .RE
 .PP
 
-.SS "int8_t pop_Heap (\fBHeap\fP *obj)"
+.PP
+Definition at line 173 of file heap.c.
+.SS "int8_t pop_Heap (\fBHeap\fP * obj)"
 .PP
 Removes the top value of the heap. \fBParameters:\fP
 .RS 4
@@ -266,22 +105,9 @@ Removes the top value of the heap. \fBParameters:\fP
 .RE
 .PP
 
-.SS "int8_t print_Heap (\fBHeap\fP *obj)"
 .PP
-prints out the data inside the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to print * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t resize_Heap (\fBHeap\fP *obj, size_tsize)"\fBParameters:\fP
+Definition at line 129 of file heap.c.
+.SS "int8_t resize_Heap (\fBHeap\fP * obj, size_t size)"\fBParameters:\fP
 .RS 4
 \fIobj\fP the object to resize 
 .br
@@ -294,108 +120,9 @@ prints out the data inside the object *
 .RE
 .PP
 
-.SS "int8_t set_alloc_Heap (\fBHeap\fP *obj, void *(*)(size_t)alloc)"* 
 .PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the alloc funtion for * 
-.br
-\fIalloc\fP the function pointer to the alloc function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_compare_Heap (\fBHeap\fP *obj, int32_t(*)(const void *, const void *, size_t)cmp)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the compare function of * 
-.br
-\fIcmp\fP the function pointer to the comparison function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_copy_Heap (\fBHeap\fP *obj, void *(*)(void *, const void *, size_t)copy)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to set the copy function for * 
-.br
-\fIcopy\fP the function pointer to the copy function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_dealloc_Heap (\fBHeap\fP *obj, void(*)(void *)dealloc)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIptr\fP the obj to set the dealloc function for * 
-.br
-\fIdealloc\fP the function pointer to the dealloc function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_print_Heap (\fBHeap\fP *obj, void(*)(const void *)print)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the print function of * 
-.br
-\fIprint\fP the function pointer to the print function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "size_t size_Heap (\fBHeap\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to get the size of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-size of object or zero on failure 
-.RE
-.PP
-
-.SS "size_t size_of_Heap (\fBHeap\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to get the size of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-size of the object or 0 on error/empty 
-.RE
-.PP
-
-.SS "void * top_Heap (\fBHeap\fP *obj)"
+Definition at line 160 of file heap.c.
+.SS "void* top_Heap (\fBHeap\fP * obj)"
 .PP
 returns the first value to be removed from the delete function \fBParameters:\fP
 .RS 4
@@ -408,6 +135,19 @@ Pointer to first value or NULL on error/empty Front is used to get either the ma
 .RE
 .PP
 
+.PP
+Definition at line 121 of file heap.c.
+.SH "Variable Documentation"
+.PP 
+.SS "void* \fBdata\fP"
+.PP
+Definition at line 41 of file heap.h.
+.SS "void size_t \fBdatasize\fP"
+.PP
+Definition at line 41 of file heap.h.
+.SS "void size_t int \fBflag\fP"
+.PP
+Definition at line 41 of file heap.h.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for 'c generic library' from the source code.

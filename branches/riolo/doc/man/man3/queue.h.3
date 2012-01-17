@@ -1,11 +1,8 @@
-.TH "/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/queue.h" 3 "Mon Aug 15 2011" ""c generic library"" \" -*- nroff -*-
+.TH "/Users/matthieuriolo/Downloads/libgenc/branches/riolo/trunk/include/queue.h" 3 "Wed Jan 11 2012" ""c generic library"" \" -*- nroff -*-
 .ad l
 .nh
 .SH NAME
-/Users/matthieuriolo/Sourcecode/libcgeneric/branches/riolo/libcgeneric/queue.h \- 
-.PP
-a resuable queue class that takes any object  
-
+/Users/matthieuriolo/Downloads/libgenc/branches/riolo/trunk/include/queue.h \- 
 .SH SYNOPSIS
 .br
 .PP
@@ -22,231 +19,65 @@ a resuable queue class that takes any object
 
 .in +1c
 .ti -1c
+.RI "#define \fBQUEUELIST_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBQUEUELIST_ITER_DEFINED\fP"
+.br
+.RI "\fIthe iterator object that helps traverse the queue \fP"
+.ti -1c
 .RI "#define \fBconvert_QueueList\fP(A, B, C, D)   push_QueueList((A),(B),(C),(D))"
 .br
 .ti -1c
+.RI "#define \fBQUEUEVECTOR_DEFINED\fP"
+.br
+.ti -1c
+.RI "#define \fBQUEUEVECTOR_ITER_DEFINED\fP"
+.br
+.ti -1c
 .RI "#define \fBconvert_QueueVector\fP(A, B, C, D)   push_QueueVector((A),(B),(C),(D))"
+.br
+.in -1c
+.SS "Typedefs"
+
+.in +1c
+.ti -1c
+.RI "typedef struct \fB_ptr_struct\fP \fBQueueList\fP"
 .br
 .in -1c
 .SS "Functions"
 
 .in +1c
 .ti -1c
-.RI "int8_t \fBconstruct_QueueList\fP (\fBQueueList\fP *obj, size_t datasize, int flag)"
+.RI "struct \fB_ptr_iter\fP \fBITER\fP (\fBQueueList\fP)"
 .br
-.RI "\fIthe iterator object that helps traverse the queue \fP"
-.ti -1c
-.RI "int8_t \fBconstruct_func_QueueList\fP (\fBQueueList\fP *obj, size_t datasize, int flag, void *(*alloc)(size_t), void(*dealloc)(void *), int32_t(*cmp)(const void *, const void *, size_t), void(*print)(const void *), void *(*copy)(void *, const void *, size_t))"
-.br
-.RI "\fIassigns all the * function pointers in one function call \fP"
-.ti -1c
-.RI "int8_t \fBdestruct_QueueList\fP (\fBQueueList\fP *obj)"
-.br
-.RI "\fIRemoves all the allocated memory for * the object. \fP"
-.ti -1c
-.RI "int8_t \fBclear_QueueList\fP (\fBQueueList\fP *obj)"
-.br
-.RI "\fIremoves all the data from the object \fP"
-.ti -1c
-.RI "\fBQueueList\fP * \fBduplicate_QueueList\fP (\fBQueueList\fP *obj)"
-.br
-.RI "\fIduplicates the object * * Duplicates all the data that the object holds * and returns it in its own object. The new object * has copies of the data and does not use copy * on write semantics. Therefor the new object will * handle the deallocation of data memory * when destroyed. \fP"
-.ti -1c
-.RI "int8_t \fBprint_QueueList\fP (\fBQueueList\fP *obj)"
-.br
-.RI "\fIprints out the data inside the object \fP"
-.ti -1c
-.RI "int8_t \fBempty_QueueList\fP (\fBQueueList\fP *obj)"
-.br
-.ti -1c
-.RI "size_t \fBsize_QueueList\fP (\fBQueueList\fP *obj)"
-.br
-.ti -1c
-.RI "int8_t \fBdump_QueueList\fP (\fBQueueList\fP *obj)"
-.br
-.RI "\fIdumps out the internal structure of the object \fP"
-.ti -1c
-.RI "size_t \fBsize_of_QueueList\fP (\fBQueueList\fP *obj)"
-.br
-.ti -1c
-.RI "int8_t \fBset_compare_QueueList\fP (\fBQueueList\fP *obj, int32_t(*cmp)(const void *, const void *, size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBset_print_QueueList\fP (\fBQueueList\fP *obj, void(*print)(const void *))"
-.br
-.ti -1c
-.RI "int8_t \fBset_alloc_QueueList\fP (\fBQueueList\fP *obj, void *(*alloc)(size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBset_dealloc_QueueList\fP (\fBQueueList\fP *obj, void(*dealloc)(void *))"
-.br
-.ti -1c
-.RI "int8_t \fBset_copy_QueueList\fP (\fBQueueList\fP *obj, void *(*copy)(void *, const void *, size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBpop_QueueList\fP (\fBQueueList\fP *queue)"
-.br
-.RI "\fIremoves the front item from the queue \fP"
 .ti -1c
 .RI "void * \fBfront_QueueList\fP (\fBQueueList\fP *queue)"
 .br
 .RI "\fIreturns a pointer to the front object so that it can be easily referenced \fP"
 .ti -1c
-.RI "int8_t \fBpush_QueueList\fP (\fBQueueList\fP *queue, void *obj, size_t objsize, int flag)"
+.RI "int8_t \fBpush_QueueList\fP (\fBQueueList\fP *queue, void *\fBobj\fP, size_t \fBobjsize\fP, int \fBflag\fP)"
 .br
 .RI "\fIpushes an item onto the end of a queue \fP"
 .ti -1c
-.RI "int8_t \fBprev_QueueListIter\fP (\fBQueueListIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the prev element in the * obj \fP"
-.ti -1c
-.RI "int8_t \fBnext_QueueListIter\fP (\fBQueueListIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the next element in the * obj \fP"
-.ti -1c
-.RI "int8_t \fBassign_QueueListIter\fP (\fBQueueListIter\fP *iter, \fBQueueList\fP *obj)"
-.br
-.RI "\fIassign statically created iterator to the obj \fP"
-.ti -1c
-.RI "void \fBdestroy_QueueListIter\fP (\fBQueueListIter\fP *iter)"
+.RI "\fBcreate_iter_prototypes\fP (\fBQueueList\fP) typedef struct \fB_array_struct\fP \fBQueueVector\fP"
 .br
 .ti -1c
-.RI "int8_t \fBhead_QueueListIter\fP (\fBQueueListIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the head of the obj * it has been assigned to \fP"
-.ti -1c
-.RI "int8_t \fBtail_QueueListIter\fP (\fBQueueListIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the tail of the * obj it has been assigned to \fP"
-.ti -1c
-.RI "\fBQueueListIter\fP * \fBcreate_QueueListIter\fP (\fBQueueList\fP *obj)"
-.br
-.RI "\fIcreates and iterator and assigns it to the obj \fP"
-.ti -1c
-.RI "void * \fBretrieve_QueueListIter\fP (\fBQueueListIter\fP *iter)"
-.br
-.RI "\fIreturns a void poitner to the object that * the iterator points to \fP"
-.ti -1c
-.RI "int8_t \fBcopy_QueueListIter\fP (\fBQueueListIter\fP *src, \fBQueueListIter\fP *dst)"
+.RI "struct \fB_array_iter\fP \fBITER\fP (\fBQueueVector\fP)"
 .br
 .ti -1c
-.RI "int8_t \fBswap_QueueListIter\fP (\fBQueueListIter\fP *iter1, \fBQueueListIter\fP *iter2)"
-.br
-.RI "\fIswaps the position of iter1 and iter2 * \fP"
-.ti -1c
-.RI "int8_t \fBconstruct_QueueVector\fP (\fBQueueVector\fP *obj, size_t datasize, int flag)"
-.br
-.ti -1c
-.RI "int8_t \fBconstruct_func_QueueVector\fP (\fBQueueVector\fP *obj, size_t datasize, int flag, void *(*alloc)(size_t), void(*dealloc)(void *), int32_t(*cmp)(const void *, const void *, size_t), void(*print)(const void *), void *(*copy)(void *, const void *, size_t))"
-.br
-.RI "\fIassigns all the * function pointers in one function call \fP"
-.ti -1c
-.RI "int8_t \fBdestruct_QueueVector\fP (\fBQueueVector\fP *obj)"
-.br
-.RI "\fIRemoves all the allocated memory for * the object. \fP"
-.ti -1c
-.RI "int8_t \fBclear_QueueVector\fP (\fBQueueVector\fP *obj)"
-.br
-.RI "\fIremoves all the data from the object \fP"
-.ti -1c
-.RI "\fBQueueVector\fP * \fBduplicate_QueueVector\fP (\fBQueueVector\fP *obj)"
-.br
-.RI "\fIduplicates the object * * Duplicates all the data that the object holds * and returns it in its own object. The new object * has copies of the data and does not use copy * on write semantics. Therefor the new object will * handle the deallocation of data memory * when destroyed. \fP"
-.ti -1c
-.RI "int8_t \fBprint_QueueVector\fP (\fBQueueVector\fP *obj)"
-.br
-.RI "\fIprints out the data inside the object \fP"
-.ti -1c
-.RI "int8_t \fBempty_QueueVector\fP (\fBQueueVector\fP *obj)"
-.br
-.ti -1c
-.RI "size_t \fBsize_QueueVector\fP (\fBQueueVector\fP *obj)"
-.br
-.ti -1c
-.RI "int8_t \fBdump_QueueVector\fP (\fBQueueVector\fP *obj)"
-.br
-.RI "\fIdumps out the internal structure of the object \fP"
-.ti -1c
-.RI "size_t \fBsize_of_QueueVector\fP (\fBQueueVector\fP *obj)"
-.br
-.ti -1c
-.RI "int8_t \fBset_compare_QueueVector\fP (\fBQueueVector\fP *obj, int32_t(*cmp)(const void *, const void *, size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBset_print_QueueVector\fP (\fBQueueVector\fP *obj, void(*print)(const void *))"
-.br
-.ti -1c
-.RI "int8_t \fBset_alloc_QueueVector\fP (\fBQueueVector\fP *obj, void *(*alloc)(size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBset_dealloc_QueueVector\fP (\fBQueueVector\fP *obj, void(*dealloc)(void *))"
-.br
-.ti -1c
-.RI "int8_t \fBset_copy_QueueVector\fP (\fBQueueVector\fP *obj, void *(*copy)(void *, const void *, size_t))"
-.br
-.ti -1c
-.RI "int8_t \fBpop_QueueVector\fP (\fBQueueVector\fP *queue)"
+.RI "\fBCOMMON_FUNCTION_PROTOTYPES\fP (\fBQueueVector\fP) int8_t pop_QueueVector(\fBQueueVector\fP *queue)"
 .br
 .ti -1c
 .RI "void * \fBfront_QueueVector\fP (\fBQueueVector\fP *queue)"
 .br
 .ti -1c
-.RI "int8_t \fBpush_QueueVector\fP (\fBQueueVector\fP *queue, void *obj, size_t objsize, int flag)"
+.RI "int8_t \fBpush_QueueVector\fP (\fBQueueVector\fP *queue, void *\fBobj\fP, size_t \fBobjsize\fP, int \fBflag\fP)"
 .br
 .ti -1c
 .RI "int8_t \fBresize_QueueVector\fP (\fBQueueVector\fP *queue, size_t size)"
 .br
-.ti -1c
-.RI "int8_t \fBprev_QueueVectorIter\fP (\fBQueueVectorIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the prev element in the * obj \fP"
-.ti -1c
-.RI "int8_t \fBnext_QueueVectorIter\fP (\fBQueueVectorIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the next element in the * obj \fP"
-.ti -1c
-.RI "int8_t \fBassign_QueueVectorIter\fP (\fBQueueVectorIter\fP *iter, \fBQueueVector\fP *obj)"
-.br
-.RI "\fIassign statically created iterator to the obj \fP"
-.ti -1c
-.RI "void \fBdestroy_QueueVectorIter\fP (\fBQueueVectorIter\fP *iter)"
-.br
-.ti -1c
-.RI "int8_t \fBhead_QueueVectorIter\fP (\fBQueueVectorIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the head of the obj * it has been assigned to \fP"
-.ti -1c
-.RI "int8_t \fBtail_QueueVectorIter\fP (\fBQueueVectorIter\fP *iter)"
-.br
-.RI "\fImoves the iterator to the tail of the * obj it has been assigned to \fP"
-.ti -1c
-.RI "\fBQueueVectorIter\fP * \fBcreate_QueueVectorIter\fP (\fBQueueVector\fP *obj)"
-.br
-.RI "\fIcreates and iterator and assigns it to the obj \fP"
-.ti -1c
-.RI "void * \fBretrieve_QueueVectorIter\fP (\fBQueueVectorIter\fP *iter)"
-.br
-.RI "\fIreturns a void poitner to the object that * the iterator points to \fP"
-.ti -1c
-.RI "int8_t \fBcopy_QueueVectorIter\fP (\fBQueueVectorIter\fP *src, \fBQueueVectorIter\fP *dst)"
-.br
-.ti -1c
-.RI "int8_t \fBswap_QueueVectorIter\fP (\fBQueueVectorIter\fP *iter1, \fBQueueVectorIter\fP *iter2)"
-.br
-.RI "\fIswaps the position of iter1 and iter2 * \fP"
 .in -1c
-.SH "Detailed Description"
-.PP 
-a resuable queue class that takes any object 
-
-\fBAuthor:\fP
-.RS 4
-Micah Villmow 
-.RE
-.PP
-
-.PP
-Definition in file \fBqueue.h\fP.
 .SH "Define Documentation"
 .PP 
 .SS "#define convert_QueueList(A, B, C, D)   push_QueueList((A),(B),(C),(D))"
@@ -255,379 +86,28 @@ Definition at line 66 of file queue.h.
 .SS "#define convert_QueueVector(A, B, C, D)   push_QueueVector((A),(B),(C),(D))"
 .PP
 Definition at line 88 of file queue.h.
+.SS "#define QUEUELIST_DEFINED"
+.PP
+Definition at line 22 of file queue.h.
+.SS "#define QUEUELIST_ITER_DEFINED"
+.PP
+the iterator object that helps traverse the queue 
+.PP
+Definition at line 31 of file queue.h.
+.SS "#define QUEUEVECTOR_DEFINED"
+.SS "#define QUEUEVECTOR_ITER_DEFINED"
+.PP
+Definition at line 77 of file queue.h.
+.SH "Typedef Documentation"
+.PP 
+.SS "typedef struct \fB_ptr_struct\fP \fBQueueList\fP"
+.PP
+Definition at line 23 of file queue.h.
 .SH "Function Documentation"
 .PP 
-.SS "int8_t assign_QueueListIter (\fBQueueListIter\fP *iter, \fBQueueList\fP *obj)"
-.PP
-assign statically created iterator to the obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to assign to the obj * 
-.br
-\fIobj\fP the obj to point the iterator to * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t assign_QueueVectorIter (\fBQueueVectorIter\fP *iter, \fBQueueVector\fP *obj)"
-.PP
-assign statically created iterator to the obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to assign to the obj * 
-.br
-\fIobj\fP the obj to point the iterator to * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t clear_QueueList (\fBQueueList\fP *obj)"
-.PP
-removes all the data from the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to clear * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * 
-.RE
-.PP
-
-.SS "int8_t clear_QueueVector (\fBQueueVector\fP *obj)"
-.PP
-removes all the data from the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to clear * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * 
-.RE
-.PP
-
-.SS "int8_t construct_func_QueueList (\fBQueueList\fP *obj, size_tdatasize, intflag, void *(*)(size_t)alloc, void(*)(void *)dealloc, int32_t(*)(const void *, const void *, size_t)cmp, void(*)(const void *)print, void *(*)(void *, const void *, size_t)copy)"
-.PP
-assigns all the * function pointers in one function call * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to initialize * 
-.br
-\fIdatasize\fP the size of the data to store * 
-.br
-\fIflag\fP the flag for how to handle memory * 
-.br
-\fIalloc\fP the allocation functor * 
-.br
-\fIdealloc\fP the deallocation functor * 
-.br
-\fIcmp\fP the comparison functor * 
-.br
-\fIprint\fP the print functor * 
-.br
-\fIcopy\fP the copy functor * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * * 
-.RE
-.PP
-
-.SS "int8_t construct_func_QueueVector (\fBQueueVector\fP *obj, size_tdatasize, intflag, void *(*)(size_t)alloc, void(*)(void *)dealloc, int32_t(*)(const void *, const void *, size_t)cmp, void(*)(const void *)print, void *(*)(void *, const void *, size_t)copy)"
-.PP
-assigns all the * function pointers in one function call * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to initialize * 
-.br
-\fIdatasize\fP the size of the data to store * 
-.br
-\fIflag\fP the flag for how to handle memory * 
-.br
-\fIalloc\fP the allocation functor * 
-.br
-\fIdealloc\fP the deallocation functor * 
-.br
-\fIcmp\fP the comparison functor * 
-.br
-\fIprint\fP the print functor * 
-.br
-\fIcopy\fP the copy functor * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * * 
-.RE
-.PP
-
-.SS "int8_t construct_QueueList (\fBQueueList\fP *obj, size_tdatasize, intflag)"
-.PP
-the iterator object that helps traverse the queue * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to initialize * 
-.br
-\fIdatasize\fP the size of the data to store * 
-.br
-\fIflag\fP the flag for how to handle memory * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-if you are using a local variable * clear out the memory before calling this * function using memset or bzero 
-.RE
-.PP
-
-.SS "int8_t construct_QueueVector (\fBQueueVector\fP *obj, size_tdatasize, intflag)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to initialize * 
-.br
-\fIdatasize\fP the size of the data to store * 
-.br
-\fIflag\fP the flag for how to handle memory * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure * * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-if you are using a local variable * clear out the memory before calling this * function using memset or bzero 
-.RE
-.PP
-
-.SS "int8_t copy_QueueListIter (\fBQueueListIter\fP *src, \fBQueueListIter\fP *dst)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIsrc\fP the source iterator * 
-.br
-\fIdst\fP the destination iterator * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-zero on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t copy_QueueVectorIter (\fBQueueVectorIter\fP *src, \fBQueueVectorIter\fP *dst)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIsrc\fP the source iterator * 
-.br
-\fIdst\fP the destination iterator * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-zero on success, non-zero on error 
-.RE
-.PP
-
-.SS "\fBQueueListIter\fP* create_QueueListIter (\fBQueueList\fP *obj)"
-.PP
-creates and iterator and assigns it to the obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to create iterator for * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-returns an iterator to the obj on success * or NULL on error * 
-.RE
-.PP
-
-.SS "\fBQueueVectorIter\fP* create_QueueVectorIter (\fBQueueVector\fP *obj)"
-.PP
-creates and iterator and assigns it to the obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to create iterator for * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-returns an iterator to the obj on success * or NULL on error * 
-.RE
-.PP
-
-.SS "void destroy_QueueListIter (\fBQueueListIter\fP *iter)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to destroy * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-only use this in conjunction with create 
-.RE
-.PP
-
-.SS "void destroy_QueueVectorIter (\fBQueueVectorIter\fP *iter)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to destroy * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-only use this in conjunction with create 
-.RE
-.PP
-
-.SS "int8_t destruct_QueueList (\fBQueueList\fP *obj)"
-.PP
-Removes all the allocated memory for * the object. * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to deinitialize * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on succss, non-zero on failure * 
-.RE
-.PP
-
-.SS "int8_t destruct_QueueVector (\fBQueueVector\fP *obj)"
-.PP
-Removes all the allocated memory for * the object. * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to deinitialize * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on succss, non-zero on failure * 
-.RE
-.PP
-
-.SS "int8_t dump_QueueList (\fBQueueList\fP *obj)"
-.PP
-dumps out the internal structure of the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to dump the internal structure of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success,non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t dump_QueueVector (\fBQueueVector\fP *obj)"
-.PP
-dumps out the internal structure of the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to dump the internal structure of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success,non-zero on error * 
-.RE
-.PP
-
-.SS "\fBQueueList\fP* duplicate_QueueList (\fBQueueList\fP *obj)"
-.PP
-duplicates the object * * Duplicates all the data that the object holds * and returns it in its own object. The new object * has copies of the data and does not use copy * on write semantics. Therefor the new object will * handle the deallocation of data memory * when destroyed. * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to duplicate * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-copy of the object or NULL on error * 
-.RE
-.PP
-
-.SS "\fBQueueVector\fP* duplicate_QueueVector (\fBQueueVector\fP *obj)"
-.PP
-duplicates the object * * Duplicates all the data that the object holds * and returns it in its own object. The new object * has copies of the data and does not use copy * on write semantics. Therefor the new object will * handle the deallocation of data memory * when destroyed. * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to duplicate * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-copy of the object or NULL on error * 
-.RE
-.PP
-
-.SS "int8_t empty_QueueList (\fBQueueList\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to check for emptiness * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on empty, non-zero otherwise 
-.RE
-.PP
-
-.SS "int8_t empty_QueueVector (\fBQueueVector\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to check for emptiness * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on empty, non-zero otherwise 
-.RE
-.PP
-
-.SS "void * front_QueueList (\fBQueueList\fP *queue)"
+.SS "COMMON_FUNCTION_PROTOTYPES (\fBQueueVector\fP)"
+.SS "create_iter_prototypes (\fBQueueList\fP)"
+.SS "void* front_QueueList (\fBQueueList\fP * queue)"
 .PP
 returns a pointer to the front object so that it can be easily referenced \fBParameters:\fP
 .RS 4
@@ -640,142 +120,14 @@ a pointer to the front object in the stack or NULL on failure
 .RE
 .PP
 
-.SS "void* front_QueueVector (\fBQueueVector\fP *queue)"
-.SS "int8_t head_QueueListIter (\fBQueueListIter\fP *iter)"
 .PP
-moves the iterator to the head of the obj * it has been assigned to * 
+Definition at line 101 of file queue.c.
+.SS "void* front_QueueVector (\fBQueueVector\fP * queue)"
 .PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to move to the head * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t head_QueueVectorIter (\fBQueueVectorIter\fP *iter)"
-.PP
-moves the iterator to the head of the obj * it has been assigned to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to move to the head * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t next_QueueListIter (\fBQueueListIter\fP *iter)"
-.PP
-moves the iterator to the next element in the * obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iter to move to the next element * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t next_QueueVectorIter (\fBQueueVectorIter\fP *iter)"
-.PP
-moves the iterator to the next element in the * obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iter to move to the next element * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t pop_QueueList (\fBQueueList\fP *queue)"
-.PP
-removes the front item from the queue \fBParameters:\fP
-.RS 4
-\fIqueue\fP the queue to remove the front item from 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on failure 
-.RE
-.PP
-
-.SS "int8_t pop_QueueVector (\fBQueueVector\fP *queue)"
-.SS "int8_t prev_QueueListIter (\fBQueueListIter\fP *iter)"
-.PP
-moves the iterator to the prev element in the * obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iter to move to the prev element * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t prev_QueueVectorIter (\fBQueueVectorIter\fP *iter)"
-.PP
-moves the iterator to the prev element in the * obj * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iter to move to the prev element * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t print_QueueList (\fBQueueList\fP *obj)"
-.PP
-prints out the data inside the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to print * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t print_QueueVector (\fBQueueVector\fP *obj)"
-.PP
-prints out the data inside the object * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to print * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t push_QueueList (\fBQueueList\fP *queue, void *obj, size_tobjsize, intflag)"
+Definition at line 180 of file queue.c.
+.SS "struct \fB_ptr_iter\fP ITER (\fBQueueList\fP)\fC [read]\fP"
+.SS "struct \fB_array_iter\fP ITER (\fBQueueVector\fP)\fC [read]\fP"
+.SS "int8_t push_QueueList (\fBQueueList\fP * queue, void * obj, size_t objsize, int flag)"
 .PP
 pushes an item onto the end of a queue \fBParameters:\fP
 .RS 4
@@ -794,314 +146,14 @@ pushes an item onto the end of a queue \fBParameters:\fP
 .RE
 .PP
 
-.SS "int8_t push_QueueVector (\fBQueueVector\fP *queue, void *obj, size_tobjsize, intflag)"
-.SS "int8_t resize_QueueVector (\fBQueueVector\fP *queue, size_tsize)"
-.SS "void* retrieve_QueueListIter (\fBQueueListIter\fP *iter)"
 .PP
-returns a void poitner to the object that * the iterator points to * 
+Definition at line 59 of file queue.c.
+.SS "int8_t push_QueueVector (\fBQueueVector\fP * queue, void * obj, size_t objsize, int flag)"
 .PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to retrieve the object from * 
-.RE
+Definition at line 197 of file queue.c.
+.SS "int8_t resize_QueueVector (\fBQueueVector\fP * queue, size_t size)"
 .PP
-\fBReturns:\fP
-.RS 4
-object on success, NULL on error * 
-.RE
-.PP
-
-.SS "void* retrieve_QueueVectorIter (\fBQueueVectorIter\fP *iter)"
-.PP
-returns a void poitner to the object that * the iterator points to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to retrieve the object from * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-object on success, NULL on error * 
-.RE
-.PP
-
-.SS "int8_t set_alloc_QueueList (\fBQueueList\fP *obj, void *(*)(size_t)alloc)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the alloc funtion for * 
-.br
-\fIalloc\fP the function pointer to the alloc function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_alloc_QueueVector (\fBQueueVector\fP *obj, void *(*)(size_t)alloc)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the alloc funtion for * 
-.br
-\fIalloc\fP the function pointer to the alloc function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_compare_QueueList (\fBQueueList\fP *obj, int32_t(*)(const void *, const void *, size_t)cmp)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the compare function of * 
-.br
-\fIcmp\fP the function pointer to the comparison function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_compare_QueueVector (\fBQueueVector\fP *obj, int32_t(*)(const void *, const void *, size_t)cmp)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the compare function of * 
-.br
-\fIcmp\fP the function pointer to the comparison function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_copy_QueueList (\fBQueueList\fP *obj, void *(*)(void *, const void *, size_t)copy)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to set the copy function for * 
-.br
-\fIcopy\fP the function pointer to the copy function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_copy_QueueVector (\fBQueueVector\fP *obj, void *(*)(void *, const void *, size_t)copy)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to set the copy function for * 
-.br
-\fIcopy\fP the function pointer to the copy function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_dealloc_QueueList (\fBQueueList\fP *obj, void(*)(void *)dealloc)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIptr\fP the obj to set the dealloc function for * 
-.br
-\fIdealloc\fP the function pointer to the dealloc function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_dealloc_QueueVector (\fBQueueVector\fP *obj, void(*)(void *)dealloc)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIptr\fP the obj to set the dealloc function for * 
-.br
-\fIdealloc\fP the function pointer to the dealloc function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_print_QueueList (\fBQueueList\fP *obj, void(*)(const void *)print)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the print function of * 
-.br
-\fIprint\fP the function pointer to the print function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t set_print_QueueVector (\fBQueueVector\fP *obj, void(*)(const void *)print)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to set the print function of * 
-.br
-\fIprint\fP the function pointer to the print function * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "size_t size_of_QueueList (\fBQueueList\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to get the size of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-size of the object or 0 on error/empty 
-.RE
-.PP
-
-.SS "size_t size_of_QueueVector (\fBQueueVector\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the obj to get the size of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-size of the object or 0 on error/empty 
-.RE
-.PP
-
-.SS "size_t size_QueueList (\fBQueueList\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to get the size of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-size of object or zero on failure 
-.RE
-.PP
-
-.SS "size_t size_QueueVector (\fBQueueVector\fP *obj)"* 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIobj\fP the object to get the size of * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-size of object or zero on failure 
-.RE
-.PP
-
-.SS "int8_t swap_QueueListIter (\fBQueueListIter\fP *iter1, \fBQueueListIter\fP *iter2)"
-.PP
-swaps the position of iter1 and iter2 * * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter1\fP the first iterator * 
-.br
-\fIiter2\fP the second iterator * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-iterators must be pointing to same parent * object or the swap will fail * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t swap_QueueVectorIter (\fBQueueVectorIter\fP *iter1, \fBQueueVectorIter\fP *iter2)"
-.PP
-swaps the position of iter1 and iter2 * * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter1\fP the first iterator * 
-.br
-\fIiter2\fP the second iterator * 
-.RE
-.PP
-\fBWarning:\fP
-.RS 4
-iterators must be pointing to same parent * object or the swap will fail * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error 
-.RE
-.PP
-
-.SS "int8_t tail_QueueListIter (\fBQueueListIter\fP *iter)"
-.PP
-moves the iterator to the tail of the * obj it has been assigned to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to move to the tail * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
-.SS "int8_t tail_QueueVectorIter (\fBQueueVectorIter\fP *iter)"
-.PP
-moves the iterator to the tail of the * obj it has been assigned to * 
-.PP
-\fBParameters:\fP
-.RS 4
-\fIiter\fP the iterator to move to the tail * 
-.RE
-.PP
-\fBReturns:\fP
-.RS 4
-0 on success, non-zero on error * 
-.RE
-.PP
-
+Definition at line 210 of file queue.c.
 .SH "Author"
 .PP 
 Generated automatically by Doxygen for 'c generic library' from the source code.

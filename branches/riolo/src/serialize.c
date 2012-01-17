@@ -182,6 +182,7 @@ int xml_WriteContainerElement(FILE* file, const void* elem, size_t size, struct 
 // -- datatypes --
 
 F_ENCODE(Vector)
+F_ENCODEELEMENTS(Vector)
 
 /*
 F_ENCODE(BinaryTree)

@@ -55,14 +55,13 @@ some missing generic functions - put this into gen/somewhere.h */
 typedef struct coder_t {
 	int (*writeContainerBegin)(FILE* file, const void*  obj, size_t size, size_t obj_size);
 	int (*writeContainerEnd)(FILE* file, const void* obj, size_t size, size_t obj_size);
-	//int (*writeContainerElement)(FILE* file, const void* elem, size_t size);
-	
 	int (*writeContainerElement)(FILE* file, const void* elem, size_t size, struct coder_t* coder);
+	
 	struct coder_t* subcoder;
 	
-	/*readContainerBegin
-	readContainerEnd
-	readContainerElement*/
+	int (*readContainerBegin)(FILE* file, void* obj, size_t* size, size_t* obj_size);
+	int (*readContainerEnd)(FILE* file, const void* elem, size_t* size, struct coder_t* coder);
+	int (*readContainerElement)(FILE* file, void* obj, size_t* size, size_t* obj_size);
 } Coder;
 
 
@@ -100,6 +99,18 @@ int xml_WriteContainerElement(FILE* file, const void* elem, size_t size, struct 
 #define PROTO_ENCODE(TYPE) int encode_##TYPE(TYPE* obj, FILE* fileptr, Coder* coder)
 #define PROTO_ENCODETOFILE(TYPE) int encodeToFile_##TYPE(TYPE* obj, const char* path, Coder* coder)
 #define PROTO_ENCODETOMEMORY(TYPE) void* encodeToMemory_##TYPE(TYPE* obj, size_t* length, Coder* coder)
+
+
+
+
+#define encodeElements(TYPE) encode##TYPE##Elements
+#define PROTO_ENCODEELEMENTS(TYPE) int encodeElements(TYPE) (FILE* file, const void* elem, size_t size, struct coder_t* coder)
+
+
+#define F_ENCODEELEMENTS(TYPE) PROTO_ENCODEELEMENTS(TYPE) { \
+	return encode(TYPE, (TYPE*)elem, file, coder); \
+}
+
 
 //definition of the function-content
 #define F_ENCODE(TYPE) PROTO_ENCODE(TYPE) { \
@@ -155,4 +166,7 @@ int xml_WriteContainerElement(FILE* file, const void* elem, size_t size, struct 
 PROTO_ENCODE(Vector);
 PROTO_ENCODETOFILE(Vector);
 PROTO_ENCODETOMEMORY(Vector);
+
+PROTO_ENCODEELEMENTS(Vector);
+
 #endif
