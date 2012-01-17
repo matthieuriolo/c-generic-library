@@ -80,6 +80,13 @@ int main(void) {
   
   Coder* coder = createBase64Coder();
   coder->subcoder = createBase64Coder();
+  coder->writeContainerElement = encodeElements(Vector);
+  
+  /*
+  Coder* coder = createXMLCoder();
+  coder->subcoder = createXMLCoder();
+  coder->writeContainerElement = encodeElements(Vector);
+  */
   
   if(f = fopen(filepath, "w")) {
   	/* encode the vector as base64 in a file */
