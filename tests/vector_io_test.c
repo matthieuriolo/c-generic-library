@@ -87,7 +87,6 @@ int main(void) {
   coder->subcoder = createXMLCoder();
   coder->writeContainerElement = encodeElements(Vector);
   */
-  
   if(f = fopen(filepath, "w")) {
   	/* encode the vector as base64 in a file */
   	if(encode(Vector, masterObject, f, coder) != SUCCESS)
