@@ -6,7 +6,7 @@ char* base64_encode(const void* data, size_t length) {
 	size_t len = base64_encode_length(length);
 	
 	char* buffer = (char*)malloc(sizeof(char)*(len+1));
-	buffer[len-1] = '\0';
+	buffer[len] = '\0';
 	
 	size_t i;
 	size_t pos = 0;
@@ -15,7 +15,7 @@ char* base64_encode(const void* data, size_t length) {
 		
 		memcpy(tmp, data+pos, length-pos > 3 ? 3 : length-pos);
 		
-		buffer[i] = base64_characters[tmp[0] >> 2];
+		buffer[i] = base64_characters[(tmp[0] >> 2) & 0x0F];
 		buffer[i+1] = base64_characters[((tmp[0] & 0x03)<<4) | (tmp[1]>>4)];
 		buffer[i+2] = base64_characters[((tmp[1] & 0x0F)<<2) | (tmp[2]>>4)];
 		buffer[i+3] = base64_characters[(tmp[2] & 0x3F)];

@@ -137,8 +137,6 @@ int base64_ReadContainerElement(FILE* file, const void* elem, size_t size) {
 
 
 
-
-
 Coder* createXMLCoder() {
 	Coder* coder = (Coder*)malloc(sizeof(Coder));
 	

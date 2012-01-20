@@ -75,11 +75,18 @@ int base64_WriteContainerBegin(FILE* file, const void* obj, size_t size, size_t 
 int base64_WriteContainerEnd(FILE* file, const void* obj, size_t size, size_t obj_size);
 int base64_WriteContainerElement(FILE* file, const void* elem, size_t size, struct coder_t* coder);
 
+int base64_ReadContainerBegin(FILE* file, void* obj, size_t* size, size_t* obj_size);
+int base64_ReadContainerEnd(FILE* file, const void* elem, size_t* size, struct coder_t* coder);
+int base64_ReadContainerElement(FILE* file, void* obj, size_t* size, size_t* obj_size);
+
 
 int xml_WriteContainerBegin(FILE* file, const void* obj, size_t size, size_t obj_size);
 int xml_WriteContainerEnd(FILE* file, const void* obj, size_t size, size_t obj_size);
 int xml_WriteContainerElement(FILE* file, const void* elem, size_t size, struct coder_t* coder);
 
+int xml_ReadContainerBegin(FILE* file, void* obj, size_t* size, size_t* obj_size);
+int xml_ReadContainerEnd(FILE* file, const void* elem, size_t* size, struct coder_t* coder);
+int xml_ReadContainerElement(FILE* file, void* obj, size_t* size, size_t* obj_size);
 
 
 
@@ -100,13 +107,13 @@ int xml_WriteContainerElement(FILE* file, const void* elem, size_t size, struct 
 #define PROTO_ENCODETOFILE(TYPE) int encodeToFile_##TYPE(TYPE* obj, const char* path, Coder* coder)
 #define PROTO_ENCODETOMEMORY(TYPE) void* encodeToMemory_##TYPE(TYPE* obj, size_t* length, Coder* coder)
 
-
+#define PROTO_DECODE(TYPE) int decode_##TYPE(TYPE* obj, FILE* fileptr, Coder* coder)
+//#define PROTO_DECODETOFILE(TYPE) int decodeToFile_##TYPE(TYPE* obj, const char* path, Coder* coder)
+//#define PROTO_DECODEFROMMEMORY(TYPE) void* decodeToMemory_##TYPE(TYPE* obj, size_t* length, Coder* coder)
 
 
 #define encodeElements(TYPE) encode##TYPE##Elements
 #define PROTO_ENCODEELEMENTS(TYPE) int encodeElements(TYPE) (FILE* file, const void* elem, size_t size, struct coder_t* coder)
-
-
 #define F_ENCODEELEMENTS(TYPE) PROTO_ENCODEELEMENTS(TYPE) { \
 	return encode(TYPE, (TYPE*)elem, file, coder); \
 }
@@ -161,6 +168,36 @@ int xml_WriteContainerElement(FILE* file, const void* elem, size_t size, struct 
 	remove(path); \
 	return data; \
 }
+
+
+#define F_DECODE(TYPE) PROTO_DECODE(TYPE) { \
+	TYPE* obj = NULL;
+	
+	size_t obj_size, size; \
+	coder->readContainerBegin(fileptr, obj, &size, &obj_size); \
+	
+	if(obj == NULL) {
+		obj = (TYPE*)malloc(sizeof(TYPE));
+		memset(obj, 0, sizeof(TYPE));
+		construct(TYPE, obj, /*sizeof(x)*/, FREEOBJ);
+	}
+	
+	
+	\
+	if(!empty(TYPE, obj)) { \
+		TYPE##Iter* ptr = create(TYPE##Iter, obj); \
+		head(TYPE##Iter, ptr); \
+		do { \
+			coder->writeContainerElement(fileptr, retrieve(TYPE##Iter, ptr), obj_size, coder->subcoder); \
+		}while(!next(TYPE##Iter, ptr)); \
+		destroy(TYPE##Iter, ptr); \
+	} \
+	coder->writeContainerEnd(fileptr, obj, size_of(TYPE, obj), obj_size); \
+	return SUCCESS; \
+}
+
+
+
 
 // -- declaration of the existing encode method -- 
 PROTO_ENCODE(Vector);
