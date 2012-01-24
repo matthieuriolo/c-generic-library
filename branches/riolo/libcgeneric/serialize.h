@@ -1,8 +1,10 @@
 /* 
 todo in common:
-
+- need a proper way to delete dynamic allocated elements + container
+- common way to load the data into the container
 - create print_all functions for all datatypes
 - print_all should be based on the makro bellow
+
 - create dump function for all datatypes
 - create better documentation (explanation which datatype is useful for what and what's the runtime of the functions)
 
@@ -45,7 +47,7 @@ some missing generic functions - put this into gen/somewhere.h */
 /* belongs to error_macros (gen/error_macros.h) */
 #define ECODERWRITE 0x40
 #define ECODERREAD 0x50
-
+#define WCODERINIT 0x60
 
 /*
  *
@@ -60,12 +62,13 @@ typedef struct coder_t {
 	struct coder_t* subcoder;
 	
 	int (*readContainerBegin)(FILE* file, void* obj, size_t* size, size_t* obj_size);
-	int (*readContainerEnd)(FILE* file, const void* elem, size_t* size, struct coder_t* coder);
-	int (*readContainerElement)(FILE* file, void* obj, size_t* size, size_t* obj_size);
+	int (*readContainerEnd)(FILE* file, void* obj, size_t* size, size_t* obj_size);
+	int (*readContainerElement)(FILE* file, void* elem, size_t size, struct coder_t* coder);
 } Coder;
 
 
 
+char* memstr(FILE* file, int character, size_t* len);
 
 //predefined formatter
 Coder* createBase64Coder();
@@ -76,8 +79,8 @@ int base64_WriteContainerEnd(FILE* file, const void* obj, size_t size, size_t ob
 int base64_WriteContainerElement(FILE* file, const void* elem, size_t size, struct coder_t* coder);
 
 int base64_ReadContainerBegin(FILE* file, void* obj, size_t* size, size_t* obj_size);
-int base64_ReadContainerEnd(FILE* file, const void* elem, size_t* size, struct coder_t* coder);
-int base64_ReadContainerElement(FILE* file, void* obj, size_t* size, size_t* obj_size);
+int base64_ReadContainerEnd(FILE* file, void* obj, size_t* size, size_t* obj_size);
+int base64_ReadContainerElement(FILE* file, void* elem, size_t size, struct coder_t* coder);
 
 
 int xml_WriteContainerBegin(FILE* file, const void* obj, size_t size, size_t obj_size);
@@ -85,8 +88,8 @@ int xml_WriteContainerEnd(FILE* file, const void* obj, size_t size, size_t obj_s
 int xml_WriteContainerElement(FILE* file, const void* elem, size_t size, struct coder_t* coder);
 
 int xml_ReadContainerBegin(FILE* file, void* obj, size_t* size, size_t* obj_size);
-int xml_ReadContainerEnd(FILE* file, const void* elem, size_t* size, struct coder_t* coder);
-int xml_ReadContainerElement(FILE* file, void* obj, size_t* size, size_t* obj_size);
+int xml_ReadContainerEnd(FILE* file, void* obj, size_t* size, size_t* obj_size);
+int xml_ReadContainerElement(FILE* file, void* elem, size_t size, struct coder_t* coder);
 
 
 
@@ -101,13 +104,16 @@ int xml_ReadContainerElement(FILE* file, void* obj, size_t* size, size_t* obj_si
 #define encodeToMemory(TYPE, STRUCT, LENGTH, CODER) encodeToMemory_##TYPE(STRUCT, LENGTH, CODER)
 
 
+#define decode(TYPE, FILEPTR, CODER) decode_##TYPE(FILEPTR, CODER)
+
+
 // -- function declaration -- 
 //signature for encode
 #define PROTO_ENCODE(TYPE) int encode_##TYPE(TYPE* obj, FILE* fileptr, Coder* coder)
 #define PROTO_ENCODETOFILE(TYPE) int encodeToFile_##TYPE(TYPE* obj, const char* path, Coder* coder)
 #define PROTO_ENCODETOMEMORY(TYPE) void* encodeToMemory_##TYPE(TYPE* obj, size_t* length, Coder* coder)
 
-#define PROTO_DECODE(TYPE) int decode_##TYPE(TYPE* obj, FILE* fileptr, Coder* coder)
+#define PROTO_DECODE(TYPE) void* decode_##TYPE(FILE* fileptr, Coder* coder)
 //#define PROTO_DECODETOFILE(TYPE) int decodeToFile_##TYPE(TYPE* obj, const char* path, Coder* coder)
 //#define PROTO_DECODEFROMMEMORY(TYPE) void* decodeToMemory_##TYPE(TYPE* obj, size_t* length, Coder* coder)
 
@@ -118,11 +124,20 @@ int xml_ReadContainerElement(FILE* file, void* obj, size_t* size, size_t* obj_si
 	return encode(TYPE, (TYPE*)elem, file, coder); \
 }
 
+#define decodeElements(TYPE) decode##TYPE##Elements
+#define PROTO_DECODEELEMENTS(TYPE) int decodeElements(TYPE) (FILE* file, void* elem, size_t size, struct coder_t* coder)
+#define F_DECODEELEMENTS(TYPE) PROTO_DECODEELEMENTS(TYPE) { \
+	elem = decode(TYPE, file, coder); \
+	return SUCCESS; \
+}
+
+
 
 //definition of the function-content
 #define F_ENCODE(TYPE) PROTO_ENCODE(TYPE) { \
 	size_t obj_size = O(obj); \
-	coder->writeContainerBegin(fileptr, obj, size_of(TYPE, obj), obj_size); \
+	if(coder->writeContainerBegin(fileptr, obj, size_of(TYPE, obj), obj_size) != SUCCESS) \
+		return ECODERWRITE; \
 	\
 	if(!empty(TYPE, obj)) { \
 		TYPE##Iter* ptr = create(TYPE##Iter, obj); \
@@ -132,7 +147,9 @@ int xml_ReadContainerElement(FILE* file, void* obj, size_t* size, size_t* obj_si
 		}while(!next(TYPE##Iter, ptr)); \
 		destroy(TYPE##Iter, ptr); \
 	} \
-	coder->writeContainerEnd(fileptr, obj, size_of(TYPE, obj), obj_size); \
+	\
+	if(coder->writeContainerEnd(fileptr, obj, size_of(TYPE, obj), obj_size) != SUCCESS) \
+		return ECODERWRITE; \
 	return SUCCESS; \
 }
 
@@ -142,8 +159,11 @@ int xml_ReadContainerElement(FILE* file, void* obj, size_t* size, size_t* obj_si
 	char* p = tmpname(); \
 	FILE* f = fopen(p, "w"); \
 	if(f!=NULL){ \
-		encode(TYPE, f, coder); \
+		int ret = encode(TYPE, f, coder); \
 		fclose(f); \
+		if(ret != SUCCESS) \
+			return ret; \
+		\
 		rename(p, path); \
 	}else \
 		return errno; \
@@ -171,31 +191,53 @@ int xml_ReadContainerElement(FILE* file, void* obj, size_t* size, size_t* obj_si
 
 
 #define F_DECODE(TYPE) PROTO_DECODE(TYPE) { \
-	TYPE* obj = NULL;
-	
-	size_t obj_size, size; \
-	coder->readContainerBegin(fileptr, obj, &size, &obj_size); \
-	
-	if(obj == NULL) {
-		obj = (TYPE*)malloc(sizeof(TYPE));
-		memset(obj, 0, sizeof(TYPE));
-		construct(TYPE, obj, /*sizeof(x)*/, FREEOBJ);
-	}
-	
-	
+	TYPE* obj = NULL; \
 	\
-	if(!empty(TYPE, obj)) { \
-		TYPE##Iter* ptr = create(TYPE##Iter, obj); \
-		head(TYPE##Iter, ptr); \
-		do { \
-			coder->writeContainerElement(fileptr, retrieve(TYPE##Iter, ptr), obj_size, coder->subcoder); \
-		}while(!next(TYPE##Iter, ptr)); \
-		destroy(TYPE##Iter, ptr); \
+	size_t obj_size, size; \
+	int ret = coder->readContainerBegin(fileptr, obj, &size, &obj_size); \
+	\
+	printf("direct after begin %lu %lu\n", size, obj_size); \
+	if(ret == WCODERINIT) { \
+		obj = (TYPE*)malloc(sizeof(TYPE)); \
+		memset(obj, 0, sizeof(TYPE)); \
+		construct(TYPE, obj, obj_size, FREEOBJ); \
+	}else \
+		if(ret != SUCCESS) \
+			return NULL; \
+	\
+	\
+	while(size--) { \
+		void* elem = malloc(obj_size); \
+		if(coder->readContainerElement(fileptr, elem, obj_size, coder->subcoder) != SUCCESS) { \
+			if(!empty(TYPE, obj)) { \
+				TYPE##Iter* ptr = create(TYPE##Iter, obj); \
+				head(TYPE##Iter, ptr); \
+				do { \
+					free(retrieve(TYPE##Iter, ptr)); \
+				}while(!next(TYPE##Iter, ptr)); \
+				destroy(TYPE##Iter, ptr); \
+			} \
+			destruct(TYPE, obj); \
+			free(obj); \
+			free(elem); \
+			return NULL; \
+		}else \
+			push_back(TYPE, obj, elem, DYNAMIC); \
+		\
+		\
 	} \
-	coder->writeContainerEnd(fileptr, obj, size_of(TYPE, obj), obj_size); \
-	return SUCCESS; \
+	\
+	if(coder->writeContainerEnd(fileptr, obj, size_of(TYPE, obj), obj_size)!=SUCCESS) {\
+		if(ret == WCODERINIT) { \
+			destruct(TYPE, obj); \
+			free(obj); \
+		} \
+		\
+		return NULL; \
+	} \
+	\
+	return obj; \
 }
-
 
 
 
@@ -206,4 +248,7 @@ PROTO_ENCODETOMEMORY(Vector);
 
 PROTO_ENCODEELEMENTS(Vector);
 
+
+PROTO_DECODE(Vector);
+PROTO_DECODEELEMENTS(Vector);
 #endif
