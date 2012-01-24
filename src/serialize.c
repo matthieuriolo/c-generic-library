@@ -1,21 +1,10 @@
 #include "serialize.h"
 
 /*
-
 TODO:
-
-- think about the point to insert the coder into the API and remove the CODER parameter in the encoding functions
-- create the decode AKA read function
-- rewrite default coder in following matter:
-	Coder* coder = createCoderFormatLineSeparated();//subcoder points to NULL
-	initializeCoderForBase64(coder);//initialize the subcoder
-	//those functions creates a coder with a subcoder.
-	//the maincoder contains as BEGIN and END function the line separating functions.
-	//the subcoder contains an empty BEGIN and END function. The
-	
+- need a proper way to delete dynamic allocated elements + container
 - add format Line Separated, XML and JSON
 - add value coding Base64, Base85, HEX, ASCII, Point-Line-Coding (if Bit(x)=0 then print "."; if Bit(x)=1 then print "-"; I guess that this is useful if you're using this library with microcontrollers)
-
 
 
 - add length calculation function (may not supported by all codings)
@@ -32,7 +21,26 @@ TODO:
 - create better documentation
 */
 	
+char* memstr(FILE* file, int character, size_t* len) {
+	*len = 0;
+	int c;
+	size_t capacity = INITIAL_SIZE;
+	char* buffer = (char*)malloc(sizeof(char)*capacity);
 	
+	while( (c=fgetc(file)) != EOF && c != character) {
+		buffer[(*len)++] = c;
+		
+		if(*len>=capacity)
+			buffer = realloc(buffer, capacity += INITIAL_SIZE);
+	}
+	
+	buffer = realloc(buffer, *len + 1);
+	buffer[*len] = '\0';
+	
+	return buffer;
+}
+
+
 //predefined formatter
 Coder* createBase64Coder() {
 	Coder* coder = (Coder*)malloc(sizeof(Coder));
@@ -41,7 +49,10 @@ Coder* createBase64Coder() {
 	coder->writeContainerEnd = base64_WriteContainerEnd;
 	coder->writeContainerElement = base64_WriteContainerElement;
 	
-	//coder->subcoder = (Coder*)malloc(sizeof(Coder));
+	coder->readContainerBegin = base64_ReadContainerBegin;
+	coder->readContainerEnd = base64_ReadContainerEnd;
+	coder->readContainerElement = base64_ReadContainerElement;
+	
 	
 	return coder;
 }
@@ -91,46 +102,44 @@ int base64_WriteContainerElement(FILE* file, const void* elem, size_t size, stru
 }
 
 
-int base64_ReadContainerBegin(FILE* file, const void*  obj, size_t size, size_t obj_size) {
-	char* tmp = base64_encode(&size, sizeof(size));
-	size_t ret = fwrite(tmp, strlen(tmp), 1, file);
-	free(tmp);
+int base64_ReadContainerBegin(FILE* file, void* obj, size_t* size, size_t* obj_size) {
+	size_t len;
 	
-	if(ret < 1)
-		return ECODERWRITE;
+	char* buffer = memstr(file, '\n', &len);
 	
-	if(fwrite("\n", 1, 1, file) < 1)
-		return ECODERWRITE;
+	printf("aha %s %lu %lu\n", buffer, strlen(buffer), len);
+	*size = *((size_t*)base64_decode(buffer, &len));
+	free(buffer);
 	
-	tmp = base64_encode(&obj_size, sizeof(obj_size));
-	ret = fwrite(tmp, strlen(tmp), 1, file);
-	free(tmp);
+	if(size == NULL)
+		return ECODERREAD;
+	printf("grml\n");
+	buffer = memstr(file, '\n', &len);
+	*obj_size = *((size_t*)base64_decode(buffer, &len));
+	free(buffer);
 	
-	if(ret < 1)
-		return ECODERWRITE;
+	if(obj_size == NULL)
+		return ECODERREAD;
 	
-	if(fwrite("\n", 1, 1, file) < 1)
-		return ECODERWRITE;
-	
-	return SUCCESS;
+	return WCODERINIT;
 }
 
 
-int base64_ReadContainerEnd(FILE* file, const void* obj, size_t size, size_t obj_size) {
+int base64_ReadContainerEnd(FILE* file, void* obj, size_t* size, size_t* obj_size) {
 	return SUCCESS;
 }
 
-int base64_ReadContainerElement(FILE* file, const void* elem, size_t size) {
-	char* tmp = base64_encode(elem, size);
-	size_t ret = fwrite(tmp, strlen(tmp), 1, file);
-	free(tmp);
+int base64_ReadContainerElement(FILE* file, void* elem, size_t size, struct coder_t* coder) {
+	size_t len;
+	char* buffer = memstr(file, '\n', &len);
+	elem = base64_decode(buffer, &len);
+	free(buffer);
 	
-	if(ret < 1)
-		return ECODERWRITE;
+	printf("decoded size %lu datalength %lu\n", size, len);
 	
-	if(fwrite("\n", 1, 1, file) < 1)
-		return ECODERWRITE;
-	
+	if(elem == NULL)
+		return ECODERREAD;
+	printf("heurike\n");
 	return SUCCESS;
 }
 
@@ -187,3 +196,6 @@ F_ENCODE(BinaryTree)
 F_ENCODE(Queue)
 ...
 */
+
+F_DECODE(Vector)
+F_DECODEELEMENTS(Vector)
