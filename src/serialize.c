@@ -107,13 +107,12 @@ int base64_ReadContainerBegin(FILE* file, void* obj, size_t* size, size_t* obj_s
 	
 	char* buffer = memstr(file, '\n', &len);
 	
-	printf("aha %s %lu %lu\n", buffer, strlen(buffer), len);
 	*size = *((size_t*)base64_decode(buffer, &len));
 	free(buffer);
 	
 	if(size == NULL)
 		return ECODERREAD;
-	printf("grml\n");
+	
 	buffer = memstr(file, '\n', &len);
 	*obj_size = *((size_t*)base64_decode(buffer, &len));
 	free(buffer);
@@ -132,14 +131,16 @@ int base64_ReadContainerEnd(FILE* file, void* obj, size_t* size, size_t* obj_siz
 int base64_ReadContainerElement(FILE* file, void* elem, size_t size, struct coder_t* coder) {
 	size_t len;
 	char* buffer = memstr(file, '\n', &len);
-	elem = base64_decode(buffer, &len);
-	free(buffer);
 	
-	printf("decoded size %lu datalength %lu\n", size, len);
+	void* tmp = base64_decode(buffer, &len);
 	
-	if(elem == NULL)
+	if(tmp == NULL)
 		return ECODERREAD;
-	printf("heurike\n");
+	
+	memcpy(elem, tmp, size);
+	free(buffer);
+	free(tmp);
+	
 	return SUCCESS;
 }
 

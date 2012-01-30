@@ -196,7 +196,6 @@ int xml_ReadContainerElement(FILE* file, void* elem, size_t size, struct coder_t
 	size_t obj_size, size; \
 	int ret = coder->readContainerBegin(fileptr, obj, &size, &obj_size); \
 	\
-	printf("direct after begin %lu %lu\n", size, obj_size); \
 	if(ret == WCODERINIT) { \
 		obj = (TYPE*)malloc(sizeof(TYPE)); \
 		memset(obj, 0, sizeof(TYPE)); \
@@ -221,10 +220,9 @@ int xml_ReadContainerElement(FILE* file, void* elem, size_t size, struct coder_t
 			free(obj); \
 			free(elem); \
 			return NULL; \
-		}else \
-			push_back(TYPE, obj, elem, DYNAMIC); \
-		\
-		\
+		}else { \
+			push_back_##TYPE(obj, elem, obj_size, DYNAMIC);/*push_back(TYPE, obj, elem, DYNAMIC); - issue with the obj size*/ \
+		} \
 	} \
 	\
 	if(coder->writeContainerEnd(fileptr, obj, size_of(TYPE, obj), obj_size)!=SUCCESS) {\

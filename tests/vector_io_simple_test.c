@@ -25,21 +25,21 @@ int main(void) {
   memset(masterObject, 0, sizeof(Vector));
   construct(Vector, masterObject,sizeof(int),FREEOBJ);
   
-  fprintf(stderr, "Construct content\n");
+  printf("Construct content\n");
   
   for(x = 0; x < 10; x++) {
 	unsigned int* val=malloc(sizeof(x));
-	*val = 10-x;
+	*val = x;
     push_back(Vector, masterObject, val, DYNAMIC);
   }
   
-  fprintf(stderr, "Print content\n");
+  printf("Print content\n");
   
   set_print(Vector, masterObject, printer);
   print_all(Vector, masterObject);
   
   
-  fprintf(stderr, "Write content\n");
+  printf("Write content\n");
   
   FILE* f;
   
@@ -56,10 +56,10 @@ int main(void) {
   if(f = fopen(filepath, "w")) {
   	/* encode the vector as base64 in a file */
   	if(encode(Vector, masterObject, f, coder) != SUCCESS)
-  		fprintf(stderr, "There was an error during encoding!\n");
+  		printf("There was an error during encoding!\n");
   	fclose(f);
   }else
-    fprintf(stderr, "Could not create or edit the file!\n");
+    printf("Could not create or edit the file!\n");
   
   
   for(x = 0; x < 10; x++) {
@@ -70,16 +70,16 @@ int main(void) {
   destruct(Vector, masterObject);
   free(masterObject);
   
-  fprintf(stderr, "Read content!\n");
+  printf("Read content!\n");
   if(f = fopen(filepath, "r")) {
     masterObject = decode(Vector, f, coder);
     
     if(masterObject) {
-    	 fprintf(stderr, "Print the content of the decoded data in a loop\n");
+    	 printf("Print the content of the decoded data in a loop\n");
     	 
     	 set_print(Vector, masterObject, printer);
   		 print_all(Vector, masterObject);
-  		 printf("%lu   <<<-----\n", size_of(Vector, masterObject));
+  		 /*printf("%lu   <<<-----\n", size_of(Vector, masterObject));
     	 /*VectorIter *ptr;
 		 ptr = create(VectorIter, masterObject);
 		 
@@ -91,10 +91,10 @@ int main(void) {
 		 destroy(VectorIter,ptr);*/
 		 destruct(Vector, masterObject);
     }else
-      fprintf(stderr, "There was an problem during the decoding\n");
+      printf("There was an problem during the decoding\n");
     
   }else
-    fprintf(stderr, "Could not read the file!\n");
+    printf("Could not read the file!\n");
   
   
   
