@@ -59,13 +59,14 @@ int main() {
 	free(strB);
 	
 	
-	size_t d = 0;
-	x = base64_encode(strA, sizeof(d));
+	size_t d = 10;
+	x = base64_encode(&d, sizeof(d));
 	size_t* e = base64_decode(x, &t);
+	
 	if(t != sizeof(d))
 		printf("different object size during the base64 encode %lu %lu\n", sizeof(d), t);
 	if(e == NULL)
-		printf("failure\n");
+		printf("failure - points to null\n");
 	if(*e != d)
 		printf("different value %lu %lu\n", *e, d);
 	
