@@ -10,7 +10,7 @@ gcc -o vector_io_simple_test ./vector_io_simple_test.c ../src/serialize.c ../src
 #include "serialize.h"
 
 const char* filepath = "vector_io_simple_test.cbe";
-
+const unsigned int TURNS = 1000;
 
 void printer(const void* number) {
   printf("%u\n", *(unsigned int*)number);
@@ -27,7 +27,7 @@ int main(void) {
   
   printf("Construct content\n");
   
-  for(x = 0; x < 10; x++) {
+  for(x = 0; x < TURNS; x++) {
 	unsigned int* val=malloc(sizeof(x));
 	*val = x;
     push_back(Vector, masterObject, val, DYNAMIC);
