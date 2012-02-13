@@ -22,9 +22,9 @@ char* base64_encode(const void* data, size_t length) {
 		buffer[i+3] = base64_characters[(tmp[2] & 0x3F)];
 		*/
 		
-		buffer[i] = base64_characters[(tmp[0] >> 2)];
-		buffer[i+1] = base64_characters[((tmp[0] & 0x03)<<4) | (tmp[1]>>4)];
-		buffer[i+2] = base64_characters[((tmp[1] & 0x0F)<<2) | (tmp[2]>>6)]; // last four should be a six ?
+		buffer[i] = base64_characters[(tmp[0] >> 2) & 0x3F];
+		buffer[i+1] = base64_characters[((tmp[0]<<4) & 0x30) | ((tmp[1]>>4) & 0x0F)];
+		buffer[i+2] = base64_characters[((tmp[1] << 2) & 0x3C) | ((tmp[2]>>6) & 0x03)];
 		buffer[i+3] = base64_characters[(tmp[2] & 0x3F)];
 		
 		pos+=3;

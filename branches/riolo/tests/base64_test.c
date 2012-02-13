@@ -69,8 +69,23 @@ int main() {
 		printf("failure - points to null\n");
 	if(*e != d)
 		printf("different value %lu %lu\n", *e, d);
-	
 	free(e);
+	
+	
+	//8 388 608
+	for(d = 0; d < (size_t) -1; d++) {
+		x = base64_encode(&d, sizeof(d));
+		size_t* m = base64_decode(x, &t);
+		
+		if(m == NULL || *m != d) {
+			printf("the string '%s' creates an failure when it hits the number %lu\n", x, d);
+			return EXIT_SUCCESS;
+		}
+		
+		if(m != NULL)
+			free(m);
+		free(x);
+	}
 	
 	return EXIT_SUCCESS;
 }

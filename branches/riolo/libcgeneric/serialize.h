@@ -1,7 +1,7 @@
 /* 
 todo in common:
 - need a proper way to delete dynamic allocated elements + container
-- common way to load the data into the container
+- common way to load the data into the container (a new function called add, join, attach or something like that ... a functions that does not care about the sort function)
 - create print_all functions for all datatypes
 - print_all should be based on the makro bellow
 
@@ -21,6 +21,7 @@ some missing generic functions - put this into gen/somewhere.h */
 		destroy(TYPE##Iter, iter); \
 	} \
 }
+
 /*
 #define FUNC_EMPTY_ARR(TYPE) { \
 	return !S(obj); \
@@ -72,6 +73,7 @@ char* memstr(FILE* file, int character, size_t* len);
 
 //predefined formatter
 Coder* createBase64Coder();
+Coder* createBinaryCoder();
 Coder* createXMLCoder();
 
 int base64_WriteContainerBegin(FILE* file, const void* obj, size_t size, size_t obj_size);
@@ -82,6 +84,13 @@ int base64_ReadContainerBegin(FILE* file, void* obj, size_t* size, size_t* obj_s
 int base64_ReadContainerEnd(FILE* file, void* obj, size_t* size, size_t* obj_size);
 int base64_ReadContainerElement(FILE* file, void* elem, size_t size, struct coder_t* coder);
 
+int binary_WriteContainerBegin(FILE* file, const void* obj, size_t size, size_t obj_size);
+int binary_WriteContainerEnd(FILE* file, const void* obj, size_t size, size_t obj_size);
+int binary_WriteContainerElement(FILE* file, const void* elem, size_t size, struct coder_t* coder);
+
+int binary_ReadContainerBegin(FILE* file, void* obj, size_t* size, size_t* obj_size);
+int binary_ReadContainerEnd(FILE* file, void* obj, size_t* size, size_t* obj_size);
+int binary_ReadContainerElement(FILE* file, void* elem, size_t size, struct coder_t* coder);
 
 int xml_WriteContainerBegin(FILE* file, const void* obj, size_t size, size_t obj_size);
 int xml_WriteContainerEnd(FILE* file, const void* obj, size_t size, size_t obj_size);
@@ -127,8 +136,14 @@ int xml_ReadContainerElement(FILE* file, void* elem, size_t size, struct coder_t
 #define decodeElements(TYPE) decode##TYPE##Elements
 #define PROTO_DECODEELEMENTS(TYPE) int decodeElements(TYPE) (FILE* file, void* elem, size_t size, struct coder_t* coder)
 #define F_DECODEELEMENTS(TYPE) PROTO_DECODEELEMENTS(TYPE) { \
-	elem = decode(TYPE, file, coder); \
-	return SUCCESS; \
+	void* tmp = decode(TYPE, file, coder); \
+	if(tmp != NULL) { \
+		memcpy(elem, tmp, size); \
+		free(tmp); \
+		return SUCCESS; \
+	} \
+	\
+	return ECODERREAD; \
 }
 
 
@@ -138,7 +153,6 @@ int xml_ReadContainerElement(FILE* file, void* elem, size_t size, struct coder_t
 	size_t obj_size = O(obj); \
 	if(coder->writeContainerBegin(fileptr, obj, size_of(TYPE, obj), obj_size) != SUCCESS) \
 		return ECODERWRITE; \
-	\
 	if(!empty(TYPE, obj)) { \
 		TYPE##Iter* ptr = create(TYPE##Iter, obj); \
 		head(TYPE##Iter, ptr); \
@@ -190,7 +204,7 @@ int xml_ReadContainerElement(FILE* file, void* elem, size_t size, struct coder_t
 }
 
 
-#define F_DECODE(TYPE) PROTO_DECODE(TYPE) { \
+#define F_DECODE(TYPE, FUNC) PROTO_DECODE(TYPE) { \
 	TYPE* obj = NULL; \
 	\
 	size_t obj_size, size; \
@@ -212,7 +226,7 @@ int xml_ReadContainerElement(FILE* file, void* elem, size_t size, struct coder_t
 				TYPE##Iter* ptr = create(TYPE##Iter, obj); \
 				head(TYPE##Iter, ptr); \
 				do { \
-					free(retrieve(TYPE##Iter, ptr)); \
+					/*free(retrieve(TYPE##Iter, ptr));*/ \
 				}while(!next(TYPE##Iter, ptr)); \
 				destroy(TYPE##Iter, ptr); \
 			} \
@@ -221,7 +235,7 @@ int xml_ReadContainerElement(FILE* file, void* elem, size_t size, struct coder_t
 			free(elem); \
 			return NULL; \
 		}else { \
-			push_back_##TYPE(obj, elem, obj_size, DYNAMIC);/*push_back(TYPE, obj, elem, DYNAMIC); - issue with the obj size*/ \
+			FUNC##TYPE(obj, elem, obj_size, DYNAMIC);/*push_back(TYPE, obj, elem, DYNAMIC); - issue with the obj size*/ \
 		} \
 	} \
 	\
