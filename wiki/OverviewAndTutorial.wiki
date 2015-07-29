@@ -158,7 +158,7 @@ print_all(List, &container);
 The function print_all does actually nothing else the iterating through the container. For iterating through the list we need to create at first an iterator the is bound against our container.
 
 {{{
-ListIter* i = create(ListIter, &container); 
+ListIter* iterator = create(ListIter, &container); 
 }}}
 
 The function "create" alloces an iterater that is bound to our object container. That means that *i* is always pointing at an element from *container*.
@@ -166,11 +166,11 @@ The function "create" alloces an iterater that is bound to our object container.
 You can use the generic functions retrieve, next, previous and head for reseting the iteratorposition. There exists also a function called empty which checks if there is any element inside the container.
 
 {{{
-if(!empty(List, &container)){
-	head(List, &container);
+if(!empty(List, iterator)){
+	head(ListIter, iterator);
 	do {
-		printf("%u\n", *((unsigned int*)retrieve(List, &container)));
-	}while(next(List, &container));
+		printf("%u\n", *((unsigned int*)retrieve(ListIter, iterator)));
+	}while(!next(ListIter, iterator));
 }
 
 }}} 
