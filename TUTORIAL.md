@@ -8,9 +8,8 @@ However, we will create a little dummy applications that does collect an unlimit
 
 ## Compilation
 
-The C Generic Library uses the build system [http://en.wikipedia.org/wiki/GNU_build_system autotools] from GNU. Read the artikel HowToCompile if you want to know how to compile the library.
+The C Generic Library uses the build system http://en.wikipedia.org/wiki/GNU_build_system from GNU. Read the artikel HowToCompile if you want to know how to compile the library.
 
-The whole sourcecode can be downloaded [http://code.google.com/p/c-generic-library/downloads/detail?name=tutorial.c&can=2&q= here]. 
 
 You can use the bellow statements for compiling the tutorial sourcecode or any other simple application that uses the c generic library.
 
