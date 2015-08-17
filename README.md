@@ -32,3 +32,4 @@ The generic data structure library is a bunch of data structures that are design
 
 # Tutorial
 
+https://github.com/matthieuriolo/c-generic-library/blob/master/TUTORIAL.md
