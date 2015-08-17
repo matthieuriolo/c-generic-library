@@ -8,10 +8,10 @@ However, we will create a little dummy applications that does collect an unlimit
 
 ## Compilation
 
-The C Generic Library uses the build system http://en.wikipedia.org/wiki/GNU_build_system from GNU. Read the artikel HowToCompile if you want to know how to compile the library.
+The C Generic Library uses the build system http://en.wikipedia.org/wiki/GNU_build_system from GNU. Read the article https://github.com/matthieuriolo/c-generic-library/blob/master/COMPILE.md if you want to know how to compile the library.
 
 
-You can use the bellow statements for compiling the tutorial sourcecode or any other simple application that uses the c generic library.
+You can use the below statements for compiling the tutorial sourcecode or any other simple application that uses the c generic library.
 
 ### Library installed
 
@@ -201,7 +201,8 @@ destroy(ListIter, i);
 destruct(List, &container);
 ```
 
-
+## Source
+The whole code for this small project is available at https://github.com/matthieuriolo/c-generic-library/blob/master/tutorial.c
 
 
 
