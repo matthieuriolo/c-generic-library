@@ -30,6 +30,11 @@ The generic data structure library is a bunch of data structures that are design
 - RB Tree
 - AVL Tree
 
-# Tutorial
+# Documentation
+Compile instructions
+
+https://github.com/matthieuriolo/c-generic-library/blob/master/COMPILE.md
+
+Tutorial
 
 https://github.com/matthieuriolo/c-generic-library/blob/master/TUTORIAL.md
